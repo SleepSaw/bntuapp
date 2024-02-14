@@ -1,0 +1,24 @@
+#homeIcon{
+    -fx-image: url("../images/главная.gif");
+}
+#employeeIcon{
+    -fx-image: url("../images/сотрудники.gif");
+}
+#loadIcon{
+    -fx-image: url("../images/нагрузка.gif");
+}
+#salaryIcon{
+    -fx-image: url("../images/оплата.gif");
+}
+#vacancyIcon{
+    -fx-image: url("../images/вакансии.gif");
+}
+#settingsIcon{
+    -fx-image: url("../images/настройки.gif");
+}
+#helpIcon{
+    -fx-image: url("../images/помощь.gif");
+}
+#exitIcon{
+    -fx-image: url("../images/выйти_стат.png");
+}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="982.0" prefWidth="1434.0" stylesheets="@../../css/table_view_style.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bntu.accounting.application.controllers.windows.SalaryWindowController">
+   <top>
+      <BorderPane prefHeight="51.0" prefWidth="1390.0" style="-fx-background-color: #217346;" BorderPane.alignment="CENTER">
+         <left>
+            <BorderPane prefHeight="51.0" prefWidth="616.0" BorderPane.alignment="CENTER">
+               <left>
+                  <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Label prefHeight="27.0" prefWidth="575.0" text="Подробная информация о заработных палатах работников" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </right>
+            </BorderPane>
+         </left>
+      </BorderPane>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <BorderPane prefHeight="61.0" prefWidth="1390.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+               <left>
+                  <GridPane hgap="10.0" prefHeight="61.0" prefWidth="656.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.0" minWidth="10.0" prefWidth="162.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.0" minWidth="10.0" prefWidth="189.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="202.0" minWidth="10.0" prefWidth="157.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="21.0" minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="15.0" minHeight="4.0" prefHeight="8.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="212.0" style="-fx-background-color: #217346;" text="Показать общие сведения" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="212.0" style="-fx-background-color: #217346;" text="Авто. распределение" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button layoutX="10.0" layoutY="23.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="164.0" style="-fx-background-color: #217346;" text="Отчёт в Excel" textFill="WHITE" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </left>
+               <BorderPane.margin>
+                  <Insets left="15.0" />
+               </BorderPane.margin>
+            </BorderPane>
+         </top>
+         <center>
+            <BorderPane prefHeight="689.0" prefWidth="1390.0" BorderPane.alignment="CENTER">
+               <center>
+                  <ScrollPane prefHeight="746.0" prefWidth="1390.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+                     <content>
+                        <TableView fx:id="salaryTable" prefHeight="838.0" prefWidth="1403.0">
+                          <columns>
+                            <TableColumn fx:id="indexColumn" prefWidth="40.0" text="№" />
+                            <TableColumn fx:id="nameColumn" prefWidth="159.0" text="ФИО" />
+                              <TableColumn fx:id="tariffColumn" prefWidth="49.0" text="Тариф" />
+                              <TableColumn fx:id="loadColumn" prefWidth="70.0" text="Нагрузка" />
+                              <TableColumn minWidth="0.0" prefWidth="190.0" text="Оклад (бел. руб)">
+                                 <columns>
+                                    <TableColumn fx:id="withoutLoadSalaryColumn" prefWidth="71.0" text="На ставку" />
+                                    <TableColumn fx:id="withLoadSalaryColumn" prefWidth="69.0" text="С уч. нагр." />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="910.0" text="Надбавки с учётом педагогической нагрущки">
+                                 <columns>
+                                    <TableColumn prefWidth="137.0" text="За стаж">
+                                       <columns>
+                                          <TableColumn fx:id="expPercColumn" prefWidth="50.0" text="\%" />
+                                          <TableColumn fx:id="expRubColumn" prefWidth="61.0" text="Руб." />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="207.0" text="Контракт">
+                                       <columns>
+                                          <TableColumn fx:id="contractPercColumn" prefWidth="50.0" text="\%" />
+                                          <TableColumn fx:id="contractRubColumn" prefWidth="86.0" text="Руб." />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="100.0" text="Специф. раб.">
+                                       <columns>
+                                          <TableColumn fx:id="qualificationAllowancePercColumn" prefWidth="50.0" text="\%" />
+                                          <TableColumn fx:id="qualificationAllowanceRubColumn" prefWidth="86.0" text="Руб." />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="90.0" text="Молод. спец.">
+                                       <columns>
+                                          <TableColumn fx:id="youngSpecialistPercColumn" prefWidth="50.0" text="\%" />
+                                          <TableColumn fx:id="youngSpecialistRubColumn" prefWidth="86.0" text="Руб." />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="115.0" resizable="false" text="Раб. в отрасли">
+                                       <columns>
+                                          <TableColumn fx:id="workInIndustryAllowancePercColumn" prefWidth="50.0" text="\%" />
+                                          <TableColumn fx:id="workInIndustryAllowanceRubColumn" prefWidth="86.0" text="Руб." />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="136.0" text="Особ. проф. деят.">
+                                       <columns>
+                                          <TableColumn fx:id="profActivityPercColumn" prefWidth="50.0" text="\%" />
+                                          <TableColumn fx:id="profActivityRubColumn" prefWidth="86.0" text="Руб." />
+                                       </columns>
+                                    </TableColumn>
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn fx:id="totalSalaryColumn" minWidth="0.0" prefWidth="153.0" text="Суммарный оклад" />
+                          </columns>
+                        </TableView>
+                     </content>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>

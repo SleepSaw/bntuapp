@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1349.0"
+            stylesheets="@../../css/main_window_styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bntu.accounting.application.controllers.windows.MainWindowController">
+    <left>
+        <AnchorPane fx:id="page" prefHeight="430.0" prefWidth="223.0" style="-fx-background-color: #d6ffe8;" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane fx:id="right" prefHeight="775.0" prefWidth="50.0" style="-fx-background-color: #fff;">
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </AnchorPane>
+                <Button fx:id="homeButton" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutY="1.0" mnemonicParsing="false" onAction="#homeButtonAction" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: transparent;" stylesheets="@../../css/animated_menu_buttons.css" text="Главная">
+                    <graphic>
+                        <ImageView fx:id="homeIcon" fitHeight="26.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="loadButton" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutY="85.0" mnemonicParsing="false" onAction="#loadButtonAction" prefHeight="47.0" prefWidth="225.0" style="-fx-background-color: transparent;" stylesheets="@../../css/animated_menu_buttons.css" text="Нагрузка">
+                    <graphic>
+                        <ImageView fx:id="loadIcon" fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="salaryButton" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutY="132.0" mnemonicParsing="false" onAction="#salaryButtonAction" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: transparent;" stylesheets="@../../css/animated_menu_buttons.css" text="Оплата труда">
+                    <graphic>
+                        <ImageView fx:id="salaryIcon" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="settingsButton" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutY="216.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: transparent;" stylesheets="@../../css/animated_menu_buttons.css" text="Настройки">
+                    <graphic>
+                        <ImageView fx:id="settingsIcon" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="helpButton" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutY="258.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: transparent;" stylesheets="@../../css/animated_menu_buttons.css" text="Помощь">
+                    <graphic>
+                        <ImageView fx:id="helpIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="exitButton" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutY="733.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: transparent;" stylesheets="@../../css/animated_menu_buttons.css" text="Выйти">
+                    <graphic>
+                        <ImageView fx:id="exitIcon" fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="vacancyButton" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutY="174.0" mnemonicParsing="false" onAction="#vacancyButtonAction" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: transparent;" stylesheets="@../../css/animated_menu_buttons.css" text="Вакансии">
+                    <graphic>
+                        <ImageView fx:id="vacancyIcon" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="employeeButton" alignment="BASELINE_LEFT" defaultButton="true" graphicTextGap="40.0" layoutY="43.0" mnemonicParsing="false" onAction="#employeeButtonAction" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: transparent;" stylesheets="@../../css/animated_menu_buttons.css" text="Список сотрудников">
+                    <graphic>
+                        <ImageView fx:id="employeeIcon" fitHeight="26.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            </children>
+            <effect>
+                <DropShadow />
+            </effect>
+        </AnchorPane>
+    </left>
+    <center>
+        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+            <top>
+                <HBox prefHeight="18.0" prefWidth="1124.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label fx:id="homeLabel" text="Главная страница">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="employeeLabel" text="Список сотрудников">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="loadLabel" text="Нагрузка">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="salaryLabel" text="Оплата труда">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="vacancyLabel" text="Вакансии">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="20.0" top="20.0" />
+                    </padding>
+                </HBox>
+            </top>
+            <center>
+                <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <fx:include fx:id="homePage" source="../pages/home_page.fxml" />
+                    <fx:include fx:id="employeePage" source="../pages/employee_page.fxml" />
+                    <fx:include fx:id="loadPage" source="../pages/load_page.fxml" />
+                    <fx:include fx:id="salaryPage" source="../pages/salary_page.fxml" />
+                    <fx:include fx:id="vacancyPage" source="../pages/vacancies_page.fxml" />
+                </Pane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

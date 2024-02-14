@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Font?>
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="422.0" prefWidth="335.0" style="-fx-background-color: white;"
+            stylesheets="@../../css/add_employee_style.css" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bntu.accounting.application.controllers.windows.AddingEmployeeWindowController">
+   <top>
+      <BorderPane prefHeight="42.0" prefWidth="846.0" style="-fx-background-color: #217346;"
+                  BorderPane.alignment="CENTER">
+         <left>
+            <HBox prefHeight="43.0" prefWidth="283.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="employeeIcon" fitHeight="29.0" fitWidth="34.0" pickOnBounds="true"
+                             preserveRatio="true">
+                     <HBox.margin>
+                        <Insets right="15.0"/>
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../../images/сотрудники.gif"/>
+                     </image>
+                  </ImageView>
+                  <Label text="Сотрудник" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0"/>
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="15.0" top="5.0"/>
+               </padding>
+            </HBox>
+         </left>
+      </BorderPane>
+   </top>
+   <bottom>
+      <BorderPane prefHeight="61.0" prefWidth="640.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="15.0" right="15.0"/>
+         </padding>
+         <left>
+            <BorderPane prefHeight="51.0" prefWidth="279.0" BorderPane.alignment="CENTER">
+               <left>
+                  <Button fx:id="addEmployeeButton" mnemonicParsing="false"
+                          prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: #217346;"
+                          text="Добавить" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="15.0"/>
+                     </BorderPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND"/>
+                     </cursor>
+                  </Button>
+               </left>
+               <right>
+                  <Button fx:id="clearAllFields" mnemonicParsing="false"
+                          prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #a6a6a6;"
+                          text="Очистить поля" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND"/>
+                     </cursor>
+                  </Button>
+               </right>
+            </BorderPane>
+         </left>
+      </BorderPane>
+   </bottom>
+   <left>
+      <GridPane prefHeight="319.0" prefWidth="543.0" BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="416.0" minWidth="10.0" prefWidth="192.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.0" minWidth="10.0" prefWidth="250.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.0" minWidth="10.0" prefWidth="19.0"/>
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+         </rowConstraints>
+         <children>
+            <CheckBox fx:id="specCheckBox" mnemonicParsing="false" text="Да/Нет" GridPane.columnIndex="1"
+                      GridPane.rowIndex="6"/>
+            <Label text="ФИО:"/>
+            <Label text="Должность:" GridPane.rowIndex="1"/>
+            <Label text="Уч. предмет:" GridPane.rowIndex="2"/>
+            <Label text="Разряд:" GridPane.rowIndex="3"/>
+            <Label text="Стаж работы:" GridPane.rowIndex="4"/>
+            <Label text="Квалификация:" GridPane.rowIndex="5"/>
+            <Label text="Контракт:" GridPane.rowIndex="7"/>
+            <BorderPane prefHeight="40.0" prefWidth="185.0" GridPane.columnIndex="1">
+               <left>
+                  <TextField fx:id="fioTextField" prefHeight="25.0" prefWidth="177.0"
+                             style="-fx-background-color: transparent;" BorderPane.alignment="CENTER"/>
+               </left>
+            </BorderPane>
+            <ComboBox fx:id="postComboBox" prefHeight="25.0" prefWidth="227.0"
+                      style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="subjectComboBox" prefHeight="25.0" prefWidth="287.0"
+                      style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <ComboBox fx:id="categoryComboBox" prefHeight="25.0" prefWidth="56.0"
+                      style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <ComboBox fx:id="expComboBox" prefHeight="25.0" prefWidth="154.0"
+                      style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <ComboBox fx:id="qualificationComboBox" prefHeight="25.0" prefWidth="154.0"
+                      style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <left>
+                  <CheckBox fx:id="contractCheckBox" mnemonicParsing="false" text="Да/Нет"
+                            BorderPane.alignment="CENTER"/>
+               </left>
+               <center>
+                  <TextField fx:id="contractValueField" prefHeight="25.0" prefWidth="64.0"
+                             style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="15.0" right="15.0"/>
+                     </BorderPane.margin>
+                  </TextField>
+               </center>
+               <right>
+                  <Label text="\%" BorderPane.alignment="CENTER"/>
+               </right>
+            </BorderPane>
+            <Label text="Мол. специалист:" GridPane.rowIndex="6"/>
+         </children>
+         <BorderPane.margin>
+            <Insets left="15.0" right="15.0"/>
+         </BorderPane.margin>
+      </GridPane>
+   </left>
+</BorderPane>

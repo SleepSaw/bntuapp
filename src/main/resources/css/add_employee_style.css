@@ -1,0 +1,8 @@
+.combo-box{
+    -fx-border-width: 0 0 0.3 0;
+    -fx-border-color: black;
+}
+.text-field{
+    -fx-border-width: 0 0 0.3 0;
+    -fx-border-color: black;
+}

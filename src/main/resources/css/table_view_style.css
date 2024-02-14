@@ -1,0 +1,5 @@
+.column-header{
+    -fx-background-color: #d6ffe8;
+    -fx-border-color: #a6a6a6;
+    -fx-border-width: 0 0.3 0.3 0;
+}

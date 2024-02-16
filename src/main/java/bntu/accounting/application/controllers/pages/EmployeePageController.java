@@ -1,11 +1,10 @@
 package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.windows.EditingEmployeeWindowController;
-import bntu.accounting.application.dao.impl.EmployeeDAOImpl;
-import bntu.accounting.application.dao.interfaces.EmployeeDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.services.EmployeeService;
-import bntu.accounting.application.util.RowIndexer;
+import bntu.accounting.application.util.fxsupport.RowIndexer;
+import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,32 +64,21 @@ public class EmployeePageController implements Initializable {
     void editItemAction(ActionEvent event) throws IOException {
         Employee selectedEmployee = getEmployeesFromTable();
         if (selectedEmployee != null) {
-            FXMLLoader fxmlLoader = new FXMLLoader(EmployeePageController
-                    .class.getResource("/fxml/windows/edit_employee_window.fxml"));
-            fxmlLoader.setController(new EditingEmployeeWindowController(selectedEmployee));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(fxmlLoader.load()));
-                stage.setTitle("Новое окно");
-                stage.show();
+            WindowCreator.createWindow("/fxml/windows/edit_employee_window.fxml",this,
+                    new EditingEmployeeWindowController(selectedEmployee));
         }
     }
     @FXML
     void removeItemAction(ActionEvent event) throws IOException {
         Employee selectedEmployee = getEmployeesFromTable();
         if (selectedEmployee != null) {
-            System.out.println(selectedEmployee);
             employeeService.removeEmployee(selectedEmployee);
         }
         updateTable();
     }
     @FXML
     void addEmployeeButtonAction(ActionEvent event) throws IOException {
-        FXMLLoader l = new FXMLLoader(EmployeePageController.class
-                .getResource("/fxml/windows/add_employee_window.fxml"));
-        Stage dialog = new Stage();
-        Scene scene = new Scene(l.load());
-        dialog.setScene(scene);
-        dialog.show();
+        WindowCreator.createWindow("/fxml/windows/add_employee_window.fxml", this);
     }
     @FXML
     void updateTableButtonAction(ActionEvent event) {

@@ -1,4 +1,4 @@
-package bntu.accounting.application.util;
+package bntu.accounting.application.util.fxsupport;
 
 import bntu.accounting.application.models.Employee;
 import javafx.scene.control.TableCell;

@@ -1,14 +1,11 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.controllers.pages.VacanciesPageController;
-import bntu.accounting.application.controllers.templates.VacancyItemController;
-import bntu.accounting.application.dao.interfaces.VacancyDAO;
-import bntu.accounting.application.iojson.FileLoader;
 import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.VacancyService;
+import bntu.accounting.application.util.enums.VacancyStatus;
+import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,64 +14,58 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ShowVacancyWindowController extends VisualComponentsInitializer implements Initializable {
     private Vacancy vacancy;
     private VacancyService vacancyService = new VacancyService();
-    @FXML
-    private TableColumn<Employee, String> academicHours;
 
+    // КомбоБоксы
     @FXML
-    private TextField academicHoursField;
-
+    private ComboBox<String> postComboBox;
     @FXML
-    private TableColumn<Employee, String> additionalHours;
-
-    @FXML
-    private TextField additionalHoursField;
-
-    @FXML
-    private TextArea commentTextArea;
-
-    @FXML
-    private Button createNewEmployeeButton;
-
+    private ComboBox<String> subjectComboBox;
     @FXML
     private ComboBox<String> employeeListComboBox;
 
+    // Таблица исполнителей
     @FXML
-    private TableView<Employee> employeeTable;
-
+    private TableView<Employee> performersTable;
     @FXML
     private TableColumn<Employee, String> nameColumn;
-
     @FXML
-    private TableColumn<Employee, String> organizationHours;
+    private TableColumn<Employee, String> organizationHoursColumn;
+    @FXML
+    private TableColumn<Employee, String> academicHoursColumn;
+    @FXML
+    private TableColumn<Employee, String> additionalHoursColumn;
 
+    // Текстовые поля
+    @FXML
+    private TextField academicHoursField;
+    @FXML
+    private TextField additionalHoursField;
     @FXML
     private TextField organizationHoursField;
-
     @FXML
-    private ComboBox<String> postComboBox;
+    private TextArea commentTextArea;
 
+    // Кнопки
+    @FXML
+    private Button createPerformerButton;
     @FXML
     private Button saveChangesButton;
 
+    // Текст
     @FXML
     private Label statusLabel;
-
-    @FXML
-    private ComboBox<String> subjectComboBox;
 
     public ShowVacancyWindowController(Vacancy vacancy) {
         this.vacancy = vacancy;
@@ -82,6 +73,8 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        updateTable(performersTable);
+        showStatus(vacancyService.getStatus(vacancy));
         initComboBox(postComboBox, "posts", vacancy.getPost());
         initComboBox(subjectComboBox, "subjects", vacancy.getSubject());
         academicHoursField.setText(vacancy.getLoad().getAcademicHours().toString());
@@ -89,32 +82,20 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         additionalHoursField.setText(vacancy.getLoad().getAdditionalHours().toString());
         commentTextArea.setText(vacancy.getComment());
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
-        academicHours.setCellValueFactory(data -> new SimpleStringProperty(
+        academicHoursColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getLoad().getAcademicHours().toString()));
-        organizationHours.setCellValueFactory(data -> new SimpleStringProperty(
+        organizationHoursColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getLoad().getOrganizationHours().toString()));
-        additionalHours.setCellValueFactory(data -> new SimpleStringProperty(
+        additionalHoursColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getLoad().getAdditionalHours().toString()));
         saveChangesButton.setOnAction(actionEvent -> {
             setActionToSaveChanges();
         });
-        createNewEmployeeButton.setOnAction(actionEvent -> {
+        createPerformerButton.setOnAction(actionEvent -> {
             setActionToSaveChanges();
-            FXMLLoader fxmlLoader = new FXMLLoader(ShowVacancyWindowController.class
-                    .getResource("/fxml/windows/add_performer_window.fxml"));
-            fxmlLoader.setController(new AddingPerformerWindowController(vacancy));
-            Stage dialog = new Stage();
-            Scene scene;
-            try {
-                scene = new Scene(fxmlLoader.load());
-            } catch (IOException e) {
-                System.out.println(e);
-                throw new RuntimeException();
-            }
-            dialog.setScene(scene);
-            dialog.show();
+            WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
+                    this, new AddingPerformerWindowController(vacancy));
         });
-        updateTable(employeeTable);
     }
 
     private void setActionToSaveChanges() {
@@ -125,7 +106,8 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         vacancy.getLoad().setAdditionalHours(Double.parseDouble(additionalHoursField.getText()));
         vacancy.setComment(commentTextArea.getText());
         vacancyService.updateVacancy(vacancy);
-        updateTable(employeeTable);
+        showStatus(vacancyService.getStatus(vacancy));
+        updateTable(performersTable);
     }
 
     @Override
@@ -134,8 +116,23 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         List<Employee> resultList = vacancyService.getAllPerformers(vacancy);
         employees.addAll(resultList);
         table.setItems(employees);
-        Load load = vacancyService.findResidue(vacancy);
         return resultList;
+    }
+    private void showStatus(VacancyStatus status){
+        switch (status){
+            case OPENED:
+                statusLabel.setText("Открыта");
+                statusLabel.setStyle("-fx-text-fill: #217346 ");
+                break;
+            case PARTIALLY_CLOSED:
+                statusLabel.setText("Частично закрыта");
+                statusLabel.setStyle("-fx-text-fill: orange ");
+                break;
+            case CLOSED:
+                statusLabel.setText("Закрыта");
+                statusLabel.setStyle("-fx-text-fill: red ");
+                break;
+        }
     }
 }
 

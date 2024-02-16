@@ -3,14 +3,11 @@ package bntu.accounting.application.dao.impl;
 import bntu.accounting.application.dao.interfaces.VacancyDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
-import bntu.accounting.application.models.Salary;
 import bntu.accounting.application.models.Vacancy;
-import bntu.accounting.application.util.DBManager;
+import bntu.accounting.application.util.db.DBManager;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class VacancyDAOImpl implements VacancyDAO {

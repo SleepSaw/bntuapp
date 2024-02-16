@@ -8,11 +8,9 @@ import bntu.accounting.application.dao.interfaces.LoadDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.services.LoadService;
-import bntu.accounting.application.util.LoadTypes;
-import bntu.accounting.application.util.RowIndexer;
+import bntu.accounting.application.util.enums.LoadTypes;
+import bntu.accounting.application.util.fxsupport.RowIndexer;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,15 +19,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import static bntu.accounting.application.util.LoadTypes.ACADEMIC;
+import static bntu.accounting.application.util.enums.LoadTypes.ACADEMIC;
 
 public class LoadPageController extends VisualComponentsInitializer implements Initializable {
     private LoadService loadService = new LoadService();
-    private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
-    private LoadDAO loadDAO = new LoadDAOImpl();
     @FXML
     private TableColumn<Employee, String> academicLoadColumn;
     @FXML

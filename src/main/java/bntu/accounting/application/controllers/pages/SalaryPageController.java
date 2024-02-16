@@ -2,10 +2,9 @@ package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Salary;
-import bntu.accounting.application.services.AllowancesService;
 import bntu.accounting.application.services.SalaryService;
-import bntu.accounting.application.util.RowIndexer;
+import bntu.accounting.application.util.fxsupport.RowIndexer;
+import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,11 +64,7 @@ public class SalaryPageController extends VisualComponentsInitializer implements
     private TableColumn<Employee, String> withoutLoadSalaryColumn;
     @FXML
     void moreButtonAction(ActionEvent event) throws IOException {
-        FXMLLoader l = new FXMLLoader(VacanciesPageController.class.getResource("/fxml/windows/salary_window.fxml"));
-        Stage dialog = new Stage();
-        Scene scene = new Scene(l.load());
-        dialog.setScene(scene);
-        dialog.show();
+        WindowCreator.createWindow("/fxml/windows/salary_window.fxml",this);
     }
 
     @Override

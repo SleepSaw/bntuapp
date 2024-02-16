@@ -9,6 +9,7 @@ import bntu.accounting.application.dao.interfaces.VacancyDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.util.enums.VacancyStatus;
 
 import java.util.List;
 
@@ -21,14 +22,15 @@ public class VacancyService {
         return vacancyDAO.saveVacancy(vacancy);
     }
 
-    public List<Vacancy> getAllVacancies(){
+    public List<Vacancy> getAllVacancies() {
         return vacancyDAO.getAllVacancies();
     }
-    public void updateVacancy(Vacancy vacancy){
-        vacancyDAO.updateVacancy(vacancy.getLoad().getId(),vacancy);
+
+    public void updateVacancy(Vacancy vacancy) {
+        vacancyDAO.updateVacancy(vacancy.getLoad().getId(), vacancy);
     }
 
-    public Integer addPerformer(Vacancy vacancy, Employee employee){
+    public Integer addPerformer(Vacancy vacancy, Employee employee) {
         List<Employee> performers = vacancyDAO.getAllPerformers(vacancy.getLoad().getId());
         performers.add(employee);
         employee.setVacancy(vacancy);
@@ -36,21 +38,38 @@ public class VacancyService {
         int id = employeeDAO.savePerformer(employee);
         return id;
     }
+
     public List<Employee> getAllPerformers(Vacancy vacancy) {
         return vacancyDAO.getAllPerformers(vacancy.getLoad().getId());
     }
-    public Load findResidue(Vacancy vacancy){
+
+    public Load findResidue(Vacancy vacancy) {
         List<Load> performersLoads = getAllPerformers(vacancy)
                 .stream().map(e -> e.getLoad()).toList();
         Load necessaryLoad = vacancy.getLoad();
         Load residueLoad = new Load();
         residueLoad.clone(necessaryLoad);
-        for (Load l : performersLoads){
+        for (Load l : performersLoads) {
             residueLoad.setAcademicHours(residueLoad.getAcademicHours() - l.getAcademicHours());
             residueLoad.setOrganizationHours(residueLoad.getOrganizationHours() - l.getOrganizationHours());
             residueLoad.setAdditionalHours(residueLoad.getAdditionalHours() - l.getAdditionalHours());
             residueLoad.setTotalHours(residueLoad.getTotalHours() - l.getTotalHours());
         }
         return residueLoad;
+    }
+
+    public VacancyStatus getStatus(Vacancy vacancy) {
+        // Остаток нагрузки
+        Load residue = findResidue(vacancy);
+        VacancyStatus status;
+        // Необходимая нагрузка и остаток равны
+        if (residue.getTotalHours() == vacancy.getLoad().getTotalHours()) {
+            status = VacancyStatus.OPENED;
+        } else if (residue.getTotalHours() == 0) {
+            status = VacancyStatus.CLOSED;
+        } else {
+            status = VacancyStatus.PARTIALLY_CLOSED;
+        }
+        return status;
     }
 }

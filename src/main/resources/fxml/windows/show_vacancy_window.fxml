@@ -58,12 +58,12 @@
                   </Label>
                   <ScrollPane prefHeight="130.0" prefWidth="454.0" style="-fx-background-color: white;">
                      <content>
-                        <TableView fx:id="employeeTable" prefHeight="126.0" prefWidth="487.0">
+                        <TableView fx:id="performersTable" prefHeight="126.0" prefWidth="487.0">
                           <columns>
                             <TableColumn fx:id="nameColumn" prefWidth="176.0" text="Исполнитель" />
-                            <TableColumn fx:id="academicHours" prefWidth="104.0" text="Уч. нагрузка" />
-                              <TableColumn fx:id="organizationHours" prefWidth="101.0" text="Орг. нагрузка" />
-                              <TableColumn fx:id="additionalHours" prefWidth="105.0" text="Доп. нагрузка" />
+                            <TableColumn fx:id="academicHoursColumn" prefWidth="104.0" text="Уч. нагрузка" />
+                              <TableColumn fx:id="organizationHoursColumn" prefWidth="101.0" text="Орг. нагрузка" />
+                              <TableColumn fx:id="additionalHoursColumn" prefWidth="105.0" text="Доп. нагрузка" />
                           </columns>
                         </TableView>
                      </content>
@@ -81,7 +81,7 @@
                 <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="createNewEmployeeButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="231.0" style="-fx-background-color: #217346;" text="Создать нового исполнителя" textFill="WHITE">
+                  <Button fx:id="createPerformerButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="231.0" style="-fx-background-color: #217346;" text="Создать нового исполнителя" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
@@ -232,7 +232,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="statusLabel" text="Открыта" textFill="#217346" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="statusLabel" text="Открыта" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>

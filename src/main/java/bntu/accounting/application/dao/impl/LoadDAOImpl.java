@@ -1,9 +1,8 @@
 package bntu.accounting.application.dao.impl;
 
 import bntu.accounting.application.dao.interfaces.LoadDAO;
-import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
-import bntu.accounting.application.util.DBManager;
+import bntu.accounting.application.util.db.DBManager;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 

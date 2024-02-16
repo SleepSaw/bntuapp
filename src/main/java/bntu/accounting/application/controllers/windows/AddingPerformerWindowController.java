@@ -1,14 +1,12 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.dao.impl.LoadDAOImpl;
-import bntu.accounting.application.dao.interfaces.LoadDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
-import javafx.event.ActionEvent;
+import bntu.accounting.application.util.normalization.Normalizer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,6 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddingPerformerWindowController extends VisualComponentsInitializer implements Initializable {
+    private Employee performer;
     private Vacancy vacancy;
     private VacancyService vacancyService = new VacancyService();
     private LoadService loadService = new LoadService();
@@ -83,6 +82,10 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         this.vacancy = vacancy;
     }
 
+    public AddingPerformerWindowController(Employee performer, Vacancy vacancy) {
+        this.performer = performer;
+        this.vacancy = vacancy;
+    }
 
     private void addEmployeeButtonAction() {
         Employee employee = new Employee();
@@ -99,10 +102,9 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         employee.getLoad().setOrganizationHours(organizationHoursSlider.getValue());
         employee.getLoad().setAdditionalHours(additionalHoursSlider.getValue());
         employee.getLoad().setTotalHours(loadService.findTotalHours(employee.getLoad()));
+        Normalizer.normalizeLoad(employee.getLoad());
         vacancyService.addPerformer(vacancy,employee);
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -121,9 +123,6 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
                 flag = !flag;
                 contractValueField.setEditable(flag);
             });
-            academicHoursSlider.setMax(vacancy.getLoad().getAcademicHours());
-            organizationHoursSlider.setMax(vacancy.getLoad().getOrganizationHours());
-            additionalHoursSlider.setMax(vacancy.getLoad().getAdditionalHours());
         }
         catch (Exception e){
             System.out.printf(e.toString());

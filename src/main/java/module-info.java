@@ -17,4 +17,9 @@ module bntu.accounting.application {
     opens bntu.accounting.application.util to hibernate.entitymanager, jakarta.persistence, javafx.base;
     exports bntu.accounting.application;
     opens bntu.accounting.application.iojson to hibernate.entitymanager, jakarta.persistence, javafx.base;
+    opens bntu.accounting.application.util.db to hibernate.entitymanager, jakarta.persistence, javafx.base;
+    opens bntu.accounting.application.util.enums to hibernate.entitymanager, jakarta.persistence, javafx.base;
+    opens bntu.accounting.application.util.normalization to hibernate.entitymanager, jakarta.persistence, javafx.base;
+    opens bntu.accounting.application.util.fxsupport to hibernate.entitymanager, jakarta.persistence, javafx.base;
+
 }

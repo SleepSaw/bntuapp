@@ -1,6 +1,6 @@
 package bntu.accounting.application.controllers.windows;
 
-import bntu.accounting.application.util.PagesNames;
+import bntu.accounting.application.util.enums.PagesNames;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -1,4 +1,4 @@
-package bntu.accounting.application.util;
+package bntu.accounting.application.util.db;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

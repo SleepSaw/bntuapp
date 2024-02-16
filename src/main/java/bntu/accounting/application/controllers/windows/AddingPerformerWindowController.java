@@ -4,6 +4,7 @@ import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.models.builders.EmployeeBuilder;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.normalization.Normalizer;
@@ -88,45 +89,49 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
     }
 
     private void addEmployeeButtonAction() {
-        Employee employee = new Employee();
-        employee.setName(fioTextField.getText());
-        employee.setPost(postComboBox.getValue());
-        employee.setSubject(subjectComboBox.getValue());
-        employee.setCategory(Integer.parseInt(categoryComboBox.getValue()));
-        employee.setExperience(expComboBox.getValue());
-        employee.setQualification(qualificationComboBox.getValue());
-        employee.setYoungSpecialist(specCheckBox.isSelected());
-        employee.setContractValue(Double.parseDouble(contractValueField.getText()));
-        employee.setLoad(new Load());
-        employee.getLoad().setAcademicHours(academicHoursSlider.getValue());
-        employee.getLoad().setOrganizationHours(organizationHoursSlider.getValue());
-        employee.getLoad().setAdditionalHours(additionalHoursSlider.getValue());
-        employee.getLoad().setTotalHours(loadService.findTotalHours(employee.getLoad()));
-        Normalizer.normalizeLoad(employee.getLoad());
-        vacancyService.addPerformer(vacancy,employee);
+        EmployeeBuilder builder = new EmployeeBuilder();
+        Employee employee = builder
+                .setName(fioTextField.getText())
+                .setPost(postComboBox.getValue())
+                .setSubject(subjectComboBox.getValue())
+                .setCategory(Integer.parseInt(categoryComboBox.getValue()))
+                .setExperience(expComboBox.getValue())
+                .setQualification(qualificationComboBox.getValue())
+                .setYoungSpecialist(specCheckBox.isSelected())
+                .setContractValue(Double.parseDouble(contractValueField.getText()))
+                .build();
+        Load load = new Load(
+                academicHoursSlider.getValue(),
+                organizationHoursSlider.getValue(),
+                additionalHoursSlider.getValue()
+        );
+        load.setTotalHours(loadService.findTotalHours(employee.getLoad()));
+        Normalizer.normalizeLoad(load);
+        employee.setLoad(load);
+        vacancyService.addPerformer(vacancy, employee);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             addPerformerButton.setOnAction(actionEvent -> {
                 addEmployeeButtonAction();
             });
-            if (performer != null){
+            if (performer != null) {
                 fioTextField.setText(performer.getName());
-                initComboBox(postComboBox,"posts", performer.getPost());
-                initComboBox(subjectComboBox,"subjects", performer.getSubject());
-                initComboBox(qualificationComboBox,"qualifications", performer.getQualification());
-                initComboBox(categoryComboBox,"categories", performer.getCategory().toString());
-                initComboBox(expComboBox,"experiences", performer.getExperience());
+                initComboBox(postComboBox, "posts", performer.getPost());
+                initComboBox(subjectComboBox, "subjects", performer.getSubject());
+                initComboBox(qualificationComboBox, "qualifications", performer.getQualification());
+                initComboBox(categoryComboBox, "categories", performer.getCategory().toString());
+                initComboBox(expComboBox, "experiences", performer.getExperience());
                 contractValueField.setText(performer.getContractValue().toString());
                 specCheckBox.setSelected(performer.getYoungSpecialist());
-            }
-            else {
-                initComboBox(postComboBox,"posts", vacancy.getPost());
-                initComboBox(subjectComboBox,"subjects", vacancy.getSubject());
-                initComboBox(qualificationComboBox,"qualifications","в.к.к.");
-                initComboBox(categoryComboBox,"categories","7");
-                initComboBox(expComboBox,"experiences","до 5 лет");
+            } else {
+                initComboBox(postComboBox, "posts", vacancy.getPost());
+                initComboBox(subjectComboBox, "subjects", vacancy.getSubject());
+                initComboBox(qualificationComboBox, "qualifications", "в.к.к.");
+                initComboBox(categoryComboBox, "categories", "7");
+                initComboBox(expComboBox, "experiences", "до 5 лет");
                 contractValueField.setText("0.0");
                 contractValueField.setEditable(false);
             }
@@ -135,8 +140,7 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
                 flag = !flag;
                 contractValueField.setEditable(flag);
             });
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.printf(e.toString());
         }
 

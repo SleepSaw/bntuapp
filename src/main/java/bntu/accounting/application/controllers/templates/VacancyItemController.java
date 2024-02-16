@@ -4,10 +4,12 @@ import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.pages.VacanciesPageController;
 import bntu.accounting.application.controllers.windows.ShowVacancyWindowController;
 import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.fxml.LoadException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -35,19 +37,13 @@ public class VacancyItemController extends VisualComponentsInitializer implement
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titleLabel.setText(vacancy.getPost() + ", " + vacancy.getSubject());
         showVacancyButton.setOnAction(actionEvent -> {
-            FXMLLoader l = new FXMLLoader(
-                    VacancyItemController.class.getResource("/fxml/windows/show_vacancy_window.fxml"));
-            l.setController(new ShowVacancyWindowController(vacancy));
-            Stage dialog = new Stage();
-            Scene scene;
             try {
-                scene = new Scene(l.load());
-            } catch (IOException e) {
+                WindowCreator.createWindow("/fxml/windows/show_vacancy_window.fxml",this,
+                        new ShowVacancyWindowController(vacancy));
+            } catch (LoadException e) {
                 System.out.println(e);
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
-            dialog.setScene(scene);
-            dialog.show();
         });
     }
 }

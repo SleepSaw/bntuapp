@@ -111,13 +111,25 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
             addPerformerButton.setOnAction(actionEvent -> {
                 addEmployeeButtonAction();
             });
-            initComboBox(postComboBox,"posts", vacancy.getPost());
-            initComboBox(subjectComboBox,"subjects", vacancy.getSubject());
-            initComboBox(qualificationComboBox,"qualifications","в.к.к.");
-            initComboBox(categoryComboBox,"categories","7");
-            initComboBox(expComboBox,"experiences","до 5 лет");
-            contractValueField.setText("0.0");
-            contractValueField.setEditable(false);
+            if (performer != null){
+                fioTextField.setText(performer.getName());
+                initComboBox(postComboBox,"posts", performer.getPost());
+                initComboBox(subjectComboBox,"subjects", performer.getSubject());
+                initComboBox(qualificationComboBox,"qualifications", performer.getQualification());
+                initComboBox(categoryComboBox,"categories", performer.getCategory().toString());
+                initComboBox(expComboBox,"experiences", performer.getExperience());
+                contractValueField.setText(performer.getContractValue().toString());
+                specCheckBox.setSelected(performer.getYoungSpecialist());
+            }
+            else {
+                initComboBox(postComboBox,"posts", vacancy.getPost());
+                initComboBox(subjectComboBox,"subjects", vacancy.getSubject());
+                initComboBox(qualificationComboBox,"qualifications","в.к.к.");
+                initComboBox(categoryComboBox,"categories","7");
+                initComboBox(expComboBox,"experiences","до 5 лет");
+                contractValueField.setText("0.0");
+                contractValueField.setEditable(false);
+            }
             // обработчик на сек бокс контракта
             contractCheckBox.setOnAction(actionEvent -> {
                 flag = !flag;

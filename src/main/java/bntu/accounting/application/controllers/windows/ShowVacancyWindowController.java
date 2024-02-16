@@ -3,6 +3,7 @@ package bntu.accounting.application.controllers.windows;
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.fxml.LoadException;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
@@ -20,12 +22,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ShowVacancyWindowController extends VisualComponentsInitializer implements Initializable {
     private Vacancy vacancy;
     private VacancyService vacancyService = new VacancyService();
+    private EmployeeService employeeService = new EmployeeService();
 
     // КомбоБоксы
     @FXML
@@ -74,6 +78,7 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable(performersTable);
+        addEmployeesToComboBox();
         showStatus(vacancyService.getStatus(vacancy));
         initComboBox(postComboBox, "posts", vacancy.getPost());
         initComboBox(subjectComboBox, "subjects", vacancy.getSubject());
@@ -93,8 +98,21 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         });
         createPerformerButton.setOnAction(actionEvent -> {
             setActionToSaveChanges();
-            WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
-                    this, new AddingPerformerWindowController(vacancy));
+            try {
+                List<Employee> employees = employeeService.getAllEmployees();
+                for (Employee employee: employees){
+                    if (employeeListComboBox.getValue().equals(employee.getName())){
+                        WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
+                                this, new AddingPerformerWindowController(employee,vacancy));
+                        return;
+                    }
+                }
+                    WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
+                            this, new AddingPerformerWindowController(vacancy));
+            } catch (LoadException e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -117,6 +135,13 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         employees.addAll(resultList);
         table.setItems(employees);
         return resultList;
+    }
+    private void addEmployeesToComboBox(){
+        List<Employee> employees =
+                employeeService.getAllEmployees();
+        ObservableList<String> items = FXCollections.observableList(employees.stream().map(e -> e.getName()).toList());
+        employeeListComboBox.setItems(items);
+        employeeListComboBox.setValue("< НЕТ >");
     }
     private void showStatus(VacancyStatus status){
         switch (status){

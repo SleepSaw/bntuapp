@@ -10,12 +10,14 @@ import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.util.enums.VacancyStatus;
+import bntu.accounting.application.util.normalization.Normalizer;
 
 import java.util.List;
 
 public class VacancyService {
     private VacancyDAO vacancyDAO = new VacancyDAOImpl();
     private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    private LoadService loadService = new LoadService();
     private LoadDAO loadDAO = new LoadDAOImpl();
 
     public Integer saveVacancy(Vacancy vacancy) {
@@ -49,11 +51,11 @@ public class VacancyService {
         Load necessaryLoad = vacancy.getLoad();
         Load residueLoad = new Load();
         residueLoad.clone(necessaryLoad);
-        for (Load l : performersLoads) {
+            for (Load l : performersLoads) {
             residueLoad.setAcademicHours(residueLoad.getAcademicHours() - l.getAcademicHours());
             residueLoad.setOrganizationHours(residueLoad.getOrganizationHours() - l.getOrganizationHours());
             residueLoad.setAdditionalHours(residueLoad.getAdditionalHours() - l.getAdditionalHours());
-            residueLoad.setTotalHours(residueLoad.getTotalHours() - l.getTotalHours());
+            residueLoad.setTotalHours(loadService.findTotalHours(residueLoad));
         }
         return residueLoad;
     }
@@ -61,9 +63,10 @@ public class VacancyService {
     public VacancyStatus getStatus(Vacancy vacancy) {
         // Остаток нагрузки
         Load residue = findResidue(vacancy);
+        Normalizer.normalizeLoad(residue);
         VacancyStatus status;
         // Необходимая нагрузка и остаток равны
-        if (residue.getTotalHours() == vacancy.getLoad().getTotalHours()) {
+        if (residue.getTotalHours().equals(vacancy.getLoad().getTotalHours())) {
             status = VacancyStatus.OPENED;
         } else if (residue.getTotalHours() == 0) {
             status = VacancyStatus.CLOSED;

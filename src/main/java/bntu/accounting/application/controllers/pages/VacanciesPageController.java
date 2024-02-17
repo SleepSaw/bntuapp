@@ -5,6 +5,7 @@ import bntu.accounting.application.controllers.windows.EditingEmployeeWindowCont
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.VacancyService;
+import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,12 +30,7 @@ public class VacanciesPageController implements Initializable {
 
     @FXML
     private void addVacancyButtonAction(ActionEvent event) throws IOException {
-        FXMLLoader l = new FXMLLoader(VacanciesPageController.class.getResource("/fxml/windows/add_vacancy_window.fxml"));
-        Stage dialog = new Stage();
-        Scene scene = new Scene(l.load());
-        dialog.setScene(scene);
-
-        dialog.show();
+        WindowCreator.createWindow("/fxml/windows/add_vacancy_window.fxml", this);
     }
 
     private List<BorderPane> vacancyItems;

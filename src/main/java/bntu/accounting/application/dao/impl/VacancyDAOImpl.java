@@ -55,7 +55,6 @@ public class VacancyDAOImpl implements VacancyDAO {
             vacancy.setLoad(updatedVacancy.getLoad());
             vacancy.setComment(updatedVacancy.getComment());
             vacancy.setEmployeeList(updatedVacancy.getEmployeeList());
-            session.persist(vacancy);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println("Create HIBERNATE EXCEPTION");

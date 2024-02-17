@@ -52,16 +52,16 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
     private TextField fioTextField;
 
     @FXML
-    private TextField fioTextField1;
+    private TextField academicHoursField;
 
     @FXML
-    private TextField fioTextField11;
+    private TextField organizationHoursField;
 
     @FXML
-    private TextField fioTextField111;
+    private TextField additionalHoursField;
 
     @FXML
-    private TextField fioTextField112;
+    private TextField totalHoursField;
 
     @FXML
     private Slider organizationHoursSlider;
@@ -105,7 +105,7 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
                 organizationHoursSlider.getValue(),
                 additionalHoursSlider.getValue()
         );
-        load.setTotalHours(loadService.findTotalHours(employee.getLoad()));
+        load.setTotalHours(loadService.findTotalHours(load));
         Normalizer.normalizeLoad(load);
         employee.setLoad(load);
         vacancyService.addPerformer(vacancy, employee);
@@ -114,6 +114,7 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            showLoadData();
             addPerformerButton.setOnAction(actionEvent -> {
                 addEmployeeButtonAction();
             });
@@ -135,6 +136,9 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
                 contractValueField.setText("0.0");
                 contractValueField.setEditable(false);
             }
+            academicHoursSlider.setOnDragDetected(event ->{
+                academicHoursField.setText(Double.valueOf(academicHoursSlider.getValue()).toString());
+            });
             // обработчик на сек бокс контракта
             contractCheckBox.setOnAction(actionEvent -> {
                 flag = !flag;
@@ -143,6 +147,17 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         } catch (Exception e) {
             System.out.printf(e.toString());
         }
+    }
 
+    private void showLoadData() {
+        Load residue = (vacancyService.findResidue(vacancy));
+        Normalizer.normalizeLoad(residue);
+        setSlidersMaxValues(residue);
+    }
+
+    private void setSlidersMaxValues(Load residue) {
+        academicHoursSlider.setMax(residue.getAcademicHours());
+        organizationHoursSlider.setMax(residue.getOrganizationHours());
+        additionalHoursSlider.setMax(residue.getAdditionalHours());
     }
 }

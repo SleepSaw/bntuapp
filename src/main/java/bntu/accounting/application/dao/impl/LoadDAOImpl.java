@@ -58,7 +58,7 @@ public class LoadDAOImpl implements LoadDAO {
             load.setAdditionalHours(updatedLoad.getAdditionalHours());
             load.setTotalHours(updatedLoad.getTotalHours());
             load.setEmployee(updatedLoad.getEmployee());
-            load.getEmployee().setLoad(load);
+            //  load.getEmployee().setLoad(load);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println("Create HIBERNATE EXCEPTION");

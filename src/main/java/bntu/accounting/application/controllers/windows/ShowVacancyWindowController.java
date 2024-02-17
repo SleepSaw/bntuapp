@@ -2,8 +2,10 @@ package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.EmployeeService;
+import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
@@ -30,6 +32,7 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     private Vacancy vacancy;
     private VacancyService vacancyService = new VacancyService();
     private EmployeeService employeeService = new EmployeeService();
+    private LoadService loadService = new LoadService();
 
     // КомбоБоксы
     @FXML
@@ -122,8 +125,10 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         vacancy.getLoad().setAcademicHours(Double.parseDouble(academicHoursField.getText()));
         vacancy.getLoad().setOrganizationHours(Double.parseDouble(organizationHoursField.getText()));
         vacancy.getLoad().setAdditionalHours(Double.parseDouble(additionalHoursField.getText()));
+        vacancy.getLoad().setTotalHours(loadService.findTotalHours(vacancy.getLoad()));
         vacancy.setComment(commentTextArea.getText());
         vacancyService.updateVacancy(vacancy);
+        loadService.updateLoad(vacancy.getLoad().getId(),vacancy.getLoad());
         showStatus(vacancyService.getStatus(vacancy));
         updateTable(performersTable);
     }

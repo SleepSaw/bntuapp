@@ -69,7 +69,7 @@ public class EditingEmployeeWindowController extends VisualComponentsInitializer
         editEmployeeButton.setOnAction(actionEvent -> {
             Employee updatedEmployee = employeeBuilder
                     .setName(fioTextField.getText())
-                    .setPost(categoryComboBox.getValue())
+                    .setPost(postComboBox.getValue())
                     .setSubject(subjectComboBox.getValue())
                     .setCategory(Integer.parseInt(categoryComboBox.getValue()))
                     .setExperience(expComboBox.getValue())

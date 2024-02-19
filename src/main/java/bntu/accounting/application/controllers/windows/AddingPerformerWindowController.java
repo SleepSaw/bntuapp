@@ -128,8 +128,8 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
                 contractValueField.setText(performer.getContractValue().toString());
                 specCheckBox.setSelected(performer.getYoungSpecialist());
             } else {
-                initComboBox(postComboBox, "posts", vacancy.getPost());
-                initComboBox(subjectComboBox, "subjects", vacancy.getSubject());
+                postComboBox.setValue(vacancy.getPost());
+                subjectComboBox.setValue(vacancy.getSubject());
                 initComboBox(qualificationComboBox, "qualifications", "в.к.к.");
                 initComboBox(categoryComboBox, "categories", "7");
                 initComboBox(expComboBox, "experiences", "до 5 лет");

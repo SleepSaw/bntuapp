@@ -5,6 +5,7 @@ import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
+import bntu.accounting.application.util.enums.VacancyStatus;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -60,6 +61,7 @@ public class AddingVacancyWindowController extends VisualComponentsInitializer i
         vacancy.setPost(postComboBox.getValue());
         vacancy.setSubject(subjectComboBox.getValue());
         vacancy.setComment(commentTextArea.getText());
+        vacancy.setStatus(VacancyStatus.OPENED);
         vacancyService.saveVacancy(vacancy);
     }
     @Override

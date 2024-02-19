@@ -12,9 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1349.0"
-            stylesheets="@../../css/main_window_styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="bntu.accounting.application.controllers.windows.MainWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1349.0" stylesheets="@../../css/main_window_styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.windows.MainWindowController">
     <left>
         <AnchorPane fx:id="page" prefHeight="430.0" prefWidth="223.0" style="-fx-background-color: #d6ffe8;" BorderPane.alignment="CENTER">
             <children>
@@ -137,7 +135,7 @@
                         </Label>
                     </children>
                     <padding>
-                        <Insets bottom="5.0" left="20.0" top="20.0" />
+                        <Insets bottom="5.0" left="20.0" top="10.0" />
                     </padding>
                 </HBox>
             </top>

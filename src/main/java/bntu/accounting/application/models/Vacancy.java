@@ -1,5 +1,6 @@
 package bntu.accounting.application.models;
 
+import bntu.accounting.application.util.enums.VacancyStatus;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ public class Vacancy {
     private String subject;
     @Column(name = "comment")
     private String comment;
+    @Column(name = "status")
+    private String status;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "vacancy")
     private List<Employee> employeeList;
 
@@ -55,6 +59,15 @@ public class Vacancy {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(VacancyStatus status) {
+        this.status = String.valueOf(status);
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<Employee> getEmployeeList() {

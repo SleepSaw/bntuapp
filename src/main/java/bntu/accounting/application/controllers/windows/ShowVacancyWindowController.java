@@ -30,6 +30,7 @@ import java.util.ResourceBundle;
 
 public class ShowVacancyWindowController extends VisualComponentsInitializer implements Initializable {
     private Vacancy vacancy;
+    private VacancyStatus status;
     private VacancyService vacancyService = new VacancyService();
     private EmployeeService employeeService = new EmployeeService();
     private LoadService loadService = new LoadService();
@@ -80,6 +81,7 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        status = vacancyService.getStatus(vacancy);
         updateTable(performersTable);
         addEmployeesToComboBox();
         showStatus(vacancyService.getStatus(vacancy));
@@ -100,18 +102,23 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
             setActionToSaveChanges();
         });
         createPerformerButton.setOnAction(actionEvent -> {
-            setActionToSaveChanges();
             try {
-                List<Employee> employees = employeeService.getAllEmployees();
-                for (Employee employee: employees){
-                    if (employeeListComboBox.getValue().equals(employee.getName())){
-                        WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
-                                this, new AddingPerformerWindowController(employee,vacancy));
-                        return;
+                if (status != VacancyStatus.CLOSED){
+                    setActionToSaveChanges();
+                    List<Employee> employees = employeeService.getAllEmployees();
+                    for (Employee employee: employees){
+                        if (employeeListComboBox.getValue().equals(employee.getName())){
+                            WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
+                                    this, new AddingPerformerWindowController(employee,vacancy));
+                            return;
+                        }
                     }
-                }
                     WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
                             this, new AddingPerformerWindowController(vacancy));
+                }
+                else {
+                    System.out.println("CLOSED");
+                }
             } catch (LoadException e) {
                 System.out.println(e);
                 throw new RuntimeException(e);
@@ -127,9 +134,11 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         vacancy.getLoad().setAdditionalHours(Double.parseDouble(additionalHoursField.getText()));
         vacancy.getLoad().setTotalHours(loadService.findTotalHours(vacancy.getLoad()));
         vacancy.setComment(commentTextArea.getText());
+        status = vacancyService.getStatus(vacancy);
+        vacancy.setStatus(status);
         vacancyService.updateVacancy(vacancy);
         loadService.updateLoad(vacancy.getLoad().getId(),vacancy.getLoad());
-        showStatus(vacancyService.getStatus(vacancy));
+        showStatus(status);
         updateTable(performersTable);
     }
 

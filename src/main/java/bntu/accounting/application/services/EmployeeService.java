@@ -10,6 +10,7 @@ import bntu.accounting.application.dao.interfaces.SalaryDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Salary;
+import bntu.accounting.application.util.db.EmployeesLoader;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,12 +27,15 @@ public class EmployeeService {
         updatedEmployee.setSalary(employee.getSalary());
         // + VACANCY
         employeeDAO.updateEmployee(id,updatedEmployee);
+        EmployeesLoader.getInstance().notifyObservers();
     }
     public void saveEmployee(Employee employee){
         employeeDAO.saveEmployee(employee);
+        EmployeesLoader.getInstance().notifyObservers();
     }
     public void removeEmployee(Employee employee){
         employeeDAO.removeEmployee(employee);
+        EmployeesLoader.getInstance().notifyObservers();
     }
     public List<Employee> getAllEmployees() throws NullPointerException {
         return  employeeDAO.getAllEmployees();

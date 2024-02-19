@@ -8,6 +8,8 @@ import bntu.accounting.application.dao.interfaces.LoadDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.services.LoadService;
+import bntu.accounting.application.util.db.EmployeesLoader;
+import bntu.accounting.application.util.db.Observer;
 import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,7 +25,7 @@ import java.util.ResourceBundle;
 
 import static bntu.accounting.application.util.enums.LoadTypes.ACADEMIC;
 
-public class LoadPageController extends VisualComponentsInitializer implements Initializable {
+public class LoadPageController extends VisualComponentsInitializer implements Initializable, Observer {
     private LoadService loadService = new LoadService();
     @FXML
     private TableColumn<Employee, String> academicLoadColumn;
@@ -46,6 +48,7 @@ public class LoadPageController extends VisualComponentsInitializer implements I
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        EmployeesLoader.getInstance().attach(this);
         RowIndexer.index(indexColumn);
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         postColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPost()));
@@ -93,5 +96,10 @@ public class LoadPageController extends VisualComponentsInitializer implements I
             loadService.updateLoad(employee.getLoad().getId(),load);
             loadTable.refresh();
         });
+    }
+
+    @Override
+    public void update() {
+        updateTable(loadTable);
     }
 }

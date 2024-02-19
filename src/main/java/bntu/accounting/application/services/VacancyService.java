@@ -9,6 +9,7 @@ import bntu.accounting.application.dao.interfaces.VacancyDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.util.db.EmployeesLoader;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.normalization.Normalizer;
 
@@ -18,7 +19,6 @@ public class VacancyService {
     private VacancyDAO vacancyDAO = new VacancyDAOImpl();
     private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
     private LoadService loadService = new LoadService();
-    private LoadDAO loadDAO = new LoadDAOImpl();
 
     public Integer saveVacancy(Vacancy vacancy) {
         return vacancyDAO.saveVacancy(vacancy);
@@ -38,6 +38,7 @@ public class VacancyService {
         employee.setVacancy(vacancy);
         vacancy.setEmployeeList(performers);
         int id = employeeDAO.savePerformer(employee);
+        EmployeesLoader.getInstance().notifyObservers();
         return id;
     }
 

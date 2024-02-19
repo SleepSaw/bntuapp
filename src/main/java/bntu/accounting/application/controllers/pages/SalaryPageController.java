@@ -3,6 +3,8 @@ package bntu.accounting.application.controllers.pages;
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.services.SalaryService;
+import bntu.accounting.application.util.db.EmployeesLoader;
+import bntu.accounting.application.util.db.Observer;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,7 +24,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SalaryPageController extends VisualComponentsInitializer implements Initializable {
+public class SalaryPageController extends VisualComponentsInitializer implements Initializable, Observer {
 
     private SalaryService salaryService = new SalaryService();
     @FXML
@@ -69,6 +71,7 @@ public class SalaryPageController extends VisualComponentsInitializer implements
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        EmployeesLoader.getInstance().attach(this);
         RowIndexer.index(indexColumn);
         findActualSalary(updateTable(salaryTable));
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
@@ -91,5 +94,10 @@ public class SalaryPageController extends VisualComponentsInitializer implements
         for (Employee e : employees) {
             salaryService.getTotalSalary(e);
         }
+    }
+
+    @Override
+    public void update() {
+        findActualSalary(updateTable(salaryTable));
     }
 }

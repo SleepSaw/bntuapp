@@ -119,7 +119,6 @@ public class SalaryWindowController extends VisualComponentsInitializer implemen
                 Double.toString(data.getValue().getSalary().getTotalSalary())));
         updateTable(salaryTable);
     }
-
     private String showAllowance(AllowanceTypes type, Employee employee) {
         String result;
         switch (type){

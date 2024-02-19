@@ -3,6 +3,8 @@ package bntu.accounting.application.controllers.pages;
 import bntu.accounting.application.controllers.windows.EditingEmployeeWindowController;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.services.EmployeeService;
+import bntu.accounting.application.util.db.EmployeesLoader;
+import bntu.accounting.application.util.db.Observer;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.collections.FXCollections;
@@ -22,7 +24,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EmployeePageController implements Initializable {
+public class EmployeePageController implements Initializable, Observer {
 
     private EmployeeService employeeService = new EmployeeService();
     @FXML
@@ -87,6 +89,7 @@ public class EmployeePageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        EmployeesLoader.getInstance().attach(this);
         // Индексация строк
         RowIndexer.index(indexColumn);
         // Связываение полей объекта и колонок таблицы
@@ -108,5 +111,10 @@ public class EmployeePageController implements Initializable {
     }
     private Employee getEmployeesFromTable(){
         return employeeListTable.getSelectionModel().getSelectedItem();
+    }
+
+    @Override
+    public void update() {
+        updateTable();
     }
 }

@@ -7,6 +7,9 @@ import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
+import bntu.accounting.application.util.db.entityloaders.Observer;
+import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ShowVacancyWindowController extends VisualComponentsInitializer implements Initializable {
+public class ShowVacancyWindowController extends VisualComponentsInitializer implements Initializable, Observer {
     private Vacancy vacancy;
     private VacancyStatus status;
     private VacancyService vacancyService = new VacancyService();
@@ -81,6 +84,8 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        VacancyInstance.getInstance().attach(this);
+        EmployeesInstance.getInstance().attach(this);
         status = vacancyService.getStatus(vacancy);
         updateTable(performersTable);
         addEmployeesToComboBox();
@@ -172,6 +177,13 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
                 statusLabel.setStyle("-fx-text-fill: red ");
                 break;
         }
+    }
+
+    @Override
+    public void update() {
+        updateTable(performersTable);
+        addEmployeesToComboBox();
+        showStatus(vacancyService.getStatus(vacancy));
     }
 }
 

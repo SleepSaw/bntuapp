@@ -4,6 +4,7 @@ import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.pages.VacanciesPageController;
 import bntu.accounting.application.controllers.windows.ShowVacancyWindowController;
 import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,10 +23,13 @@ import java.util.ResourceBundle;
 
 public class VacancyItemController extends VisualComponentsInitializer implements Initializable {
     private Vacancy vacancy;
+    private VacancyService vacancyService = new VacancyService();
     @FXML
     private Label titleLabel;
     @FXML
     private Button showVacancyButton;
+    @FXML
+    private Button removeVacancyButton;
 
     @FXML
     private BorderPane vacancyItem;
@@ -45,5 +49,9 @@ public class VacancyItemController extends VisualComponentsInitializer implement
                 throw new RuntimeException(e);
             }
         });
+        removeVacancyButton.setOnAction(event ->{
+            vacancyService.removeVacancy(vacancy);
+        });
+
     }
 }

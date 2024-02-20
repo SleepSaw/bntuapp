@@ -64,7 +64,16 @@ public class VacancyDAOImpl implements VacancyDAO {
 
     @Override
     public void removeVacancy(Vacancy vacancy) {
-
+        try (Session session = DBManager.getSession()) {
+            session.beginTransaction();
+            // Удаляем связные сущности в БД, чтобы не оставалось мусора в таблицах
+            session.remove(vacancy.getLoad());
+            // Затем удаляем саму запись.
+            session.remove(vacancy);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println("Didn't removed vacancy from DB");
+        }
     }
 
     @Override

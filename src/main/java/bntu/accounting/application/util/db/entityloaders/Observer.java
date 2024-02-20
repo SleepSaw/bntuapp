@@ -1,4 +1,4 @@
-package bntu.accounting.application.util.db;
+package bntu.accounting.application.util.db.entityloaders;
 
 import bntu.accounting.application.models.Employee;
 

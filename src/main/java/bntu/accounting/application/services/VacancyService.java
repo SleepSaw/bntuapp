@@ -1,27 +1,33 @@
 package bntu.accounting.application.services;
 
 import bntu.accounting.application.dao.impl.EmployeeDAOImpl;
-import bntu.accounting.application.dao.impl.LoadDAOImpl;
 import bntu.accounting.application.dao.impl.VacancyDAOImpl;
 import bntu.accounting.application.dao.interfaces.EmployeeDAO;
-import bntu.accounting.application.dao.interfaces.LoadDAO;
 import bntu.accounting.application.dao.interfaces.VacancyDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
-import bntu.accounting.application.util.db.EmployeesLoader;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
+import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.normalization.Normalizer;
 
 import java.util.List;
 
 public class VacancyService {
+
     private VacancyDAO vacancyDAO = new VacancyDAOImpl();
     private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
     private LoadService loadService = new LoadService();
 
     public Integer saveVacancy(Vacancy vacancy) {
-        return vacancyDAO.saveVacancy(vacancy);
+        int id = vacancyDAO.saveVacancy(vacancy);
+        VacancyInstance.getInstance().notifyObservers();
+        return id;
+    }
+    public void removeVacancy(Vacancy vacancy){
+        vacancyDAO.removeVacancy(vacancy);
+        VacancyInstance.getInstance().notifyObservers();
     }
 
     public List<Vacancy> getAllVacancies() {
@@ -30,6 +36,7 @@ public class VacancyService {
 
     public void updateVacancy(Vacancy vacancy) {
         vacancyDAO.updateVacancy(vacancy.getLoad().getId(), vacancy);
+        VacancyInstance.getInstance().notifyObservers();
     }
 
     public Integer addPerformer(Vacancy vacancy, Employee employee) {
@@ -38,7 +45,8 @@ public class VacancyService {
         employee.setVacancy(vacancy);
         vacancy.setEmployeeList(performers);
         int id = employeeDAO.savePerformer(employee);
-        EmployeesLoader.getInstance().notifyObservers();
+        // Оповестить окна о изменении состояния
+        EmployeesInstance.getInstance().notifyObservers();
         return id;
     }
 

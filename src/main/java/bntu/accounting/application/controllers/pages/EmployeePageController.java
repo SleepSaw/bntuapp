@@ -3,21 +3,18 @@ package bntu.accounting.application.controllers.pages;
 import bntu.accounting.application.controllers.windows.EditingEmployeeWindowController;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.services.EmployeeService;
-import bntu.accounting.application.util.db.EmployeesLoader;
-import bntu.accounting.application.util.db.Observer;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
+import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -89,7 +86,7 @@ public class EmployeePageController implements Initializable, Observer {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        EmployeesLoader.getInstance().attach(this);
+        EmployeesInstance.getInstance().attach(this);
         // Индексация строк
         RowIndexer.index(indexColumn);
         // Связываение полей объекта и колонок таблицы

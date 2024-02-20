@@ -1,42 +1,38 @@
 package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.templates.VacancyItemController;
-import bntu.accounting.application.controllers.windows.EditingEmployeeWindowController;
-import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.VacancyService;
+import bntu.accounting.application.util.db.entityloaders.Observer;
+import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class VacanciesPageController implements Initializable {
+public class VacanciesPageController implements Initializable, Observer {
     private VacancyService vacancyService = new VacancyService();
     @FXML
     private Button addVacancyButton;
     @FXML
-    private VBox vBoxMy;
+    private VBox vacanciesContainer;
 
     @FXML
     private void addVacancyButtonAction(ActionEvent event) throws IOException {
         WindowCreator.createWindow("/fxml/windows/add_vacancy_window.fxml", this);
     }
 
-    private List<BorderPane> vacancyItems;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        VacancyInstance.getInstance().attach(this);
         try {
             createVacanciesItems();
         } catch (IOException e) {
@@ -46,13 +42,23 @@ public class VacanciesPageController implements Initializable {
     }
 
     private void createVacanciesItems() throws IOException {
+        vacanciesContainer.getChildren().clear();
         List<Vacancy> vacancies = vacancyService.getAllVacancies();
         for (Vacancy v : vacancies) {
             FXMLLoader fxmlLoader = new FXMLLoader(VacanciesPageController
                     .class.getResource("/fxml/templates/vacancy_item.fxml"));
             fxmlLoader.setController(new VacancyItemController(v));
-            vBoxMy.getChildren().add(fxmlLoader.load());
+            vacanciesContainer.getChildren().add(fxmlLoader.load());
         }
 
+    }
+
+    @Override
+    public void update() {
+        try {
+            createVacanciesItems();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

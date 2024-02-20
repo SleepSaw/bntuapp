@@ -45,7 +45,7 @@
               </rowConstraints>
                <children>
                   <Button fx:id="showVacancyButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #217346;" text="Просмотр" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #B2B2B2FF;" text="Удалить" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <Button fx:id="removeVacancyButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #B2B2B2FF;" text="Удалить" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                </children>
             </GridPane>
          </right>

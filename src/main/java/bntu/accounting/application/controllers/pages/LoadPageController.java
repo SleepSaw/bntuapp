@@ -1,15 +1,11 @@
 package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.dao.impl.EmployeeDAOImpl;
-import bntu.accounting.application.dao.impl.LoadDAOImpl;
-import bntu.accounting.application.dao.interfaces.EmployeeDAO;
-import bntu.accounting.application.dao.interfaces.LoadDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.services.LoadService;
-import bntu.accounting.application.util.db.EmployeesLoader;
-import bntu.accounting.application.util.db.Observer;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
+import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import javafx.beans.property.SimpleStringProperty;
@@ -48,7 +44,7 @@ public class LoadPageController extends VisualComponentsInitializer implements I
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        EmployeesLoader.getInstance().attach(this);
+        EmployeesInstance.getInstance().attach(this);
         RowIndexer.index(indexColumn);
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         postColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPost()));

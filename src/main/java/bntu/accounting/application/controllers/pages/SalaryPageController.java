@@ -3,21 +3,18 @@ package bntu.accounting.application.controllers.pages;
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.services.SalaryService;
-import bntu.accounting.application.util.db.EmployeesLoader;
-import bntu.accounting.application.util.db.Observer;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
+import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,7 +68,7 @@ public class SalaryPageController extends VisualComponentsInitializer implements
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        EmployeesLoader.getInstance().attach(this);
+        EmployeesInstance.getInstance().attach(this);
         RowIndexer.index(indexColumn);
         findActualSalary(updateTable(salaryTable));
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));

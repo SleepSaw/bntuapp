@@ -67,7 +67,7 @@
    <right>
         <ScrollPane prefHeight="566.0" prefWidth="1094.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <content>
-                <VBox fx:id="vBoxMy" prefHeight="611.0" prefWidth="1092.0" style="-fx-background-color: white;">
+                <VBox fx:id="vacanciesContainer" prefHeight="611.0" prefWidth="1092.0" style="-fx-background-color: white;">
                     <padding>
                         <Insets right="15.0" />
                     </padding>

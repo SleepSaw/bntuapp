@@ -5,6 +5,7 @@ import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Salary;
 import bntu.accounting.application.util.db.DBManager;
+import bntu.accounting.application.util.normalization.Normalizer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -97,6 +98,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             load.setAdditionalHours(employee.getLoad().getAdditionalHours());
             load.setOrganizationHours(employee.getLoad().getOrganizationHours());
             load.setAcademicHours(employee.getLoad().getAcademicHours());
+            Normalizer.normalizeLoad(load);
             employee.setLoad(load);
             // сохраняем в правильном порядке
             session.persist(load);

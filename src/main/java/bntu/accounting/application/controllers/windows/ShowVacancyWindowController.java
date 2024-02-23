@@ -118,13 +118,20 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
                             return;
                         }
                     }
-                    WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
-                            this, new AddingPerformerWindowController(vacancy));
                 }
                 else {
                     System.out.println("CLOSED");
                 }
-            } catch (LoadException e) {
+            }
+            catch (NullPointerException e){
+                try {
+                    WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
+                            this, new AddingPerformerWindowController(vacancy));
+                } catch (LoadException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            catch (LoadException e) {
                 System.out.println(e);
                 throw new RuntimeException(e);
             }
@@ -160,7 +167,6 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
                 employeeService.getAllEmployees();
         ObservableList<String> items = FXCollections.observableList(employees.stream().map(e -> e.getName()).toList());
         employeeListComboBox.setItems(items);
-        employeeListComboBox.setValue("< НЕТ >");
     }
     private void showStatus(VacancyStatus status){
         switch (status){
@@ -183,7 +189,9 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     public void update() {
         updateTable(performersTable);
         addEmployeesToComboBox();
-        showStatus(vacancyService.getStatus(vacancy));
+        status = vacancyService.getStatus(vacancy);
+        vacancy.setStatus(status);
+        showStatus(status);
     }
 }
 

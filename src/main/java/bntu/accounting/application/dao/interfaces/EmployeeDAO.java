@@ -1,11 +1,9 @@
 package bntu.accounting.application.dao.interfaces;
 
-import bntu.accounting.application.controllers.exceptions.EmptyResultListException;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EmployeeDAO {
 

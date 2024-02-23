@@ -22,12 +22,10 @@ public class VacancyService {
 
     public Integer saveVacancy(Vacancy vacancy) {
         int id = vacancyDAO.saveVacancy(vacancy);
-        VacancyInstance.getInstance().notifyObservers();
         return id;
     }
     public void removeVacancy(Vacancy vacancy){
         vacancyDAO.removeVacancy(vacancy);
-        VacancyInstance.getInstance().notifyObservers();
     }
 
     public List<Vacancy> getAllVacancies() {
@@ -36,7 +34,6 @@ public class VacancyService {
 
     public void updateVacancy(Vacancy vacancy) {
         vacancyDAO.updateVacancy(vacancy.getLoad().getId(), vacancy);
-        VacancyInstance.getInstance().notifyObservers();
     }
 
     public Integer addPerformer(Vacancy vacancy, Employee employee) {

@@ -32,13 +32,11 @@ public class VacanciesPageController implements Initializable, Observer {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        VacancyInstance.getInstance().attach(this);
         try {
             createVacanciesItems();
         } catch (IOException e) {
             System.out.println(e);
         }
-
     }
 
     private void createVacanciesItems() throws IOException {
@@ -46,13 +44,12 @@ public class VacanciesPageController implements Initializable, Observer {
         List<Vacancy> vacancies = vacancyService.getAllVacancies();
         for (Vacancy v : vacancies) {
             FXMLLoader fxmlLoader = new FXMLLoader(VacanciesPageController
-                    .class.getResource("/fxml/templates/vacancy_item.fxml"));
+                    .class.getResource("/fxml/templates/vacancy_item_ex1.fxml"));
             fxmlLoader.setController(new VacancyItemController(v));
             vacanciesContainer.getChildren().add(fxmlLoader.load());
         }
 
     }
-
     @Override
     public void update() {
         try {

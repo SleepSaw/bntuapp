@@ -8,7 +8,6 @@ import bntu.accounting.application.util.normalization.Normalizer;
 
 public class LoadService {
     private LoadDAO loadDAO = new LoadDAOImpl();
-    // расчёт общей нагрузки
     public Double findTotalHours(Load load){
         Double res = load.getAcademicHours() +
                 load.getAdditionalHours() + load.getOrganizationHours();

@@ -9,6 +9,7 @@ import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

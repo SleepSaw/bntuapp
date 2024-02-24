@@ -1,7 +1,6 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.controllers.exceptions.SettingEmptyValue;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
@@ -10,6 +9,7 @@ import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.fxsupport.TextFieldValidator;
 import bntu.accounting.application.util.normalization.Normalizer;
+import bntu.accounting.application.util.notifications.AlertInitializer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -25,11 +25,9 @@ import javafx.stage.Stage;
 import org.hibernate.HibernateException;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 public class AddingPerformerWindowController extends VisualComponentsInitializer implements Initializable {
     private Employee performer;
@@ -107,7 +105,72 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         this.vacancy = vacancy;
     }
 
+
+
+    private void addEmployeeButtonAction() {
+        try {
+            Employee employee = buildEmployee();
+            Load load = new Load(
+                    academicHoursSlider.getValue(),
+                    organizationHoursSlider.getValue(),
+                    additionalHoursSlider.getValue()
+            );
+            load.setTotalHours(loadService.findTotalHours(load));
+            employee.setLoad(load);
+            vacancyService.addPerformer(vacancy, employee);
+            showGoodAlert();
+        } catch (HibernateException e) {
+            showErrorAlert("Ошибка базы данных","Попробуйте ещё раз");
+        } catch (RuntimeException e) {
+            return;
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            initVisualComponents();
+            addPerformerButton.setOnAction(actionEvent -> {
+                showAgreementAlert();
+            });
+            showLoadData();
+            totalHoursField.setText(String.valueOf(findSum()));
+            // обработчик на сек бокс контракта
+            contractCheckBox.setOnAction(actionEvent -> {
+                flag = !flag;
+                contractValueField.setEditable(flag);
+            });
+            clearAllFields.setOnAction(actionEvent -> {
+                // TODO
+            });
+        } catch (NumberFormatException e) {
+            showErrorAlert("Ошибка ввода","Проверьте введенные данные");
+
+        }
+    }
+
+    private Double findSum() {
+        return academicHoursSlider.getValue() +
+                organizationHoursSlider.getValue() +
+                additionalHoursSlider.getValue();
+    }
+
+    private void showLoadData() {
+        Load residue = (vacancyService.findResidue(vacancy));
+        Normalizer.normalizeLoad(residue);
+        academicHoursSlider.setMax(residue.getAcademicHours());
+        organizationHoursSlider.setMax(residue.getOrganizationHours());
+        additionalHoursSlider.setMax(residue.getAdditionalHours());
+    }
+
     private void initVisualComponents() {
+        TextFieldValidator.preventLettersInput(academicHoursField);
+        TextFieldValidator.preventLettersInput(organizationHoursField);
+        TextFieldValidator.preventLettersInput(additionalHoursField);
+        TextFieldValidator.preventLettersInput(contractValueField);
+        bindSliderToField(academicHoursSlider, academicHoursField);
+        bindSliderToField(organizationHoursSlider, organizationHoursField);
+        bindSliderToField(additionalHoursSlider, additionalHoursField);
         if (performer != null) {
             fioTextField.setText(performer.getName());
             initComboBox(postComboBox, "posts", performer.getPost());
@@ -126,69 +189,6 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
             contractValueField.setText("0.0");
             contractValueField.setEditable(false);
         }
-    }
-
-    private void addEmployeeButtonAction() {
-        try {
-            Employee employee = buildEmployee();
-            Load load = new Load(
-                    academicHoursSlider.getValue(),
-                    organizationHoursSlider.getValue(),
-                    additionalHoursSlider.getValue()
-            );
-            load.setTotalHours(loadService.findTotalHours(load));
-            employee.setLoad(load);
-            vacancyService.addPerformer(vacancy, employee);
-            showGoodAlert(); // TODO
-        } catch (HibernateException e) {
-            showBadAlert(); // TODO
-        } catch (RuntimeException e) {
-            return;
-        }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            initVisualComponents();
-            addPerformerButton.setOnAction(actionEvent -> {
-                addEmployeeButtonAction();
-            });
-            TextFieldValidator.preventLettersInput(academicHoursField);
-            TextFieldValidator.preventLettersInput(organizationHoursField);
-            TextFieldValidator.preventLettersInput(additionalHoursField);
-            bindSliderToField(academicHoursSlider, academicHoursField);
-            bindSliderToField(organizationHoursSlider, organizationHoursField);
-            bindSliderToField(additionalHoursSlider, additionalHoursField);
-            showLoadData();
-            totalHoursField.setText(String.valueOf(findSum()));
-            // обработчик на сек бокс контракта
-            contractCheckBox.setOnAction(actionEvent -> {
-                flag = !flag;
-                contractValueField.setEditable(flag);
-            });
-        } catch (NumberFormatException e) {
-            showBadAlert();
-
-        }
-    }
-
-    private Double findSum() {
-        return academicHoursSlider.getValue() +
-                organizationHoursSlider.getValue() +
-                additionalHoursSlider.getValue();
-    }
-
-    private void showLoadData() {
-        Load residue = (vacancyService.findResidue(vacancy));
-        Normalizer.normalizeLoad(residue);
-        setSlidersMaxValues(residue);
-    }
-
-    private void setSlidersMaxValues(Load residue) {
-        academicHoursSlider.setMax(residue.getAcademicHours());
-        organizationHoursSlider.setMax(residue.getOrganizationHours());
-        additionalHoursSlider.setMax(residue.getAdditionalHours());
     }
 
     /**
@@ -245,42 +245,54 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
             builder.setContractValue(Double.parseDouble(contractValueField.getText()))
                     .setCategory(Integer.parseInt(categoryComboBox.getValue()));
         } catch (NumberFormatException e) {
-            showBadAlert();
+            showErrorAlert("Ошибка ввода","Проверьте введенные данные");
             throw new RuntimeException();
         }
         return builder.build();
     }
 
 
+    private void showAgreementAlert() {
+        ButtonType saveButton = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert agreementAlert = new Alert(Alert.AlertType.CONFIRMATION,"Подтверждение",
+                saveButton,cancelButton);
+        AlertInitializer alertInitializer = new AlertInitializer(performerWindow, agreementAlert,
+                "Сохранить исполнителя?",
+                "Подтвердите создание исполнителя нажав на кнопку \"ОК\"");
+        alertInitializer.init();
+        Optional<ButtonType> result = agreementAlert.showAndWait();
+        if (result.get() == saveButton) {
+            addEmployeeButtonAction();
+        } else if (result.get() == cancelButton) {
+            return;
+        }
+    }
     private void showGoodAlert() {
-        Stage stage = (Stage) performerWindow.getScene().getWindow();
-        Alert.AlertType type = Alert.AlertType.CONFIRMATION;
-        Alert alert = new Alert(type, "");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(stage);
-        alert.getDialogPane().setContentText("Всё прошло заебись!");
-        alert.getDialogPane().setHeaderText("Заебок");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            System.out.println("OK");
-        } else if (result.get() == ButtonType.CANCEL) {
-            System.out.println("CANCEL");
+        ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+        Alert successesAlert = new Alert(Alert.AlertType.INFORMATION,"",
+                okButton);
+        AlertInitializer alertInitializer = new AlertInitializer(performerWindow, successesAlert,
+                "Испольнитель успешно сохранён",
+                "Нажмите кнопку \"ОК\" для продолжения работы");
+        alertInitializer.init();
+        Optional<ButtonType> result = successesAlert.showAndWait();
+        if (result.get() == okButton) {
+           return;
         }
     }
 
-    private void showBadAlert() {
-        Stage stage = (Stage) performerWindow.getScene().getWindow();
-        Alert.AlertType type = Alert.AlertType.CONFIRMATION;
-        Alert alert = new Alert(type, "");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(stage);
-        alert.getDialogPane().setContentText("Хуйня");
-        alert.getDialogPane().setHeaderText("пиздец");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            System.out.println("OK");
-        } else if (result.get() == ButtonType.CANCEL) {
-            System.out.println("CANCEL");
+    private void showErrorAlert(String header,String message) {
+        ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR,"Произошла ошибка",
+                okButton);
+        AlertInitializer alertInitializer = new AlertInitializer(performerWindow, errorAlert,
+                header,
+                message);
+        alertInitializer.init();
+        Optional<ButtonType> result = errorAlert.showAndWait();
+        if (result.get() == okButton) {
+            return;
         }
     }
 }

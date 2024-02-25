@@ -2,6 +2,7 @@ package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.alerts.*;
+import bntu.accounting.application.controllers.exceptions.EmptyEntityException;
 import bntu.accounting.application.controllers.exceptions.SettingIncorrectValue;
 import bntu.accounting.application.dao.exceptions.EmptyResultListException;
 import bntu.accounting.application.models.Employee;
@@ -16,17 +17,22 @@ import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.fxml.LoadException;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.hibernate.HibernateException;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -84,9 +90,16 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     public ShowVacancyWindowController(Vacancy vacancy) {
         this.vacancy = vacancy;
     }
+    public ShowVacancyWindowController(Vacancy vacancy,Stage stage) {
+        super(stage);
+        this.vacancy = vacancy;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.getStage().setOnCloseRequest(event -> {
+            setActionToSaveChanges();
+        });
         VacancyInstance.getInstance().attach(this);
         EmployeesInstance.getInstance().attach(this);
         status = vacancyService.getStatus(vacancy);
@@ -119,27 +132,21 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         createPerformerButton.setOnAction(actionEvent -> {
             try {
                 if (status != VacancyStatus.CLOSED) {
-                    setActionToSaveChanges();
                     List<Employee> employees = employeeService.getAllEmployees();
-                    if (employees.size() == 0) throw new EmptyResultListException();
-                    for (Employee employee : employees) {
-                        if (employeeListComboBox.getValue().equals(employee.getName())) {
-                            WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
-                                    this, new AddingPerformerWindowController(employee, vacancy));
-                            return;
-                        }
-                    }
-                } else {
-                    System.out.println("CLOSED");
-                }
-            } catch (EmptyResultListException e) {
-                try {
+                    Employee e = findEmployeeByName(employees, employeeListComboBox.getValue());
                     WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
-                            this, new AddingPerformerWindowController(vacancy));
-                } catch (LoadException ex) {
-                    throw new RuntimeException(ex);
+                            this, new AddingPerformerWindowController(e, vacancy));
+
+                } else {
+                    showInformationAlert("Вакансия закрыта!",
+                            "Исполнители заняли всю вакантную нагрузку");
                 }
-            } catch (NullPointerException e) {
+            }
+            catch (HibernateException e){
+                showErrorAlert("Ошибка базы данных",
+                        "Не удалось получить данные из базы");
+            }
+            catch (EmptyEntityException e) {
                 try {
                     WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
                             this, new AddingPerformerWindowController(vacancy));
@@ -147,10 +154,19 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
                     throw new RuntimeException(ex);
                 }
             } catch (LoadException e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
+                showErrorAlert("Неизвестная ошибка",
+                        "Что-то пошло не так");
             }
         });
+    }
+
+    private Employee findEmployeeByName(List<Employee> employees, String name) throws EmptyEntityException {
+        if (name != null && !name.equals("Нет")) {
+            for (Employee e : employees) {
+                if (e.getName().equals(name)) return e;
+            }
+        }
+        throw new EmptyEntityException();
     }
 
     private void updatePerformers(List<Employee> performers) {
@@ -170,43 +186,20 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         }
     }
 
-    private void checkLoadInFields(LoadTypes type, List<Employee> performers) throws SettingIncorrectValue {
-        double sum, v;
-        switch (type) {
-            case ACADEMIC:
-                sum = 0;
-                v = Double.parseDouble(academicHoursField.getText());
-                for (Employee e : performers) {
-                    sum += e.getLoad().getAcademicHours();
-                }
-                if (v < sum) throw new SettingIncorrectValue("Неправильная уч нагрузка", "Нагрузка");
-                break;
-            case ORGANIZATION:
-                sum = 0;
-                v = Double.parseDouble(organizationHoursField.getText());
-                for (Employee e : performers) {
-                    sum += e.getLoad().getOrganizationHours();
-                }
-                if (v < sum) throw new SettingIncorrectValue("Неправильная орг нагрузка", "Нагрузка");
-                break;
-            case ADDITIONAL:
-                sum = 0;
-                v = Double.parseDouble(additionalHoursField.getText());
-                for (Employee e : performers) {
-                    sum += e.getLoad().getAdditionalHours();
-                }
-                if (v < sum) throw new SettingIncorrectValue("Неправильная доп нагрузка", "Нагрузка");
-                break;
-        }
+    private void checkLoadInFields(List<Employee> performers) throws SettingIncorrectValue {
+        loadService.checkLoadOfPerformers(LoadTypes.ACADEMIC,
+                Double.parseDouble(academicHoursField.getText()),performers);
+        loadService.checkLoadOfPerformers(LoadTypes.ORGANIZATION,
+                Double.parseDouble(organizationHoursField.getText()),performers);
+        loadService.checkLoadOfPerformers(LoadTypes.ADDITIONAL,
+                Double.parseDouble(additionalHoursField.getText()),performers);
     }
 
     private void setActionToSaveChanges() {
         try {
             List<Employee> performers = vacancy.getEmployeeList();
             try {
-                checkLoadInFields(LoadTypes.ACADEMIC, performers);
-                checkLoadInFields(LoadTypes.ORGANIZATION, performers);
-                checkLoadInFields(LoadTypes.ADDITIONAL, performers);
+                checkLoadInFields(performers);
             } catch (SettingIncorrectValue e) {
                 showErrorAlert("Некорректное значение нагрузки",
                         "Убедитесь, что вы указали значение нагрузки не меньше той, что уже" +
@@ -246,10 +239,17 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     }
 
     private void addEmployeesToComboBox() {
-        List<Employee> employees =
-                employeeService.getAllEmployees();
-        ObservableList<String> items = FXCollections.observableList(employees.stream().map(e -> e.getName()).toList());
-        employeeListComboBox.setItems(items);
+        try {
+            List<String> names = new ArrayList<>();
+            names.add("Нет");
+            names.addAll(employeeService.getAllEmployees().stream().map(e -> e.getName()).toList());
+            ObservableList<String> items = FXCollections.observableList(names);
+            employeeListComboBox.setItems(items);
+        }
+        catch (RuntimeException w){
+
+        }
+
     }
 
     private void showStatus(VacancyStatus status) {
@@ -281,13 +281,13 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     @Override
     public Optional<ButtonType> showInformationAlert(String header, String message) {
         Alerts informationAlert = new InformationAlert();
-        return informationAlert.showAlert(header,message,showVacancyWindow);
+        return informationAlert.showAlert(header, message, showVacancyWindow);
     }
 
     @Override
     public Optional<ButtonType> showWarningAlert(String header, String message) {
         Alerts warningAlert = new WarningAlert();
-        return  warningAlert.showAlert(header,message,showVacancyWindow);
+        return warningAlert.showAlert(header, message, showVacancyWindow);
     }
 
     @Override

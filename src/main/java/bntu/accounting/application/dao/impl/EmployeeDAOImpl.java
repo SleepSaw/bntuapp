@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
-    public List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees() throws HibernateException{
         List<Employee> employees = null;
         try (Session session = DBManager.getSession()) {
             session.beginTransaction();
@@ -21,7 +21,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             session.getTransaction().commit();
 
         } catch (HibernateException e) {
-            System.out.println("find all exception");
+            throw new HibernateException("Не удалось получить данные из базы данных");
         }
         return employees;
     }

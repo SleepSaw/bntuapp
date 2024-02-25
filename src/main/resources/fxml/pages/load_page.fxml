@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" stylesheets="@../../css/green_theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.LoadPageController">
+<BorderPane fx:id="loadWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" stylesheets="@../../css/green_theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.LoadPageController">
     <top>
         <GridPane prefHeight="38.0" prefWidth="1124.0" BorderPane.alignment="CENTER">
             <columnConstraints>

@@ -8,6 +8,7 @@ import bntu.accounting.application.dao.interfaces.LoadDAO;
 import bntu.accounting.application.dao.interfaces.SalaryDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
+import org.hibernate.HibernateException;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class EmployeeService {
         employeeDAO.removeEmployee(employee);
         EmployeesInstance.getInstance().notifyObservers();
     }
-    public List<Employee> getAllEmployees() throws NullPointerException {
+    public List<Employee> getAllEmployees() throws HibernateException {
         return  employeeDAO.getAllEmployees();
     }
 

@@ -1,5 +1,6 @@
 package bntu.accounting.application.util.fxsupport;
 
+import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.windows.AddingPerformerWindowController;
 import bntu.accounting.application.controllers.windows.ShowVacancyWindowController;
 import javafx.fxml.FXMLLoader;
@@ -12,10 +13,9 @@ import java.io.IOException;
 
 public class WindowCreator {
     public static void createWindow(String resourcePath, Initializable parentController,
-                                    Initializable controller) throws LoadException {
-        FXMLLoader loader = createLoader(resourcePath,parentController);
-        loader.setController(controller);
-        initWindow(loader);
+                                    VisualComponentsInitializer controller) throws LoadException {
+        FXMLLoader loader = createLoader(resourcePath, parentController);
+        initWindow(loader,controller);
     }
 
     public static void createWindow(String resourcePath, Initializable parentController) throws LoadException {
@@ -26,8 +26,19 @@ public class WindowCreator {
     private static FXMLLoader createLoader(String resourcePath, Initializable parentController) {
         return new FXMLLoader(parentController.getClass().getResource(resourcePath));
     }
-    private static void initWindow(FXMLLoader loader) throws LoadException {
+    private static void  initWindow(FXMLLoader loader, VisualComponentsInitializer controller) throws LoadException {
         Stage stage = new Stage();
+        Scene scene;
+        controller.setStage(stage);
+        loader.setController(controller);
+        loadWindow(stage,loader);
+    }
+    private static void  initWindow(FXMLLoader loader) throws LoadException {
+        Stage stage = new Stage();
+        Scene scene;
+        loadWindow(stage,loader);
+    }
+    private static void loadWindow(Stage stage, FXMLLoader loader){
         Scene scene;
         try {
             scene = new Scene(loader.load());

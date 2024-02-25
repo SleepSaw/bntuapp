@@ -1,4 +1,4 @@
-package bntu.accounting.application.util.notifications;
+package bntu.accounting.application.controllers.alerts;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;

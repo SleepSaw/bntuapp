@@ -1,6 +1,7 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
+import bntu.accounting.application.controllers.alerts.*;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
@@ -9,7 +10,7 @@ import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.fxsupport.TextFieldValidator;
 import bntu.accounting.application.util.normalization.Normalizer;
-import bntu.accounting.application.util.notifications.AlertInitializer;
+import bntu.accounting.application.util.normalization.RounderValues;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -20,16 +21,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.HibernateException;
 
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddingPerformerWindowController extends VisualComponentsInitializer implements Initializable {
+public class AddingPerformerWindowController extends VisualComponentsInitializer implements Initializable, AlertManager {
     private Employee performer;
     private Vacancy vacancy;
     private VacancyService vacancyService = new VacancyService();
@@ -93,7 +92,6 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
     @FXML
     private BorderPane performerWindow;
     private boolean flag;
-    private Double sum = 0D;
 
     public AddingPerformerWindowController(Vacancy vacancy) {
         this.vacancy = vacancy;
@@ -118,9 +116,9 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
             load.setTotalHours(loadService.findTotalHours(load));
             employee.setLoad(load);
             vacancyService.addPerformer(vacancy, employee);
-            showGoodAlert();
         } catch (HibernateException e) {
             showErrorAlert("Ошибка базы данных","Попробуйте ещё раз");
+            throw new RuntimeException();
         } catch (RuntimeException e) {
             return;
         }
@@ -131,7 +129,19 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         try {
             initVisualComponents();
             addPerformerButton.setOnAction(actionEvent -> {
-                showAgreementAlert();
+                Optional<ButtonType> result = showConfirmingAlert("Сохранить исполнителя?",
+                        "Подтвердите создание исполнителя нажав на кнопку \"ОК\"");
+                if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                    addEmployeeButtonAction();
+                    Optional<ButtonType> ok = showInformationAlert("Испольнитель успешно сохранён",
+                            "Нажмите кнопку \"ОК\" для продолжения работы");
+                    if (ok.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                        Stage stage = (Stage) performerWindow.getScene().getWindow();
+                        stage.close();
+                    }
+                } else if (result.get().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                    return;
+                }
             });
             showLoadData();
             totalHoursField.setText(String.valueOf(findSum()));
@@ -141,18 +151,20 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
                 contractValueField.setEditable(flag);
             });
             clearAllFields.setOnAction(actionEvent -> {
-                // TODO
+
             });
         } catch (NumberFormatException e) {
             showErrorAlert("Ошибка ввода","Проверьте введенные данные");
-
+        }
+        catch (RuntimeException e){
+            throw new RuntimeException();
         }
     }
 
     private Double findSum() {
-        return academicHoursSlider.getValue() +
+        return RounderValues.roundValue(academicHoursSlider.getValue() +
                 organizationHoursSlider.getValue() +
-                additionalHoursSlider.getValue();
+                additionalHoursSlider.getValue());
     }
 
     private void showLoadData() {
@@ -204,7 +216,7 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         slider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> arg0, Number oldValue, Number newValue) {
-                Double v = newValue.doubleValue();
+                Double v = RounderValues.roundValue(newValue.doubleValue());
                 field.setText(String.valueOf(v));
                 totalHoursField.setText(String.valueOf(findSum()));
 
@@ -251,48 +263,27 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         return builder.build();
     }
 
-
-    private void showAgreementAlert() {
-        ButtonType saveButton = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert agreementAlert = new Alert(Alert.AlertType.CONFIRMATION,"Подтверждение",
-                saveButton,cancelButton);
-        AlertInitializer alertInitializer = new AlertInitializer(performerWindow, agreementAlert,
-                "Сохранить исполнителя?",
-                "Подтвердите создание исполнителя нажав на кнопку \"ОК\"");
-        alertInitializer.init();
-        Optional<ButtonType> result = agreementAlert.showAndWait();
-        if (result.get() == saveButton) {
-            addEmployeeButtonAction();
-        } else if (result.get() == cancelButton) {
-            return;
-        }
-    }
-    private void showGoodAlert() {
-        ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-        Alert successesAlert = new Alert(Alert.AlertType.INFORMATION,"",
-                okButton);
-        AlertInitializer alertInitializer = new AlertInitializer(performerWindow, successesAlert,
-                "Испольнитель успешно сохранён",
-                "Нажмите кнопку \"ОК\" для продолжения работы");
-        alertInitializer.init();
-        Optional<ButtonType> result = successesAlert.showAndWait();
-        if (result.get() == okButton) {
-           return;
-        }
+    @Override
+    public Optional<ButtonType> showInformationAlert(String header, String message) {
+        Alerts informationAlert = new InformationAlert();
+        return informationAlert.showAlert(header, message, performerWindow);
     }
 
-    private void showErrorAlert(String header,String message) {
-        ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR,"Произошла ошибка",
-                okButton);
-        AlertInitializer alertInitializer = new AlertInitializer(performerWindow, errorAlert,
-                header,
-                message);
-        alertInitializer.init();
-        Optional<ButtonType> result = errorAlert.showAndWait();
-        if (result.get() == okButton) {
-            return;
-        }
+    @Override
+    public Optional<ButtonType> showWarningAlert(String header, String message) {
+        Alerts warningAlert = new WarningAlert();
+        return  warningAlert.showAlert(header,message,performerWindow);
+    }
+
+    @Override
+    public Optional<ButtonType> showErrorAlert(String header, String message) {
+        Alerts errorAlert = new ErrorAlert();
+        return errorAlert.showAlert(header, message, performerWindow);
+    }
+
+    @Override
+    public Optional<ButtonType> showConfirmingAlert(String header, String message) {
+        ConfirmingAlert confirmingAlert = new ConfirmingAlert();
+        return confirmingAlert.showAlert(header, message, performerWindow);
     }
 }

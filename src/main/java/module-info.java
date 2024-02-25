@@ -22,5 +22,6 @@ module bntu.accounting.application {
     opens bntu.accounting.application.util.normalization to hibernate.entitymanager, jakarta.persistence, javafx.base;
     opens bntu.accounting.application.util.fxsupport to hibernate.entitymanager, jakarta.persistence, javafx.base;
     opens bntu.accounting.application.util.db.entityloaders to hibernate.entitymanager, jakarta.persistence, javafx.base;
+    opens bntu.accounting.application.controllers.alerts to javafx.fxml;
 
 }

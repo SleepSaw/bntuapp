@@ -8,7 +8,6 @@ import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
-import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.normalization.Normalizer;
 

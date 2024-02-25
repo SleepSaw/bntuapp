@@ -2,7 +2,6 @@ package bntu.accounting.application.util.normalization;
 
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Salary;
-import bntu.accounting.application.util.normalization.RounderValues;
 
 public class Normalizer extends RounderValues {
     public static void normalizeSalary(Salary salary){
@@ -22,5 +21,4 @@ public class Normalizer extends RounderValues {
         load.setAdditionalHours(normalizeItem(load.getAdditionalHours()));
         load.setTotalHours(normalizeItem(load.getTotalHours()));
     }
-
 }

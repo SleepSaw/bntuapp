@@ -3,12 +3,9 @@ package bntu.accounting.application.services;
 import bntu.accounting.application.dao.impl.SalaryDAOImpl;
 import bntu.accounting.application.dao.interfaces.SalaryDAO;
 import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Salary;
-import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.models.builders.SalaryBuilder;
 import bntu.accounting.application.util.CommonData;
-import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.normalization.Normalizer;
 
 public class SalaryService {

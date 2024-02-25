@@ -23,7 +23,7 @@ public class Vacancy {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "vacancy")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "vacancy", cascade = CascadeType.REMOVE)
     private List<Employee> employeeList;
 
     public Vacancy() {

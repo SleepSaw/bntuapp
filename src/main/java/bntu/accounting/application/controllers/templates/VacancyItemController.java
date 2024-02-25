@@ -50,7 +50,6 @@ public class VacancyItemController extends VisualComponentsInitializer implement
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        VacancyInstance.getInstance().attach(this);
         update();
         showVacancyButton.setOnAction(actionEvent -> {
             try {

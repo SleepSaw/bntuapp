@@ -103,27 +103,6 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         this.vacancy = vacancy;
     }
 
-
-
-    private void addEmployeeButtonAction() {
-        try {
-            Employee employee = buildEmployee();
-            Load load = new Load(
-                    academicHoursSlider.getValue(),
-                    organizationHoursSlider.getValue(),
-                    additionalHoursSlider.getValue()
-            );
-            load.setTotalHours(loadService.findTotalHours(load));
-            employee.setLoad(load);
-            vacancyService.addPerformer(vacancy, employee);
-        } catch (HibernateException e) {
-            showErrorAlert("Ошибка базы данных","Попробуйте ещё раз");
-            throw new RuntimeException();
-        } catch (RuntimeException e) {
-            return;
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -158,6 +137,25 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         }
         catch (RuntimeException e){
             throw new RuntimeException();
+        }
+    }
+
+    private void addEmployeeButtonAction() {
+        try {
+            Employee employee = buildEmployee();
+            Load load = new Load(
+                    academicHoursSlider.getValue(),
+                    organizationHoursSlider.getValue(),
+                    additionalHoursSlider.getValue()
+            );
+            load.setTotalHours(loadService.findTotalHours(load));
+            employee.setLoad(load);
+            vacancyService.addPerformer(vacancy, employee);
+        } catch (HibernateException e) {
+            showErrorAlert("Ошибка базы данных","Попробуйте ещё раз");
+            throw new RuntimeException();
+        } catch (RuntimeException e) {
+            return;
         }
     }
 

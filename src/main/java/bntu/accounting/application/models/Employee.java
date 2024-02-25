@@ -28,7 +28,7 @@ public class Employee {
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY,mappedBy = "employee")
     private Salary salary;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "vacancy_id", referencedColumnName = "id")
     private Vacancy vacancy;
 

@@ -32,6 +32,7 @@ public class VacanciesPageController implements Initializable, Observer {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        VacancyInstance.getInstance().attach(this);
         try {
             createVacanciesItems();
         } catch (IOException e) {

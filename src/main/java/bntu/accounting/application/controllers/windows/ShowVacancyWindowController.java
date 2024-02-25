@@ -100,7 +100,7 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         super.getStage().setOnCloseRequest(event -> {
             setActionToSaveChanges();
         });
-        VacancyInstance.getInstance().attach(this);
+//        VacancyInstance.getInstance().attach(this);
         EmployeesInstance.getInstance().attach(this);
         status = vacancyService.getStatus(vacancy);
         updateTable(performersTable);
@@ -273,9 +273,6 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     public void update() {
         updateTable(performersTable);
         addEmployeesToComboBox();
-        status = vacancyService.getStatus(vacancy);
-        vacancy.setStatus(status);
-        showStatus(status);
     }
 
     @Override

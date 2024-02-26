@@ -90,17 +90,12 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     public ShowVacancyWindowController(Vacancy vacancy) {
         this.vacancy = vacancy;
     }
-    public ShowVacancyWindowController(Vacancy vacancy,Stage stage) {
-        super(stage);
-        this.vacancy = vacancy;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.getStage().setOnCloseRequest(event -> {
             setActionToSaveChanges();
         });
-//        VacancyInstance.getInstance().attach(this);
         EmployeesInstance.getInstance().attach(this);
         status = vacancyService.getStatus(vacancy);
         updateTable(performersTable);

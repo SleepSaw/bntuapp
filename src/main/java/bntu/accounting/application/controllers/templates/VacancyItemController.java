@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class VacancyItemController extends VisualComponentsInitializer implement
     private FlowPane performersBox;
 
     @FXML
-    private BorderPane vacancyItem;
+    private Pane vacancyItem;
     public VacancyItemController(Vacancy vacancy) {
         this.vacancy = vacancy;
     }

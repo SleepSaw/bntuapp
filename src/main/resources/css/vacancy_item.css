@@ -1,0 +1,9 @@
+#statusLabel{
+    -fx-background-radius: 5;
+}
+#loadBar{
+    -fx-background-radius: 5;
+}
+#residueBar{
+    -fx-background-radius: 5;
+}

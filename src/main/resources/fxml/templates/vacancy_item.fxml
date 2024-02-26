@@ -1,139 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="vacancyItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="154.0" prefWidth="1054.0" style="-fx-background-color: #EAEAEAFF;"
-            stylesheets="@../../css/vacancy_component_style.css" xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <BorderPane prefHeight="39.0" prefWidth="1080.0" style="-fx-background-color: #217346;" BorderPane.alignment="CENTER">
-         <left>
-            <Label fx:id="titleLabel" text="Должность, учебный предмет" textFill="WHITE" BorderPane.alignment="CENTER">
+
+<Pane fx:id="vacancyItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="1072.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="20.0" layoutY="17.0" prefHeight="200.0" prefWidth="982.0" style="-fx-background-color: black;" />
+      <Pane layoutX="20.0" layoutY="17.0" prefHeight="200.0" prefWidth="1033.0" style="-fx-background-color: white;" stylesheets="@../../css/vacancy_item.css">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="23.0" radius="11.0" width="23.0">
+               <color>
+                  <Color red="0.75" green="0.75" blue="0.75" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label fx:id="postLabel" layoutX="30.0" layoutY="11.0" text="Учитель" textFill="#468ffd">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-         </left>
-         <padding>
-            <Insets left="15.0" />
-         </padding>
-      </BorderPane>
-   </top>
-   <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets left="15.0" right="15.0" />
-         </BorderPane.margin>
-         <right>
-            <GridPane prefHeight="95.0" prefWidth="135.0" vgap="10.0" BorderPane.alignment="CENTER">
+            <Label fx:id="subjectLabel" layoutX="30.0" layoutY="40.0" text="Иностранный язык" underline="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="73.0" text="Необходимая нагрузка (в часах в неделю)">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="30.0" layoutY="96.0" prefHeight="93.0" prefWidth="200.0">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="223.0" minWidth="0.0" prefWidth="0.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="125.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="15.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="152.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="48.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button fx:id="showVacancyButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #217346;" text="Просмотр" textFill="white" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-                  <Button fx:id="removeVacancyButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #B2B2B2FF;" text="Удалить" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-               </children>
-            </GridPane>
-         </right>
-         <left>
-            <GridPane prefHeight="75.0" prefWidth="875.0" vgap="5.0" BorderPane.alignment="CENTER">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="225.0" minWidth="10.0" prefWidth="159.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.0" minWidth="0.0" prefWidth="67.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.0" minWidth="10.0" prefWidth="164.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="552.0" minWidth="8.0" prefWidth="63.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="170.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="305.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Всего часов">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label text="Академических:" GridPane.rowIndex="1">
+                  <Label text="Учебная:">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Организационных:" GridPane.rowIndex="2">
+                  <Label text="Дополнительная:" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Дополнительных:" GridPane.rowIndex="3">
+                  <Label text="Организационная:" GridPane.rowIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="20" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Остаток" GridPane.columnIndex="2">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label text="Академических:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label text="Всего:" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Организационных:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Label text="0" underline="true" GridPane.columnIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Дополнительных:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="20" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Label text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Label text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <Label text="Статус" GridPane.columnIndex="4">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label text="Открыта" textFill="#217346" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Исполнители" GridPane.columnIndex="5">
+                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Слепцов Д.А., Максименко И.В. " textFill="#2200ff" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                </children>
-               <BorderPane.margin>
-                  <Insets bottom="15.0" top="10.0" />
-               </BorderPane.margin>
             </GridPane>
-         </left>
-      </BorderPane>
-   </center>
-</BorderPane>
+            <Label layoutX="340.0" layoutY="72.0" text="Остаток нагрузки (в часах в неделю)">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="340.0" layoutY="96.0" prefHeight="93.0" prefWidth="200.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="152.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="48.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Учебная:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Дополнительная:" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Организационная:" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Всего:" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="0" underline="true" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <Label layoutX="617.0" layoutY="72.0" text="Список исполнителей:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <FlowPane fx:id="performersBox" layoutX="617.0" layoutY="96.0" prefHeight="93.0" prefWidth="385.0" />
+            <Label fx:id="statusLabel" alignment="CENTER" layoutX="121.0" layoutY="15.0" prefHeight="20.0" prefWidth="63.0" style="-fx-background-color: #d6ffe8;" text="Открыта" />
+            <Button fx:id="showVacancyButton" layoutX="936.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: transparent;" text="Просмотр" textFill="#468ffd" underline="true" />
+            <Button fx:id="removeVacancyButton" layoutX="864.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: transparent;" text="Удалить" textFill="#fc4747" underline="true" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

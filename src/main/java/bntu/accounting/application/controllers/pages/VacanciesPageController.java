@@ -45,7 +45,7 @@ public class VacanciesPageController implements Initializable, Observer {
         List<Vacancy> vacancies = vacancyService.getAllVacancies();
         for (Vacancy v : vacancies) {
             FXMLLoader fxmlLoader = new FXMLLoader(VacanciesPageController
-                    .class.getResource("/fxml/templates/vacancy_item_ex1.fxml"));
+                    .class.getResource("/fxml/templates/vacancy_item.fxml"));
             fxmlLoader.setController(new VacancyItemController(v));
             vacanciesContainer.getChildren().add(fxmlLoader.load());
         }

@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 
 import static bntu.accounting.application.util.enums.LoadTypes.ACADEMIC;
 
-public class LoadPageController extends VisualComponentsInitializer implements Initializable, Observer, AlertManager {
+public class LoadPageController extends VisualComponentsInitializer implements Initializable, Observer {
     private LoadService loadService = new LoadService();
     @FXML
     private TableColumn<Employee, String> academicLoadColumn;
@@ -172,29 +172,5 @@ public class LoadPageController extends VisualComponentsInitializer implements I
     @Override
     public void update() {
         updateTable(loadTable);
-    }
-
-    @Override
-    public Optional<ButtonType> showInformationAlert(String header, String message) {
-        Alerts informationAlert = new InformationAlert();
-        return informationAlert.showAlert(header, message, loadWindow);
-    }
-
-    @Override
-    public Optional<ButtonType> showWarningAlert(String header, String message) {
-        Alerts warningAlert = new WarningAlert();
-        return warningAlert.showAlert(header, message, loadWindow);
-    }
-
-    @Override
-    public Optional<ButtonType> showErrorAlert(String header, String message) {
-        Alerts errorAlert = new ErrorAlert();
-        return errorAlert.showAlert(header, message, loadWindow);
-    }
-
-    @Override
-    public Optional<ButtonType> showConfirmingAlert(String header, String message) {
-        ConfirmingAlert confirmingAlert = new ConfirmingAlert();
-        return confirmingAlert.showAlert(header, message, loadWindow);
     }
 }

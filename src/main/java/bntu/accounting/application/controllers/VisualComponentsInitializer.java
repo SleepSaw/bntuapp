@@ -1,11 +1,13 @@
 package bntu.accounting.application.controllers;
 
+import bntu.accounting.application.controllers.alerts.*;
 import bntu.accounting.application.dao.impl.EmployeeDAOImpl;
 import bntu.accounting.application.dao.interfaces.EmployeeDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.iojson.FileLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -16,8 +18,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class VisualComponentsInitializer {
+public class VisualComponentsInitializer implements AlertManager {
     private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
     // название файла с конфигурацией приложения
     private final String filePath = "options.json";
@@ -60,5 +63,28 @@ public class VisualComponentsInitializer {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+    @Override
+    public Optional<ButtonType> showInformationAlert(String header, String message) {
+        Alerts informationAlert = new InformationAlert();
+        return informationAlert.showAlert(header, message, stage);
+    }
+
+    @Override
+    public Optional<ButtonType> showWarningAlert(String header, String message) {
+        Alerts warningAlert = new WarningAlert();
+        return warningAlert.showAlert(header, message, stage);
+    }
+
+    @Override
+    public Optional<ButtonType> showErrorAlert(String header, String message) {
+        Alerts errorAlert = new ErrorAlert();
+        return errorAlert.showAlert(header, message, stage);
+    }
+
+    @Override
+    public Optional<ButtonType> showConfirmingAlert(String header, String message) {
+        ConfirmingAlert confirmingAlert = new ConfirmingAlert();
+        return confirmingAlert.showAlert(header, message, stage);
     }
 }

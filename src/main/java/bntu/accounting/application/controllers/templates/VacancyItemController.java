@@ -55,7 +55,7 @@ public class VacancyItemController extends VisualComponentsInitializer implement
         showVacancyButton.setOnAction(actionEvent -> {
             try {
                 WindowCreator.createWindow("/fxml/windows/show_vacancy_window.fxml",this,
-                        new ShowVacancyWindowController(vacancy));
+                        new ShowVacancyWindowController(super.getStage(),vacancy));
             } catch (LoadException e) {
                 System.out.println(e);
                 throw new RuntimeException(e);

@@ -9,16 +9,15 @@ public class AlertInitializer {
     private Alert alert;
     private String header;
     private String message;
-    private Parent parent;
+    private Stage stage;
 
-    public AlertInitializer(Parent parent, Alert alert, String header, String message) {
+    public AlertInitializer(Stage  stage, Alert alert, String header, String message) {
         this.alert = alert;
         this.header = header;
         this.message = message;
-        this.parent = parent;
+        this.stage = stage;
     }
     public void init(){
-        Stage stage = (Stage) parent.getScene().getWindow();
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(stage);
         alert.getDialogPane().setContentText(message);
@@ -42,11 +41,11 @@ public class AlertInitializer {
     }
 
 
-    public Parent getParent() {
-        return parent;
+    public Stage getStage() {
+        return stage;
     }
 
-    public void setParent(Parent parent) {
-        this.parent = parent;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

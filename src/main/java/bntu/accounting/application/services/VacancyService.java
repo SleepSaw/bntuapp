@@ -26,11 +26,9 @@ public class VacancyService {
         return id;
     }
     public void removeVacancy(Vacancy vacancy){
-        if(vacancy.getEmployeeList() != null && !vacancy.getEmployeeList().isEmpty()){
-
-        }
         vacancyDAO.removeVacancy(vacancy);
         VacancyInstance.getInstance().notifyObservers();
+        EmployeesInstance.getInstance().notifyObservers();
     }
 
     public List<Vacancy> getAllVacancies() {

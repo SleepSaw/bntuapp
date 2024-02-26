@@ -27,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.fxml.LoadException;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.hibernate.HibernateException;
@@ -37,8 +38,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ShowVacancyWindowController extends VisualComponentsInitializer implements Initializable,
-        Observer, AlertManager {
+public class ShowVacancyWindowController extends VisualComponentsInitializer implements Initializable, Observer {
     private Vacancy vacancy;
     private VacancyStatus status;
     private VacancyService vacancyService = new VacancyService();
@@ -82,6 +82,7 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     private Button createPerformerButton;
     @FXML
     private Button saveChangesButton;
+    private Stage parent;
 
     // Текст
     @FXML
@@ -90,12 +91,19 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     public ShowVacancyWindowController(Vacancy vacancy) {
         this.vacancy = vacancy;
     }
+    public ShowVacancyWindowController(Stage parent,Vacancy vacancy) {
+        this.vacancy = vacancy;
+        this.parent = parent;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.getStage().setOnCloseRequest(event -> {
             setActionToSaveChanges();
+            EmployeesInstance.getInstance().detach(this);
         });
+        super.getStage().initModality(Modality.APPLICATION_MODAL);
+        super.getStage().initOwner(parent);
         EmployeesInstance.getInstance().attach(this);
         status = vacancyService.getStatus(vacancy);
         updateTable(performersTable);
@@ -268,30 +276,10 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     public void update() {
         updateTable(performersTable);
         addEmployeesToComboBox();
+        status = vacancyService.getStatus(vacancy);
+        showStatus(status);
     }
 
-    @Override
-    public Optional<ButtonType> showInformationAlert(String header, String message) {
-        Alerts informationAlert = new InformationAlert();
-        return informationAlert.showAlert(header, message, showVacancyWindow);
-    }
 
-    @Override
-    public Optional<ButtonType> showWarningAlert(String header, String message) {
-        Alerts warningAlert = new WarningAlert();
-        return warningAlert.showAlert(header, message, showVacancyWindow);
-    }
-
-    @Override
-    public Optional<ButtonType> showErrorAlert(String header, String message) {
-        Alerts errorAlert = new ErrorAlert();
-        return errorAlert.showAlert(header, message, showVacancyWindow);
-    }
-
-    @Override
-    public Optional<ButtonType> showConfirmingAlert(String header, String message) {
-        ConfirmingAlert confirmingAlert = new ConfirmingAlert();
-        return confirmingAlert.showAlert(header, message, showVacancyWindow);
-    }
 }
 

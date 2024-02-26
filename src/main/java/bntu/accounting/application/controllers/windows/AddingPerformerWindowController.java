@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddingPerformerWindowController extends VisualComponentsInitializer implements Initializable, AlertManager {
+public class AddingPerformerWindowController extends VisualComponentsInitializer implements Initializable {
     private Employee performer;
     private Vacancy vacancy;
     private VacancyService vacancyService = new VacancyService();
@@ -259,29 +259,5 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
             throw new RuntimeException();
         }
         return builder.build();
-    }
-
-    @Override
-    public Optional<ButtonType> showInformationAlert(String header, String message) {
-        Alerts informationAlert = new InformationAlert();
-        return informationAlert.showAlert(header, message, performerWindow);
-    }
-
-    @Override
-    public Optional<ButtonType> showWarningAlert(String header, String message) {
-        Alerts warningAlert = new WarningAlert();
-        return  warningAlert.showAlert(header,message,performerWindow);
-    }
-
-    @Override
-    public Optional<ButtonType> showErrorAlert(String header, String message) {
-        Alerts errorAlert = new ErrorAlert();
-        return errorAlert.showAlert(header, message, performerWindow);
-    }
-
-    @Override
-    public Optional<ButtonType> showConfirmingAlert(String header, String message) {
-        ConfirmingAlert confirmingAlert = new ConfirmingAlert();
-        return confirmingAlert.showAlert(header, message, performerWindow);
     }
 }

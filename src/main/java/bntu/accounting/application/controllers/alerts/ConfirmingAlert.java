@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
 import java.util.Optional;
 
@@ -11,10 +12,10 @@ public class ConfirmingAlert implements Alerts {
     private ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
     private ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
     @Override
-    public Optional<ButtonType> showAlert(String header, String message, Parent parent) {
+    public Optional<ButtonType> showAlert(String header, String message, Stage stage) {
 
         Alert agreementAlert = new Alert(Alert.AlertType.CONFIRMATION,"Подтверждение", okButton,cancelButton);
-        AlertInitializer alertInitializer = new AlertInitializer(parent, agreementAlert, header, message);
+        AlertInitializer alertInitializer = new AlertInitializer(stage, agreementAlert, header, message);
         alertInitializer.init();
         return agreementAlert.showAndWait();
     }

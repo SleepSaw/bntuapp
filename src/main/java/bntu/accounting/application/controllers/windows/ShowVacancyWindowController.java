@@ -138,7 +138,7 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
                     List<Employee> employees = employeeService.getAllEmployees();
                     Employee e = findEmployeeByName(employees, employeeListComboBox.getValue());
                     WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
-                            this, new AddingPerformerWindowController(e, vacancy));
+                            this, new AddingPerformerWindowController(super.getStage(),e, vacancy));
 
                 } else {
                     showInformationAlert("Вакансия закрыта!",
@@ -152,7 +152,7 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
             catch (EmptyEntityException e) {
                 try {
                     WindowCreator.createWindow("/fxml/windows/add_performer_window.fxml",
-                            this, new AddingPerformerWindowController(vacancy));
+                            this, new AddingPerformerWindowController(super.getStage(),vacancy));
                 } catch (LoadException ex) {
                     throw new RuntimeException(ex);
                 }

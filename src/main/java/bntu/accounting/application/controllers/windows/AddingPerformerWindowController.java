@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.HibernateException;
 
@@ -92,20 +93,31 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
     @FXML
     private BorderPane performerWindow;
     private boolean flag;
+    private Stage parent;
 
     public AddingPerformerWindowController(Vacancy vacancy) {
         this.vacancy = vacancy;
-
+    }
+    public AddingPerformerWindowController(Stage parent,Vacancy vacancy) {
+        this.vacancy = vacancy;
+        this.parent = parent;
     }
 
     public AddingPerformerWindowController(Employee performer, Vacancy vacancy) {
         this.performer = performer;
         this.vacancy = vacancy;
     }
+    public AddingPerformerWindowController(Stage parent,Employee performer, Vacancy vacancy) {
+        this.performer = performer;
+        this.vacancy = vacancy;
+        this.parent = parent;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            super.getStage().initModality(Modality.APPLICATION_MODAL);
+            super.getStage().initOwner(parent);
             initVisualComponents();
             addPerformerButton.setOnAction(actionEvent -> {
                 Optional<ButtonType> result = showConfirmingAlert("Сохранить исполнителя?",

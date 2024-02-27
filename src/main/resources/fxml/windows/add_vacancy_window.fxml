@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="463.0" stylesheets="@../../css/add_employee_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.windows.AddingVacancyWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="463.0" stylesheets="@../../css/add_employee_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <BorderPane prefHeight="48.0" prefWidth="463.0" style="-fx-background-color: #217346;" BorderPane.alignment="CENTER">
          <left>
@@ -37,12 +37,12 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="saveVacancyButton" layoutX="85.0" layoutY="16.0" mnemonicParsing="false" onAction="#saveVacancyButtonAction" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #217346;" text="Сохранить" textFill="WHITE">
+                  <Button fx:id="saveVacancyButton" layoutX="85.0" layoutY="16.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #217346;" text="Сохранить" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clearAllFieldsButton" layoutX="227.0" layoutY="16.0" mnemonicParsing="false" onAction="#clearAllFieldsButtonAction" prefHeight="34.0" prefWidth="125.0" text="Очистить поля">
+                  <Button fx:id="clearAllFieldsButton" layoutX="227.0" layoutY="16.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" text="Очистить поля">
                      <font>
                         <Font size="14.0" />
                      </font></Button>

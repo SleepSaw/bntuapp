@@ -1,6 +1,7 @@
 package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.templates.VacancyItemController;
+import bntu.accounting.application.controllers.windows.AddingVacancyWindowController;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.db.entityloaders.Observer;
@@ -27,7 +28,8 @@ public class VacanciesPageController implements Initializable, Observer {
 
     @FXML
     private void addVacancyButtonAction(ActionEvent event) throws IOException {
-        WindowCreator.createWindow("/fxml/windows/add_vacancy_window.fxml", this);
+        WindowCreator.createWindow("/fxml/windows/add_vacancy_window.fxml", this,
+                new AddingVacancyWindowController());
     }
 
     @Override

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.VacanciesPageController">
+<BorderPane fx:id="vacancyPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.VacanciesPageController">
     <top>
         <BorderPane prefHeight="68.0" prefWidth="1124.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <effect>
@@ -64,7 +64,7 @@
         </BorderPane>
     </top>
    <right>
-        <ScrollPane prefHeight="566.0" prefWidth="1094.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+        <ScrollPane hbarPolicy="NEVER" prefHeight="566.0" prefWidth="1094.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <content>
                 <VBox fx:id="vacanciesContainer" prefHeight="611.0" prefWidth="1092.0" style="-fx-background-color: white;">
                     <padding>

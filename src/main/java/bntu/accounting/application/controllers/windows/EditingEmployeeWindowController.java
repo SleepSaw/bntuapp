@@ -9,13 +9,12 @@ import bntu.accounting.application.services.EmployeeService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import org.hibernate.HibernateException;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditingEmployeeWindowController extends VisualComponentsInitializer implements Initializable {
@@ -59,7 +58,6 @@ public class EditingEmployeeWindowController extends VisualComponentsInitializer
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        EmployeeBuilder employeeBuilder = new EmployeeBuilder();
         // обработчик на сек бокс контракта
         contractCheckBox.setOnAction(actionEvent -> {
             flag = !flag;
@@ -67,17 +65,22 @@ public class EditingEmployeeWindowController extends VisualComponentsInitializer
         });
         // обработчик кнопки "Редактировать"
         editEmployeeButton.setOnAction(actionEvent -> {
-            Employee updatedEmployee = employeeBuilder
-                    .setName(fioTextField.getText())
-                    .setPost(postComboBox.getValue())
-                    .setSubject(subjectComboBox.getValue())
-                    .setCategory(Integer.parseInt(categoryComboBox.getValue()))
-                    .setExperience(expComboBox.getValue())
-                    .setQualification(qualificationComboBox.getValue())
-                    .setYoungSpecialist(specCheckBox.isSelected())
-                    .setContractValue(Double.parseDouble(contractValueField.getText()))
-                    .build();
-            employeeService.updateEmployee(employee,updatedEmployee);
+            try {
+                employeeService.updateEmployee(employee,buildEmployee());
+                Optional<ButtonType> result = showInformationAlert("Работник успешно изменен","");
+                if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
+                    super.getStage().close();
+                }
+            }
+            catch (HibernateException e){
+                showErrorAlert("Ошибка базы данных","Не удалось удалить вакансию из базы данных");
+            }
+            catch (NullPointerException e){
+                showErrorAlert("Ошибка данных","Похоже вы ввели пустое значение");
+            }
+            catch (RuntimeException e){
+                showErrorAlert("Возникла неизвестная ошибка","");
+            }
         });
         // Очистка полей
         clearAllFieldsButton.setOnAction(actionEvent -> {
@@ -100,6 +103,19 @@ public class EditingEmployeeWindowController extends VisualComponentsInitializer
         fioTextField.setText(employee.getName());
         contractValueField.setText(employee.getContractValue().toString());
         selectContractCheckBox();
+    }
+    private Employee buildEmployee(){
+        EmployeeBuilder employeeBuilder = new EmployeeBuilder();
+        return employeeBuilder
+                .setName(fioTextField.getText())
+                .setPost(postComboBox.getValue())
+                .setSubject(subjectComboBox.getValue())
+                .setCategory(Integer.parseInt(categoryComboBox.getValue()))
+                .setExperience(expComboBox.getValue())
+                .setQualification(qualificationComboBox.getValue())
+                .setYoungSpecialist(specCheckBox.isSelected())
+                .setContractValue(Double.parseDouble(contractValueField.getText()))
+                .build();
     }
     // Автоматическое выставление значения чек-бокса при появлении окна
     private void selectContractCheckBox(){

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
-
 
 <Pane fx:id="vacancyItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="1072.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -24,12 +25,7 @@
             </DropShadow>
          </effect>
          <children>
-            <Label fx:id="postLabel" layoutX="30.0" layoutY="11.0" text="Учитель" textFill="#468ffd">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="subjectLabel" layoutX="30.0" layoutY="40.0" text="Иностранный язык" underline="true">
+            <Label fx:id="postLabel" layoutX="30.0" layoutY="39.0" text="Учитель" underline="true">
                <font>
                   <Font size="14.0" />
                </font>
@@ -158,9 +154,25 @@
                </font>
             </Label>
             <FlowPane fx:id="performersBox" layoutX="617.0" layoutY="96.0" prefHeight="93.0" prefWidth="385.0" />
-            <Label fx:id="statusLabel" alignment="CENTER" layoutX="121.0" layoutY="15.0" prefHeight="20.0" prefWidth="63.0" style="-fx-background-color: #d6ffe8;" text="Открыта" />
-            <Button fx:id="showVacancyButton" layoutX="936.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: transparent;" text="Просмотр" textFill="#468ffd" underline="true" />
-            <Button fx:id="removeVacancyButton" layoutX="864.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: transparent;" text="Удалить" textFill="#fc4747" underline="true" />
+            <Button fx:id="showVacancyButton" layoutX="941.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: transparent;" text="Просмотр" textFill="#468ffd" underline="true" />
+            <Button fx:id="removeVacancyButton" layoutX="870.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: transparent;" text="Удалить" textFill="#fc4747" underline="true" />
+            <HBox layoutX="30.0" layoutY="12.0" prefHeight="27.0" prefWidth="818.0">
+               <children>
+                  <Label fx:id="subjectLabel" text="Иностранный язык" textFill="#468ffd">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="63.0" style="-fx-background-color: #d6ffe8;" text="Открыта">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </Pane>
    </children>

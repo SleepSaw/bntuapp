@@ -17,14 +17,18 @@ import javafx.fxml.Initializable;
 import javafx.fxml.LoadException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.hibernate.HibernateException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class VacancyItemController extends VisualComponentsInitializer implements Initializable, Observer {
@@ -62,7 +66,40 @@ public class VacancyItemController extends VisualComponentsInitializer implement
             }
         });
         removeVacancyButton.setOnAction(event ->{
-            vacancyService.removeVacancy(vacancy);
+            if (vacancy.getEmployeeList() != null && !vacancy.getEmployeeList().isEmpty()){
+                Optional<ButtonType> result = showWarningAlert("На вакансию назначены исполнители",
+                        "Вы можете удалить вакансию с привязанными к ней исполнителями или же без них");
+                if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
+                    try {
+                        vacancyService.removeVacancy(vacancy);
+                        showInformationAlert("Вакансия успешно удалена","");
+                    }
+                    catch (HibernateException e){
+                        showErrorAlert("Ошибка базы данных","Не удалось удалить вакансию из базы данных");
+                    }
+                    catch (RuntimeException e){
+                        showErrorAlert("Возникла неизвестная ошибка","");
+                    }
+
+                }
+            }
+            else {
+                Optional<ButtonType> result = showConfirmingAlert("Удаление вакансии",
+                        "Вы действительно хотите удалить вакансию?");
+                if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
+                    try {
+                        vacancyService.removeVacancy(vacancy);
+                        showInformationAlert("Вакансия успешно удалена","");
+                    }
+                    catch (HibernateException e){
+                        showErrorAlert("Ошибка базы данных","Не удалось удалить вакансию из базы данных");
+                    }
+                    catch (RuntimeException e){
+                        showErrorAlert("Возникла неизвестная ошибка","");
+                    }
+                }
+            }
+
         });
     }
     private void showStatus(String status){

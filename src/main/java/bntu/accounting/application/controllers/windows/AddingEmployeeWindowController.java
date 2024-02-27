@@ -12,12 +12,11 @@ import bntu.accounting.application.services.EmployeeService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import org.hibernate.HibernateException;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddingEmployeeWindowController extends VisualComponentsInitializer implements Initializable {
@@ -50,8 +49,8 @@ public class AddingEmployeeWindowController extends VisualComponentsInitializer 
     private ComboBox<String> subjectComboBox;
     private boolean flag = false;
 
-    @FXML
-    void addEmployeeButtonAction(ActionEvent event) {
+
+    void addEmployeeButtonAction() {
         Employee employee = new Employee();
         employee.setName(fioTextField.getText());
         employee.setPost(postComboBox.getValue());
@@ -64,20 +63,26 @@ public class AddingEmployeeWindowController extends VisualComponentsInitializer 
         employeeService.saveEmployee(employee);
     }
 
-    @FXML
-    void clearAllFieldsAction(ActionEvent event) {
-        fioTextField.setText(null);
-        contractValueField.setText("0.0");
-        postComboBox.setValue(null);
-        subjectComboBox.setValue(null);
-        expComboBox.setValue(null);
-        qualificationComboBox.setValue(null);
-        categoryComboBox.setValue(null);
-        specCheckBox.setSelected(false);
-        contractCheckBox.setSelected(false);
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addEmployeeButton.setOnAction(actionEvent -> {
+            try{
+                addEmployeeButtonAction();
+                Optional<ButtonType> result = showInformationAlert("Работник успешно сохранён","");
+                if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
+                    super.getStage().close();
+                }
+            }
+            catch (HibernateException e){
+                showErrorAlert("Ошибка базы данных","Не удалось удалить вакансию из базы данных");
+            }
+            catch (NullPointerException e){
+                showErrorAlert("Ошибка данных","Похоже вы ввели пустое значение");
+            }
+            catch (RuntimeException e){
+                showErrorAlert("Возникла неизвестная ошибка","");
+            }
+        });
         initComboBox(postComboBox,"posts","Учитель");
         initComboBox(subjectComboBox,"subjects","Математика");
         initComboBox(qualificationComboBox,"qualifications","в.к.к.");

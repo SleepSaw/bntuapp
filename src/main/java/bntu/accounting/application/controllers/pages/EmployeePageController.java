@@ -1,5 +1,6 @@
 package bntu.accounting.application.controllers.pages;
 
+import bntu.accounting.application.controllers.windows.AddingEmployeeWindowController;
 import bntu.accounting.application.controllers.windows.EditingEmployeeWindowController;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.services.EmployeeService;
@@ -77,7 +78,8 @@ public class EmployeePageController implements Initializable, Observer {
     }
     @FXML
     void addEmployeeButtonAction(ActionEvent event) throws IOException {
-        WindowCreator.createWindow("/fxml/windows/add_employee_window.fxml", this);
+        WindowCreator.createWindow("/fxml/windows/add_employee_window.fxml", this,
+                new AddingEmployeeWindowController());
     }
     @FXML
     void updateTableButtonAction(ActionEvent event) {

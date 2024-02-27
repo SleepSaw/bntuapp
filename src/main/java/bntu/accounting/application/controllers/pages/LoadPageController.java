@@ -1,7 +1,6 @@
 package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.controllers.alerts.*;
 import bntu.accounting.application.controllers.exceptions.SettingIncorrectValue;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
@@ -11,21 +10,18 @@ import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import static bntu.accounting.application.util.enums.LoadTypes.ACADEMIC;
 
@@ -93,6 +89,7 @@ public class LoadPageController extends VisualComponentsInitializer implements I
     private void provideEditingOfColumn(TableColumn<Employee, String> column, LoadTypes type) {
         // Установка фабрики ячеек для редактирования
         column.setOnEditCommit(event -> {
+            Pattern p = Pattern.compile("(\\d+\\.?\\d{0,2})?");
             Employee employee = event.getRowValue();
             Load load = employee.getLoad();
             double value = 0;
@@ -101,6 +98,7 @@ public class LoadPageController extends VisualComponentsInitializer implements I
             switch (type) {
                 case ACADEMIC:
                     try {
+                        if(p.matcher(event.getNewValue()).matches()) throw new NumberFormatException();
                         if(employee.getVacancy() != null){
                             value = employee.getLoad().getAcademicHours();
                             newSum = findSum(employee.getVacancy().getEmployeeList()
@@ -112,6 +110,11 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                         }
                         load.setAcademicHours(Double.parseDouble(event.getNewValue()));
                     }
+                    catch (NumberFormatException e){
+                        showErrorAlert("Ошибка ввода нагрузки",
+                                "Указанно некорректное значение. При вводе допускаются только цирф и точка" +
+                                        " по шаблону XX.XX");
+                    }
                     catch (NullPointerException e){
                         showErrorAlert("Ну это ваще пизда","");
                     }
@@ -122,6 +125,7 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                     break;
                 case ADDITIONAL:
                     try {
+                        if(p.matcher(event.getNewValue()).matches()) throw new NumberFormatException();
                         if(employee.getVacancy() != null){
                             value = employee.getLoad().getAdditionalHours();
                             newSum = findSum(employee.getVacancy().getEmployeeList()
@@ -133,6 +137,11 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                         }
                         load.setAdditionalHours(Double.parseDouble(event.getNewValue()));
                     }
+                    catch (NumberFormatException e){
+                        showErrorAlert("Ошибка ввода нагрузки",
+                                "Указанно некорректное значение. При вводе допускаются только цирф и точка" +
+                                        " по шаблону XX.XX");
+                    }
                     catch (NullPointerException e){
                         showErrorAlert("Ну это ваще пизда","");
                     }
@@ -143,6 +152,7 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                     break;
                 case ORGANIZATION:
                     try {
+                        if(p.matcher(event.getNewValue()).matches()) throw new NumberFormatException();
                         if(employee.getVacancy() != null){
                             value = employee.getLoad().getOrganizationHours();
                             newSum = findSum(employee.getVacancy().getEmployeeList()
@@ -153,6 +163,11 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                                     "Неправильная орг нагрузка", "Нагрузка");
                         }
                         load.setOrganizationHours(Double.parseDouble(event.getNewValue()));
+                    }
+                    catch (NumberFormatException e){
+                        showErrorAlert("Ошибка ввода нагрузки",
+                                "Указанно некорректное значение. При вводе допускаются только цирф и точка" +
+                                        " по шаблону XX.XX");
                     }
                     catch (NullPointerException e){
                         showErrorAlert("Ну это ваще пизда","");

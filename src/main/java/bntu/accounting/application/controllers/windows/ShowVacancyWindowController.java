@@ -16,6 +16,7 @@ import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.enums.VacancyStatus;
+import bntu.accounting.application.util.fxsupport.TextFieldValidator;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -104,6 +105,9 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         });
         super.getStage().initModality(Modality.APPLICATION_MODAL);
         super.getStage().initOwner(parent);
+        TextFieldValidator.preventLettersInput(academicHoursField);
+        TextFieldValidator.preventLettersInput(organizationHoursField);
+        TextFieldValidator.preventLettersInput(additionalHoursField);
         EmployeesInstance.getInstance().attach(this);
         status = vacancyService.getStatus(vacancy);
         updateTable(performersTable);
@@ -162,7 +166,6 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
             }
         });
     }
-
     private Employee findEmployeeByName(List<Employee> employees, String name) throws EmptyEntityException {
         if (name != null && !name.equals("Нет")) {
             for (Employee e : employees) {
@@ -197,7 +200,6 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         loadService.checkLoadOfPerformers(LoadTypes.ADDITIONAL,
                 Double.parseDouble(additionalHoursField.getText()),performers);
     }
-
     private void setActionToSaveChanges() {
         try {
             List<Employee> performers = vacancy.getEmployeeList();

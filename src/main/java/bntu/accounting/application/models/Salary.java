@@ -2,6 +2,8 @@ package bntu.accounting.application.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "salary")
 public class Salary {
@@ -123,4 +125,24 @@ public class Salary {
         this.specialActivitiesAllowance = specialActivitiesAllowance;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Salary salary = (Salary) o;
+        return Objects.equals(totalSalary, salary.totalSalary)
+                && Objects.equals(rateSalary, salary.rateSalary)
+                && Objects.equals(loadSalary, salary.loadSalary)
+                && Objects.equals(expAllowance, salary.expAllowance)
+                && Objects.equals(qualAllowance, salary.qualAllowance)
+                && Objects.equals(YSAllowance, salary.YSAllowance)
+                && Objects.equals(industryWorkAllowance, salary.industryWorkAllowance)
+                && Objects.equals(contractAllowance, salary.contractAllowance)
+                && Objects.equals(specialActivitiesAllowance, salary.specialActivitiesAllowance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(totalSalary, rateSalary, loadSalary, expAllowance, qualAllowance, YSAllowance, industryWorkAllowance, contractAllowance, specialActivitiesAllowance);
+    }
 }

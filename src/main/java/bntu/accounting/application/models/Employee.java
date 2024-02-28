@@ -2,6 +2,8 @@ package bntu.accounting.application.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -28,7 +30,7 @@ public class Employee {
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY,mappedBy = "employee")
     private Salary salary;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vacancy_id", referencedColumnName = "id")
     private Vacancy vacancy;
 
@@ -135,6 +137,27 @@ public class Employee {
 
     public void setVacancy(Vacancy vacancy) {
         this.vacancy = vacancy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(load, employee.load)
+                && Objects.equals(name, employee.name)
+                && Objects.equals(post, employee.post)
+                && Objects.equals(subject, employee.subject)
+                && Objects.equals(experience, employee.experience)
+                && Objects.equals(qualification, employee.qualification)
+                && Objects.equals(category, employee.category)
+                && Objects.equals(isYoungSpecialist, employee.isYoungSpecialist)
+                && Objects.equals(contractValue, employee.contractValue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(load, name, post, subject, experience, qualification, category, isYoungSpecialist, contractValue);
     }
 
     @Override

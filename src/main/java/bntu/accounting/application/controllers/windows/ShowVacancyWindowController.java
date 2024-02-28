@@ -175,22 +175,22 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         throw new EmptyEntityException();
     }
 
-    private void updatePerformers(List<Employee> performers) {
-        for (Employee e : performers) {
-            EmployeeBuilder employeeBuilder = new EmployeeBuilder();
-            Employee updatedEmployee = employeeBuilder
-                    .setName(e.getName())
-                    .setPost(vacancy.getPost())
-                    .setSubject(vacancy.getSubject())
-                    .setCategory(e.getCategory())
-                    .setExperience(e.getExperience())
-                    .setQualification(e.getQualification())
-                    .setYoungSpecialist(e.getYoungSpecialist())
-                    .setContractValue(e.getContractValue())
-                    .build();
-            employeeService.updateEmployee(e, updatedEmployee);
-        }
-    }
+//    private void updatePerformers(List<Employee> performers) {
+//        for (Employee e : performers) {
+//            EmployeeBuilder employeeBuilder = new EmployeeBuilder();
+//            Employee updatedEmployee = employeeBuilder
+//                    .setName(e.getName())
+//                    .setPost(vacancy.getPost())
+//                    .setSubject(vacancy.getSubject())
+//                    .setCategory(e.getCategory())
+//                    .setExperience(e.getExperience())
+//                    .setQualification(e.getQualification())
+//                    .setYoungSpecialist(e.getYoungSpecialist())
+//                    .setContractValue(e.getContractValue())
+//                    .build();
+//            employeeService.updateEmployee(e, updatedEmployee);
+//        }
+//    }
 
     private void checkLoadInFields(List<Employee> performers) throws SettingIncorrectValue {
         loadService.checkLoadOfPerformers(LoadTypes.ACADEMIC,
@@ -223,7 +223,6 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
             vacancy.setComment(commentTextArea.getText());
             status = vacancyService.getStatus(vacancy);
             vacancy.setStatus(status);
-            updatePerformers(performers);
             vacancyService.updateVacancy(vacancy);
             loadService.updateLoad(vacancy.getLoad().getId(), vacancy.getLoad());
             showStatus(status);
@@ -231,7 +230,6 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         } catch (HibernateException e) {
             System.out.println(e);
         }
-
     }
 
     @Override
@@ -273,7 +271,6 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
                 break;
         }
     }
-
     @Override
     public void update() {
         updateTable(performersTable);
@@ -281,7 +278,5 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
         status = vacancyService.getStatus(vacancy);
         showStatus(status);
     }
-
-
 }
 

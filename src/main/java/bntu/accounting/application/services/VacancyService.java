@@ -36,6 +36,7 @@ public class VacancyService {
     }
 
     public void updateVacancy(Vacancy vacancy) {
+        vacancy.setStatus(getStatus(vacancy));
         vacancyDAO.updateVacancy(vacancy.getLoad().getId(), vacancy);
         VacancyInstance.getInstance().notifyObservers();
     }
@@ -45,10 +46,21 @@ public class VacancyService {
         performers.add(employee);
         employee.setVacancy(vacancy);
         vacancy.setEmployeeList(performers);
+        vacancy.setStatus(getStatus(vacancy));
+        updateVacancy(vacancy);
         int id = employeeDAO.savePerformer(employee);
         // Оповестить окна о изменении состояния
         EmployeesInstance.getInstance().notifyObservers();
         return id;
+    }
+    public void removePerformer(Vacancy vacancy, Employee employee) {
+        List<Employee> performers = vacancyDAO.getAllPerformers(vacancy.getLoad().getId());
+        performers.remove(employee);
+        vacancy.setEmployeeList(performers);
+        vacancy.setStatus(getStatus(vacancy));
+        updateVacancy(vacancy);
+        employeeDAO.removeEmployee(employee);
+        EmployeesInstance.getInstance().notifyObservers();
     }
 
     public List<Employee> getAllPerformers(Vacancy vacancy) {
@@ -56,8 +68,7 @@ public class VacancyService {
     }
 
     public Load findResidue(Vacancy vacancy) {
-        List<Load> performersLoads = getAllPerformers(vacancy)
-                .stream().map(e -> e.getLoad()).toList();
+        List<Load> performersLoads = vacancy.getEmployeeList().stream().map(e -> e.getLoad()).toList();
         Load necessaryLoad = vacancy.getLoad();
         Load residueLoad = new Load();
         residueLoad.clone(necessaryLoad);

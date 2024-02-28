@@ -2,6 +2,8 @@ package bntu.accounting.application.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "load")
 public class Load {
@@ -87,6 +89,23 @@ public class Load {
 
     public void setVacancy(Vacancy vacancy) {
         this.vacancy = vacancy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Load load = (Load) o;
+        return Objects.equals(id, load.id)
+                && Objects.equals(totalHours, load.totalHours)
+                && Objects.equals(academicHours, load.academicHours)
+                && Objects.equals(organizationHours, load.organizationHours)
+                && Objects.equals(additionalHours, load.additionalHours);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, totalHours, academicHours, organizationHours, additionalHours);
     }
 
     public void clone(Load load) {

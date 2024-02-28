@@ -4,6 +4,7 @@ import bntu.accounting.application.controllers.templates.VacancyItemController;
 import bntu.accounting.application.controllers.windows.AddingVacancyWindowController;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.services.VacancyService;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
@@ -35,6 +36,7 @@ public class VacanciesPageController implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         VacancyInstance.getInstance().attach(this);
+        EmployeesInstance.getInstance().attach(this);
         try {
             createVacanciesItems();
         } catch (IOException e) {

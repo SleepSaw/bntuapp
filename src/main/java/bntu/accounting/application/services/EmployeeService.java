@@ -7,6 +7,7 @@ import bntu.accounting.application.dao.interfaces.EmployeeDAO;
 import bntu.accounting.application.dao.interfaces.LoadDAO;
 import bntu.accounting.application.dao.interfaces.SalaryDAO;
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import org.hibernate.HibernateException;
 
@@ -16,6 +17,7 @@ public class EmployeeService {
     private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
     private LoadDAO loadDAO = new LoadDAOImpl();
     private SalaryDAO salaryDAO = new SalaryDAOImpl();
+    private VacancyService vacancyService = new VacancyService();
 
     public void updateEmployee(Employee employee, Employee updatedEmployee){
         int id = employee.getLoad().getId(); // Получаем id объекта
@@ -31,7 +33,11 @@ public class EmployeeService {
         EmployeesInstance.getInstance().notifyObservers();
     }
     public void removeEmployee(Employee employee){
-        employeeDAO.removeEmployee(employee);
+        Vacancy vacancy = employee.getVacancy();
+        if (vacancy != null){
+            vacancyService.removePerformer(vacancy,employee);
+        }
+        else employeeDAO.removeEmployee(employee);
         EmployeesInstance.getInstance().notifyObservers();
     }
     public List<Employee> getAllEmployees() throws HibernateException {

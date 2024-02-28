@@ -5,6 +5,7 @@ import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.util.db.DBManager;
+import bntu.accounting.application.util.enums.VacancyStatus;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -30,6 +31,7 @@ public class VacancyDAOImpl implements VacancyDAO {
         try (Session session = DBManager.getSession()) {
             session.beginTransaction();
             session.persist(vacancy.getLoad());
+            vacancy.setStatus(VacancyStatus.OPENED);
             vacancy.setEmployeeList(null);
             session.persist(vacancy);
             session.getTransaction().commit();

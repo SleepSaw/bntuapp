@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "vacancy")
@@ -80,5 +81,22 @@ public class Vacancy {
     public void addEmployee(Employee employee){
         if (employeeList != null) employeeList.add(employee);
         employeeList = new ArrayList<>(Arrays.asList(employee));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vacancy vacancy = (Vacancy) o;
+        return Objects.equals(load, vacancy.load)
+                && Objects.equals(post, vacancy.post)
+                && Objects.equals(subject, vacancy.subject)
+                && Objects.equals(comment, vacancy.comment)
+                && Objects.equals(status, vacancy.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(load, post, subject, comment, status);
     }
 }

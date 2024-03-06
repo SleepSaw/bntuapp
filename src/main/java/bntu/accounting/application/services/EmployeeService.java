@@ -19,29 +19,31 @@ public class EmployeeService {
     private SalaryDAO salaryDAO = new SalaryDAOImpl();
     private VacancyService vacancyService = new VacancyService();
 
-    public void updateEmployee(Employee employee, Employee updatedEmployee){
+    public void updateEmployee(Employee employee, Employee updatedEmployee) {
         int id = employee.getLoad().getId(); // Получаем id объекта
         // Привзка связанных сущностей к новому объекту
         updatedEmployee.setLoad(employee.getLoad());
         updatedEmployee.setSalary(employee.getSalary());
         // + VACANCY
-        employeeDAO.updateEmployee(id,updatedEmployee);
+        employeeDAO.updateEmployee(id, updatedEmployee);
         EmployeesInstance.getInstance().notifyObservers();
     }
-    public void saveEmployee(Employee employee){
+
+    public void saveEmployee(Employee employee) {
         employeeDAO.saveEmployee(employee);
         EmployeesInstance.getInstance().notifyObservers();
     }
-    public void removeEmployee(Employee employee){
+
+    public void removeEmployee(Employee employee) {
         Vacancy vacancy = employee.getVacancy();
-        if (vacancy != null){
-            vacancyService.removePerformer(vacancy,employee);
-        }
-        else employeeDAO.removeEmployee(employee);
+        if (vacancy != null) {
+            vacancyService.removePerformer(vacancy, employee);
+        } else employeeDAO.removeEmployee(employee);
         EmployeesInstance.getInstance().notifyObservers();
     }
+
     public List<Employee> getAllEmployees() throws HibernateException {
-        return  employeeDAO.getAllEmployees();
+        return employeeDAO.getAllEmployees();
     }
 
 }

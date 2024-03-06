@@ -67,22 +67,22 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0" underline="true" GridPane.columnIndex="1">
+                  <Label fx:id="necessaryAcademicLoadLabel" text="0" underline="true" GridPane.columnIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="necessaryOrganizationLoadLabel" text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="necessaryAdditionalLoadLabel" text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="necessaryTotalLoadLabel" text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -126,22 +126,22 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0" underline="true" GridPane.columnIndex="1">
+                  <Label fx:id="residueAcademicLoadLabel" text="0" underline="true" GridPane.columnIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="residueOrganizationLoadLabel" text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="residueAdditionalLoadLabel" text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="residueTotalLoadLabel" text="0" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>

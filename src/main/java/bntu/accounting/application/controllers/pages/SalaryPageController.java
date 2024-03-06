@@ -1,6 +1,7 @@
 package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
+import bntu.accounting.application.controllers.windows.SalaryOptionsWindowController;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.services.SalaryService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
@@ -11,6 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.fxml.LoadException;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,7 +37,8 @@ public class SalaryPageController extends VisualComponentsInitializer implements
 
     @FXML
     private TableColumn<Employee, String> loadColumn;
-
+    @FXML
+    private Button optionsButton;
     @FXML
     private Button moreButton;
 
@@ -62,8 +65,21 @@ public class SalaryPageController extends VisualComponentsInitializer implements
     @FXML
     private TableColumn<Employee, String> withoutLoadSalaryColumn;
     @FXML
-    void moreButtonAction(ActionEvent event) throws IOException {
-        WindowCreator.createWindow("/fxml/windows/salary_window.fxml",this);
+    void moreButtonAction(ActionEvent event) {
+        try {
+            WindowCreator.createWindow("/fxml/windows/salary_window.fxml",this);
+        } catch (LoadException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    void optionsButtonAction(ActionEvent event) {
+        try {
+            WindowCreator.createWindow("/fxml/windows/salary_options_window.fxml",this,
+                    new SalaryOptionsWindowController(super.getStage()));
+        } catch (LoadException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

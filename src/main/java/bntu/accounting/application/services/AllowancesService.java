@@ -1,54 +1,101 @@
 package bntu.accounting.application.services;
 
 import bntu.accounting.application.iojson.FileLoader;
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Load;
-import bntu.accounting.application.models.Salary;
-import bntu.accounting.application.util.CommonData;
-import org.json.JSONArray;
+import bntu.accounting.application.iojson.OptionsJsonHelper;
+import bntu.accounting.application.models.SalaryOptions;
+import bntu.accounting.application.util.db.entityloaders.Observer;
+import bntu.accounting.application.util.db.entityloaders.SalaryInstance;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class AllowancesService {
-    private static final FileLoader fileLoader = new FileLoader();
-    private static final String fileName = "allowances.json";
+public class AllowancesService implements Observer {
+    private OptionsJsonHelper helper = new OptionsJsonHelper();
+    private SalaryOptions options;
 
-    public Double getTariffByCategory(String key) {
-        return getComplexAllowanceByKey("tariffs",key);
+    public AllowancesService() {
+        SalaryInstance.getInstance().attach(this);
+        update();
     }
 
+    public Double getBaseRate() {
+        return options.getBaseRate();
+    }
+    public Double getLoadRate() {
+        return options.getLoadRate();
+    }
+    public Double getTariffByCategory(String key) {
+        double result = 0;
+        switch (key){
+            case "7":
+                result = options.getTariffs().getCategory7();
+                break;
+            case "8":
+                result = options.getTariffs().getCategory8();
+                break;
+            case "9":
+                result = options.getTariffs().getCategory9();
+                break;
+            case "10":
+                result = options.getTariffs().getCategory10();
+                break;
+            case "11":
+                result = options.getTariffs().getCategory11();
+                break;
+        }
+        return Double.valueOf(result);
+    }
     public Double getExpAllowance(String key){
-        return getComplexAllowanceByKey("experience",key);
+        double result = 0;
+        switch (key){
+            case "До 5 лет":
+                result = options.getExperienceAllowances().getStep1();
+                break;
+            case "5-10 лет":
+                result = options.getExperienceAllowances().getStep2();
+                break;
+            case "10-15 лет":
+                result = options.getExperienceAllowances().getStep3();
+                break;
+            case "св. 15 лет":
+                result = options.getExperienceAllowances().getStep4();
+                break;
+        }
+        return Double.valueOf(result);
     }
     public Double getQualAllowance(String key){
-        return getComplexAllowanceByKey("qualification",key);
+        double result = 0;
+        switch (key){
+            case "б.к.к.":
+                result = options.getQualificationAllowances().getStep1();
+                break;
+            case "1-я к.к.":
+                result = options.getQualificationAllowances().getStep2();
+                break;
+            case "2-я к.к.":
+                result = options.getQualificationAllowances().getStep3();
+                break;
+            case "в.к.к.":
+                result = options.getQualificationAllowances().getStep4();
+                break;
+            case "уч.-методист":
+                result = options.getQualificationAllowances().getStep5();
+                break;
+        }
+        return Double.valueOf(result);
     }
     public Double getWorkInIndustryAllowance(){
-        return getSimpleAllowanceByKey("work_in_industry");
+        return options.getWorkInIndustryAllowance();
     }
     public Double getYoungSpecialistAllowance(){
-        return getSimpleAllowanceByKey("young_specialist");
+        return options.getYoungSpecialistAllowance();
     }
     public Double getProfActivityAllowance(){
-        return getSimpleAllowanceByKey("prof_activity");
+        return options.getProfActivityAllowance();
     }
 
-    private Double getSimpleAllowanceByKey(String key){
-        try {
-            JSONObject jsonObject = fileLoader.loadJsonFile(fileName);
-            return jsonObject.getDouble(key);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private Double getComplexAllowanceByKey(String containerName,String key){
-        try {
-            JSONObject jsonObject = fileLoader.loadJsonFile(fileName);
-            JSONObject container = jsonObject.getJSONObject(containerName);
-            return container.getDouble(key);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    public void update() {
+        options = helper.readFromJson();
     }
 }

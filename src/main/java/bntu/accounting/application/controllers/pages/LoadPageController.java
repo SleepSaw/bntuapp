@@ -98,7 +98,10 @@ public class LoadPageController extends VisualComponentsInitializer implements I
             switch (type) {
                 case ACADEMIC:
                     try {
-                        if(p.matcher(event.getNewValue()).matches()) throw new NumberFormatException();
+                        if(!p.matcher(event.getNewValue()).matches()){
+                            load.setAcademicHours(Double.parseDouble(event.getOldValue()));
+                            throw new NumberFormatException();
+                        }
                         if(employee.getVacancy() != null){
                             value = employee.getLoad().getAcademicHours();
                             newSum = findSum(employee.getVacancy().getEmployeeList()
@@ -125,7 +128,10 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                     break;
                 case ADDITIONAL:
                     try {
-                        if(p.matcher(event.getNewValue()).matches()) throw new NumberFormatException();
+                        if(!p.matcher(event.getNewValue()).matches()){
+                            load.setAcademicHours(Double.parseDouble(event.getOldValue()));
+                            throw new NumberFormatException();
+                        }
                         if(employee.getVacancy() != null){
                             value = employee.getLoad().getAdditionalHours();
                             newSum = findSum(employee.getVacancy().getEmployeeList()
@@ -152,7 +158,10 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                     break;
                 case ORGANIZATION:
                     try {
-                        if(p.matcher(event.getNewValue()).matches()) throw new NumberFormatException();
+                        if(!p.matcher(event.getNewValue()).matches()){
+                            load.setAcademicHours(Double.parseDouble(event.getOldValue()));
+                            throw new NumberFormatException();
+                        }
                         if(employee.getVacancy() != null){
                             value = employee.getLoad().getOrganizationHours();
                             newSum = findSum(employee.getVacancy().getEmployeeList()

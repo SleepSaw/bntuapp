@@ -195,8 +195,8 @@ public class AddingPerformerWindowController extends VisualComponentsInitializer
         bindSliderToField(additionalHoursSlider, additionalHoursField);
         if (performer != null) {
             fioTextField.setText(performer.getName());
-            initComboBox(postComboBox, "posts", performer.getPost());
-            initComboBox(subjectComboBox, "subjects", performer.getSubject());
+            postComboBox.setValue(vacancy.getPost());
+            subjectComboBox.setValue(vacancy.getSubject());
             initComboBox(qualificationComboBox, "qualifications", performer.getQualification());
             initComboBox(categoryComboBox, "categories", performer.getCategory().toString());
             initComboBox(expComboBox, "experiences", performer.getExperience());

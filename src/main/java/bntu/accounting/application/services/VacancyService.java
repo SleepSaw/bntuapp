@@ -66,6 +66,13 @@ public class VacancyService {
     public List<Employee> getAllPerformers(Vacancy vacancy) {
         return vacancyDAO.getAllPerformers(vacancy.getLoad().getId());
     }
+    public Employee findPerformerByName(Vacancy vacancy,String name) {
+        Employee employee = null;
+        for (Employee e:  vacancy.getEmployeeList()){
+            if (e.getName().equals(name)) employee = e;
+        }
+        return employee;
+    }
 
     public Load findResidue(Vacancy vacancy) {
         List<Load> performersLoads = vacancy.getEmployeeList().stream().map(e -> e.getLoad()).toList();

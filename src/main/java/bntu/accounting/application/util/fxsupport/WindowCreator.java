@@ -28,14 +28,12 @@ public class WindowCreator {
     }
     private static void  initWindow(FXMLLoader loader, VisualComponentsInitializer controller) throws LoadException {
         Stage stage = new Stage();
-        Scene scene;
         controller.setStage(stage);
         loader.setController(controller);
         loadWindow(stage,loader);
     }
     private static void  initWindow(FXMLLoader loader) throws LoadException {
         Stage stage = new Stage();
-        Scene scene;
         loadWindow(stage,loader);
     }
     private static void loadWindow(Stage stage, FXMLLoader loader){
@@ -46,6 +44,7 @@ public class WindowCreator {
         catch (NullPointerException e) {
             throw new NullPointerException();
         } catch (IOException e) {
+            System.out.println(e);
             throw new RuntimeException();
         }
         stage.setScene(scene);

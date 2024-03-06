@@ -2,24 +2,36 @@ package bntu.accounting.application.services;
 
 import bntu.accounting.application.dao.impl.SalaryDAOImpl;
 import bntu.accounting.application.dao.interfaces.SalaryDAO;
+import bntu.accounting.application.iojson.OptionsJsonHelper;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Salary;
+import bntu.accounting.application.models.SalaryOptions;
 import bntu.accounting.application.models.builders.SalaryBuilder;
-import bntu.accounting.application.util.CommonData;
+import bntu.accounting.application.util.db.entityloaders.Observer;
+import bntu.accounting.application.util.db.entityloaders.SalaryInstance;
 import bntu.accounting.application.util.normalization.Normalizer;
 
-public class SalaryService {
+import java.util.Optional;
+
+public class SalaryService implements Observer {
     private AllowancesService allowancesService = new AllowancesService();
+    private OptionsJsonHelper helper = new OptionsJsonHelper();
+
+    public SalaryService() {
+        SalaryInstance.getInstance().attach(this);
+        update();
+    }
+
+    private SalaryOptions options;
     private SalaryDAO salaryDAO = new SalaryDAOImpl();
-    private final CommonData commonData = new CommonData();
     public Double calcSalaryPerRate(Integer category) {
-        return commonData.getBaseRate() * getTariffByCategory(category);
+        return allowancesService.getBaseRate() * getTariffByCategory(category);
     }
     public Double getTariffByCategory(Integer category) {
         return allowancesService.getTariffByCategory(category.toString());
     }
     public Double calcSalaryPerLoad(Double salaryPerRate, Double totalLoad) {
-        return salaryPerRate * totalLoad / 20;
+        return salaryPerRate * totalLoad / options.getLoadRate();
     }
     // Расчёт общей суммы надбавок
     public Double getTotalAllowances(Employee employee) {
@@ -69,5 +81,10 @@ public class SalaryService {
         double result = Math.round(value * 100);
         result = result / 100;
         return result;
+    }
+
+    @Override
+    public void update() {
+        options = helper.readFromJson();
     }
 }

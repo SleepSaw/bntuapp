@@ -1,21 +1,21 @@
 package bntu.accounting.application.util.db.entityloaders;
 
-import bntu.accounting.application.dao.impl.EmployeeDAOImpl;
-import bntu.accounting.application.dao.interfaces.EmployeeDAO;
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Salary;
+import bntu.accounting.application.models.SalaryOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeesInstance implements EntityInstance {
-    private static final EmployeesInstance INSTANCE = new EmployeesInstance();
+public class SalaryInstance implements EntityInstance {
+    private static final SalaryInstance INSTANCE = new SalaryInstance();
     private List<Observer> observers = new ArrayList<>();
-    private List<Employee> employees;
+    private List<Salary> salaries;
 
-    private EmployeesInstance(){
+    private SalaryInstance(){
     }
 
-    public static EmployeesInstance getInstance(){
+    public static SalaryInstance getInstance(){
         return INSTANCE;
     }
 

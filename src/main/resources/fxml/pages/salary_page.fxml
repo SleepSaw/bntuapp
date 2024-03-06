@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,43 +14,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" stylesheets="@../../css/green_theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.SalaryPageController">
-    <top>
-        <GridPane prefHeight="38.0" prefWidth="1124.0" BorderPane.alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="615.0" minWidth="10.0" prefWidth="396.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="615.0" minWidth="10.0" prefWidth="439.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="114.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="176.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Button fx:id="saveButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" style="-fx-background-color: #217346;" text="Сохранить в файл" textFill="WHITE" GridPane.columnIndex="3">
-                    <graphic>
-                        <ImageView fx:id="saveIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
-                    </graphic>
-                    <GridPane.margin>
-                        <Insets left="8.0" />
-                    </GridPane.margin>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
-            <Button fx:id="moreButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#moreButtonAction" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #a6a6a6;" text="Развернуть отчёт" textFill="WHITE" GridPane.columnIndex="2">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            </children>
-        </GridPane>
-    </top>
     <center>
-        <ScrollPane prefHeight="624.0" prefWidth="1084.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+        <ScrollPane hbarPolicy="NEVER" prefHeight="579.0" prefWidth="1094.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <content>
                 <BorderPane prefHeight="638.0" prefWidth="1092.0" style="-fx-background-color: white;">
                     <center>
-                        <TableView fx:id="salaryTable" prefHeight="636.0" prefWidth="1092.0" stylesheets="@../../css/table_view_style.css" BorderPane.alignment="CENTER">
+                        <TableView fx:id="salaryTable" prefHeight="545.0" prefWidth="1092.0" stylesheets="@../../css/table_view_style.css" BorderPane.alignment="CENTER">
                             <columns>
                                 <TableColumn fx:id="indexColumn" prefWidth="49.0" text="№" />
                                 <TableColumn fx:id="nameColumn" prefWidth="214.0" text="ФИО" />
@@ -70,12 +40,12 @@
                 </BorderPane>
             </content>
             <BorderPane.margin>
-                <Insets left="15.0" right="15.0" />
+                <Insets />
             </BorderPane.margin>
         </ScrollPane>
     </center>
     <bottom>
-        <GridPane prefHeight="52.0" prefWidth="1124.0" BorderPane.alignment="CENTER">
+        <GridPane prefHeight="48.0" prefWidth="1094.0" BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -87,4 +57,45 @@
             </rowConstraints>
         </GridPane>
     </bottom>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="717.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+         <items>
+            <Button fx:id="saveButton1" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" style="-fx-background-color: #217346;" text="Сохрнить в файл" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fx:id="saveIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Button fx:id="moreButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#moreButtonAction" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #217346;" text="Подробный отчёт" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="252.0" style="-fx-background-color: #217346;" text="Распределение надбавочного фонда" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Button fx:id="optionsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#optionsButtonAction" prefHeight="25.0" prefWidth="111.0" style="-fx-background-color: #217346;" text="Настройки" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+         </items>
+      </ToolBar>
+   </top>
+   <padding>
+      <Insets left="15.0" right="15.0" />
+   </padding>
 </BorderPane>

@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class VisualComponentsInitializer implements AlertManager {
     private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
     // название файла с конфигурацией приложения
-    private final String filePath = "options.json";
+    private final String filePath = "employee_data.json";
     private final FileLoader loader = new FileLoader();
     private Stage stage;
     public VisualComponentsInitializer() {

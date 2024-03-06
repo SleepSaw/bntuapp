@@ -5,8 +5,10 @@ import bntu.accounting.application.controllers.exceptions.SettingIncorrectValue;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.services.LoadService;
+import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
+import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,6 +28,7 @@ import java.util.regex.Pattern;
 import static bntu.accounting.application.util.enums.LoadTypes.ACADEMIC;
 
 public class LoadPageController extends VisualComponentsInitializer implements Initializable, Observer {
+    private VacancyService vacancyService = new VacancyService();
     private LoadService loadService = new LoadService();
     @FXML
     private TableColumn<Employee, String> academicLoadColumn;
@@ -110,8 +113,14 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                             maxCapacity = employee.getVacancy().getLoad().getAcademicHours();
                             if (newSum > maxCapacity ) throw new SettingIncorrectValue(
                                     "Неправильная уч нагрузка", "Нагрузка");
+                            load.setAcademicHours(Double.parseDouble(event.getNewValue()));
+                            vacancyService.updateVacancy(employee.getVacancy());
+                            VacancyInstance.getInstance().notifyObservers();
                         }
-                        load.setAcademicHours(Double.parseDouble(event.getNewValue()));
+                        else {
+                            load.setAcademicHours(Double.parseDouble(event.getNewValue()));
+                        }
+
                     }
                     catch (NumberFormatException e){
                         showErrorAlert("Ошибка ввода нагрузки",
@@ -129,7 +138,7 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                 case ADDITIONAL:
                     try {
                         if(!p.matcher(event.getNewValue()).matches()){
-                            load.setAcademicHours(Double.parseDouble(event.getOldValue()));
+                            load.setAdditionalHours(Double.parseDouble(event.getOldValue()));
                             throw new NumberFormatException();
                         }
                         if(employee.getVacancy() != null){
@@ -140,8 +149,13 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                             maxCapacity = employee.getVacancy().getLoad().getAdditionalHours();
                             if (newSum > maxCapacity ) throw new SettingIncorrectValue(
                                     "Неправильная доп нагрузка", "Нагрузка");
+                            load.setAdditionalHours(Double.parseDouble(event.getNewValue()));
+                            vacancyService.updateVacancy(employee.getVacancy());
+                            VacancyInstance.getInstance().notifyObservers();
                         }
-                        load.setAdditionalHours(Double.parseDouble(event.getNewValue()));
+                        else {
+                            load.setAdditionalHours(Double.parseDouble(event.getNewValue()));
+                        }
                     }
                     catch (NumberFormatException e){
                         showErrorAlert("Ошибка ввода нагрузки",
@@ -159,7 +173,7 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                 case ORGANIZATION:
                     try {
                         if(!p.matcher(event.getNewValue()).matches()){
-                            load.setAcademicHours(Double.parseDouble(event.getOldValue()));
+                            load.setOrganizationHours(Double.parseDouble(event.getOldValue()));
                             throw new NumberFormatException();
                         }
                         if(employee.getVacancy() != null){
@@ -170,8 +184,13 @@ public class LoadPageController extends VisualComponentsInitializer implements I
                             maxCapacity = employee.getVacancy().getLoad().getOrganizationHours();
                             if (newSum > maxCapacity ) throw new SettingIncorrectValue(
                                     "Неправильная орг нагрузка", "Нагрузка");
+                            load.setOrganizationHours(Double.parseDouble(event.getNewValue()));
+                            vacancyService.updateVacancy(employee.getVacancy());
+                            VacancyInstance.getInstance().notifyObservers();
                         }
-                        load.setOrganizationHours(Double.parseDouble(event.getNewValue()));
+                        else {
+                            load.setOrganizationHours(Double.parseDouble(event.getNewValue()));
+                        }
                     }
                     catch (NumberFormatException e){
                         showErrorAlert("Ошибка ввода нагрузки",

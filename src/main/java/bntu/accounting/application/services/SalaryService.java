@@ -7,6 +7,7 @@ import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Salary;
 import bntu.accounting.application.models.SalaryOptions;
 import bntu.accounting.application.models.builders.SalaryBuilder;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.db.entityloaders.SalaryInstance;
 import bntu.accounting.application.util.normalization.Normalizer;

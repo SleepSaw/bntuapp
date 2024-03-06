@@ -1,0 +1,26 @@
+.button{
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #afafaf;
+}
+#generalLabel{
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #217346;
+}
+#allowanceLabel{
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #217346;
+}
+.table-view .scroll-bar * {
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+.table-view:focused{
+    -fx-background-color: #fff;
+}

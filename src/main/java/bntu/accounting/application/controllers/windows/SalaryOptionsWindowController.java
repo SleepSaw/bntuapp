@@ -2,9 +2,11 @@ package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.iojson.OptionsJsonHelper;
+import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.SalaryOptions;
 import bntu.accounting.application.models.Tariff;
 import bntu.accounting.application.services.AllowancesService;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.SalaryInstance;
 import bntu.accounting.application.util.enums.AllowanceTypes;
 import javafx.beans.property.SimpleStringProperty;
@@ -117,6 +119,7 @@ public class SalaryOptionsWindowController extends VisualComponentsInitializer i
             if (res.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
                 helper.writeToJson(options);
                 SalaryInstance.getInstance().notifyObservers();
+                EmployeesInstance.getInstance().notifyObservers();
                 super.getStage().close();
             }
         });

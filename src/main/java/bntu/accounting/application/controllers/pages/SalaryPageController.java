@@ -64,18 +64,20 @@ public class SalaryPageController extends VisualComponentsInitializer implements
 
     @FXML
     private TableColumn<Employee, String> withoutLoadSalaryColumn;
+
     @FXML
     void moreButtonAction(ActionEvent event) {
         try {
-            WindowCreator.createWindow("/fxml/windows/salary_window.fxml",this);
+            WindowCreator.createWindow("/fxml/windows/salary_window.fxml", this);
         } catch (LoadException e) {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     void optionsButtonAction(ActionEvent event) {
         try {
-            WindowCreator.createWindow("/fxml/windows/salary_options_window.fxml",this,
+            WindowCreator.createWindow("/fxml/windows/salary_options_window.fxml", this,
                     new SalaryOptionsWindowController(super.getStage()));
         } catch (LoadException e) {
             throw new RuntimeException(e);
@@ -86,7 +88,7 @@ public class SalaryPageController extends VisualComponentsInitializer implements
     public void initialize(URL url, ResourceBundle resourceBundle) {
         EmployeesInstance.getInstance().attach(this);
         RowIndexer.index(indexColumn);
-        findActualSalary(updateTable(salaryTable));
+        updateTable(salaryTable);
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         loadColumn.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue()
                 .getLoad().getTotalHours())));
@@ -103,7 +105,8 @@ public class SalaryPageController extends VisualComponentsInitializer implements
         totalSalaryColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 Double.toString(data.getValue().getSalary().getTotalSalary())));
     }
-    private void findActualSalary(List<Employee> employees){
+
+    private void findActualSalary(List<Employee> employees) {
         for (Employee e : employees) {
             salaryService.getTotalSalary(e);
         }
@@ -112,5 +115,6 @@ public class SalaryPageController extends VisualComponentsInitializer implements
     @Override
     public void update() {
         findActualSalary(updateTable(salaryTable));
+        salaryTable.refresh();
     }
 }

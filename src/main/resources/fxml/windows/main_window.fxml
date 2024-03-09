@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1349.0" stylesheets="@../../css/main_window_styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.windows.MainWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1349.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.windows.MainWindowController">
     <left>
-        <AnchorPane fx:id="page" prefHeight="430.0" prefWidth="223.0" style="-fx-background-color: #d6ffe8;" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="page" prefHeight="430.0" prefWidth="223.0" style="-fx-background-color: #d6ffe8;" stylesheets="@../../css/menu_buttons_style.css" BorderPane.alignment="CENTER">
             <children>
                 <AnchorPane fx:id="right" prefHeight="775.0" prefWidth="50.0" style="-fx-background-color: #fff;">
                     <effect>
@@ -103,6 +103,9 @@
                             <HBox.margin>
                                 <Insets right="15.0" />
                             </HBox.margin>
+                     <padding>
+                        <Insets bottom="3.0" />
+                     </padding>
                         </Label>
                         <Label fx:id="employeeLabel" text="Список сотрудников">
                             <font>
@@ -111,6 +114,9 @@
                             <HBox.margin>
                                 <Insets right="15.0" />
                             </HBox.margin>
+                     <padding>
+                        <Insets bottom="3.0" />
+                     </padding>
                         </Label>
                         <Label fx:id="loadLabel" text="Нагрузка">
                             <font>
@@ -119,6 +125,9 @@
                             <HBox.margin>
                                 <Insets right="15.0" />
                             </HBox.margin>
+                     <padding>
+                        <Insets bottom="3.0" />
+                     </padding>
                         </Label>
                         <Label fx:id="salaryLabel" text="Оплата труда">
                             <font>
@@ -127,16 +136,25 @@
                             <HBox.margin>
                                 <Insets right="15.0" />
                             </HBox.margin>
+                     <padding>
+                        <Insets bottom="3.0" />
+                     </padding>
                         </Label>
                         <Label fx:id="vacancyLabel" text="Вакансии">
                             <font>
                                 <Font size="14.0" />
                             </font>
+                     <padding>
+                        <Insets bottom="3.0" />
+                     </padding>
                         </Label>
                     </children>
                     <padding>
-                        <Insets bottom="5.0" left="20.0" top="10.0" />
+                        <Insets left="20.0" />
                     </padding>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
                 </HBox>
             </top>
             <center>
@@ -150,4 +168,7 @@
             </center>
         </BorderPane>
     </center>
+   <top>
+      <AnchorPane prefHeight="1.0" prefWidth="1349.0" style="-fx-background-color: #afafaf;" BorderPane.alignment="CENTER" />
+   </top>
 </BorderPane>

@@ -75,11 +75,6 @@ public class LoadPageController extends VisualComponentsInitializer implements I
 
     }
 
-    @FXML
-    public void updateTableButtonAction(ActionEvent actionEvent) {
-        updateTable(loadTable);
-    }
-
     private Double findSum(List<Double> loads) {
         double sum = 0;
         for (Double v : loads) {

@@ -137,7 +137,7 @@
                   </Label>
                   <TableView fx:id="experienceTable" editable="true" layoutX="15.0" layoutY="194.0" prefHeight="50.0" prefWidth="321.0" stylesheets="@../../css/table_view_style.css">
                      <columns>
-                        <TableColumn fx:id="exp1Column" prefWidth="81.0" text="До 5-ти лет" />
+                        <TableColumn fx:id="exp1Column" prefWidth="81.0" text="До 5 лет" />
                         <TableColumn fx:id="exp2Column" prefWidth="77.0" text="5-10 лет" />
                         <TableColumn fx:id="exp3Column" prefWidth="75.0" text="10-15 лет" />
                         <TableColumn fx:id="exp4Column" prefWidth="87.0" text="Более 15 лет" />

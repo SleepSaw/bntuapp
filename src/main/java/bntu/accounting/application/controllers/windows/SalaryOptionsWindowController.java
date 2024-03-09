@@ -117,6 +117,12 @@ public class SalaryOptionsWindowController extends VisualComponentsInitializer i
         saveButton.setOnAction(actionEvent -> {
             Optional<ButtonType> res = showConfirmingAlert("Сохранить изменения?","");
             if (res.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
+                options.setBaseRate(Double.valueOf(baseRateField.getText()));
+                options.setLoadRate(Double.valueOf(loadRateField.getText()));
+                options.setProfActivityAllowance(Double.valueOf(profActivityField.getText()) / 100);
+                options.setYoungSpecialistAllowance(Double.valueOf(youngSpecialistField.getText()) / 100);
+                options.setWorkInIndustryAllowance(Double.valueOf(workInIndustryField.getText()) / 100);
+
                 helper.writeToJson(options);
                 SalaryInstance.getInstance().notifyObservers();
                 EmployeesInstance.getInstance().notifyObservers();
@@ -150,16 +156,16 @@ public class SalaryOptionsWindowController extends VisualComponentsInitializer i
         category10Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getTariffs().getCategory10())));
         category11Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getTariffs().getCategory11())));
 
-        exp1Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getExperienceAllowances().getStep1())));
-        exp2Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getExperienceAllowances().getStep2())));
-        exp3Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getExperienceAllowances().getStep3())));
-        exp4Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getExperienceAllowances().getStep4())));
+        exp1Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getExperienceAllowances().getStep1() * 100)));
+        exp2Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getExperienceAllowances().getStep2() * 100)));
+        exp3Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getExperienceAllowances().getStep3() * 100)));
+        exp4Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getExperienceAllowances().getStep4() * 100)));
 
-        qual1Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep1())));
-        qual2Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep2())));
-        qual3Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep3())));
-        qual4Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep4())));
-        qual5Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep5())));
+        qual1Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep1() * 100)));
+        qual2Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep2() * 100)));
+        qual3Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep3() * 100)));
+        qual4Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep4() * 100)));
+        qual5Column.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getQualificationAllowances().getStep5() * 100)));
 
         for (TableColumn<SalaryOptions, String> column : tariffColumns) {
             column.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -220,35 +226,35 @@ public class SalaryOptionsWindowController extends VisualComponentsInitializer i
     private void setExpValue(String key, Double newValueFromCell){
         switch (key) {
             case "До 5 лет":
-                options.getExperienceAllowances().setStep1(newValueFromCell);
+                options.getExperienceAllowances().setStep1(newValueFromCell / 100);
                 break;
             case "5-10 лет":
-                options.getExperienceAllowances().setStep2(newValueFromCell);
+                options.getExperienceAllowances().setStep2(newValueFromCell / 100);
                 break;
             case "10-15 лет":
-                options.getExperienceAllowances().setStep3(newValueFromCell);
+                options.getExperienceAllowances().setStep3(newValueFromCell / 100);
                 break;
-            case "св. 15 лет":
-                options.getExperienceAllowances().setStep4(newValueFromCell);
+            case "Более 15 лет":
+                options.getExperienceAllowances().setStep4(newValueFromCell / 100);
                 break;
         }
     }
     private void setQualValue(String key, Double newValueFromCell){
         switch (key) {
             case "б.к.к.":
-                options.getQualificationAllowances().setStep1(newValueFromCell);
+                options.getQualificationAllowances().setStep1(newValueFromCell / 100);
                 break;
             case "1-я к.к.":
-                options.getQualificationAllowances().setStep2(newValueFromCell);
+                options.getQualificationAllowances().setStep2(newValueFromCell / 100);
                 break;
             case "2-я к.к.":
-                options.getQualificationAllowances().setStep3(newValueFromCell);
+                options.getQualificationAllowances().setStep3(newValueFromCell / 100);
                 break;
             case "в.к.к.":
-                options.getQualificationAllowances().setStep4(newValueFromCell);
+                options.getQualificationAllowances().setStep4(newValueFromCell / 100);
                 break;
             case "уч.-методист":
-                options.getQualificationAllowances().setStep5(newValueFromCell);
+                options.getQualificationAllowances().setStep5(newValueFromCell / 100);
                 break;
         }
     }

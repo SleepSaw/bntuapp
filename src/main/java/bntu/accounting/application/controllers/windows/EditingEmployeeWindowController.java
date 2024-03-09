@@ -94,8 +94,12 @@ public class EditingEmployeeWindowController extends VisualComponentsInitializer
             specCheckBox.setSelected(false);
             contractCheckBox.setSelected(false);
         });
-        initComboBox(postComboBox, "posts", employee.getPost());
-        initComboBox(subjectComboBox, "subjects", employee.getSubject());
+        postComboBox.setValue(employee.getPost());
+        subjectComboBox.setValue(employee.getSubject());
+        if (employee.getVacancy() == null){
+            initComboBox(postComboBox, "posts", employee.getPost());
+            initComboBox(subjectComboBox, "subjects", employee.getSubject());
+        }
         initComboBox(qualificationComboBox, "qualifications", employee.getQualification());
         initComboBox(categoryComboBox, "categories", employee.getCategory().toString());
         initComboBox(expComboBox, "experiences", employee.getExperience());

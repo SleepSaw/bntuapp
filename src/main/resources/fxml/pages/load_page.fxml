@@ -24,7 +24,7 @@
                 <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="saveButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" stylesheets="@../../css/button_style.css" text="Сохранить в файл" textFill="WHITE" GridPane.columnIndex="2">
+                <Button fx:id="saveToFileButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" stylesheets="@../../css/button_style.css" text="Сохранить в файл" textFill="WHITE" GridPane.columnIndex="2">
                     <graphic>
                         <ImageView fx:id="saveIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
                     </graphic>

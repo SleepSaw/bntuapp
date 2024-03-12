@@ -14,6 +14,34 @@ import java.util.List;
 
 public class LoadService {
     private LoadDAO loadDAO = new LoadDAOImpl();
+    public Double getTotalLoadOfAllTeachers(List<Employee> employees){
+        double result =0;
+        for (Employee employee: employees) {
+            result += employee.getLoad().getTotalHours();
+        }
+        return result;
+    }
+    public Double getAcademicLoadOfAllTeachers(List<Employee> employees){
+        double result =0;
+        for (Employee teacher: employees) {
+            result += teacher.getLoad().getAcademicHours();
+        }
+        return result;
+    }
+    public Double getOrgLoadOfAllTeachers(List<Employee> employees){
+        double result =0;
+        for (Employee teacher: employees) {
+            result += teacher.getLoad().getOrganizationHours();
+        }
+        return result;
+    }
+    public Double getAddLoadOfAllTeachers(List<Employee> employees){
+        double result =0;
+        for (Employee teacher: employees) {
+            result += teacher.getLoad().getAdditionalHours();
+        }
+        return result;
+    }
     public Double findTotalHours(Load load){
         Double res = load.getAcademicHours() +
                 load.getAdditionalHours() + load.getOrganizationHours();

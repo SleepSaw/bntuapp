@@ -2,7 +2,10 @@ package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.windows.SalaryOptionsWindowController;
+import bntu.accounting.application.excel.LoadFileCreator;
+import bntu.accounting.application.excel.SalaryFileCreator;
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.services.SalaryService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
@@ -17,8 +20,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
-import java.io.IOException;
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,6 +30,7 @@ import java.util.ResourceBundle;
 public class SalaryPageController extends VisualComponentsInitializer implements Initializable, Observer {
 
     private SalaryService salaryService = new SalaryService();
+    private EmployeeService employeeService = new EmployeeService();
     @FXML
     private TableColumn<Employee, String> categoryColumn;
 
@@ -38,6 +43,22 @@ public class SalaryPageController extends VisualComponentsInitializer implements
     @FXML
     private TableColumn<Employee, String> loadColumn;
     @FXML
+    private TableColumn<Employee, String> contractAllowanceColumn;
+
+    @FXML
+    private TableColumn<Employee, String> expAllowanceColumn;
+    @FXML
+    private TableColumn<Employee, String> profActivityAllowanceColumn;
+
+    @FXML
+    private TableColumn<Employee, String> qualAllowanceColumn;
+    @FXML
+    private TableColumn<Employee, String> workInIndustryAllowanceColumn;
+    @FXML
+    private TableColumn<Employee, String> youngSpecAllowanceColumn;
+    @FXML
+    private Button separateButton;
+    @FXML
     private Button optionsButton;
     @FXML
     private Button moreButton;
@@ -46,7 +67,7 @@ public class SalaryPageController extends VisualComponentsInitializer implements
     private TableColumn<Employee, String> nameColumn;
 
     @FXML
-    private Button saveButton;
+    private Button saveToFileButton;
 
     @FXML
     private ImageView saveIcon;
@@ -100,10 +121,32 @@ public class SalaryPageController extends VisualComponentsInitializer implements
                 (data.getValue().getSalary().getRateSalary())));
         withLoadSalaryColumn.setCellValueFactory(data -> new SimpleStringProperty
                 (Double.toString(data.getValue().getSalary().getLoadSalary())));
+        contractAllowanceColumn.setCellValueFactory(data -> new SimpleStringProperty(
+                Double.toString(data.getValue().getSalary().getContractAllowance())));
+        expAllowanceColumn.setCellValueFactory(data -> new SimpleStringProperty(
+                Double.toString(data.getValue().getSalary().getExpAllowance())));
+        qualAllowanceColumn.setCellValueFactory(data -> new SimpleStringProperty(
+                Double.toString(data.getValue().getSalary().getQualAllowance())));
+        youngSpecAllowanceColumn.setCellValueFactory(data -> new SimpleStringProperty(
+                Double.toString(data.getValue().getSalary().getYSAllowance())));
+        workInIndustryAllowanceColumn.setCellValueFactory(data -> new SimpleStringProperty(
+                Double.toString(data.getValue().getSalary().getIndustryWorkAllowance())));
+        profActivityAllowanceColumn.setCellValueFactory(data -> new SimpleStringProperty(
+                Double.toString(data.getValue().getSalary().getProfActivitiesAllowance())));
         totalAllowancesColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 Double.toString(salaryService.getTotalAllowances(data.getValue()))));
         totalSalaryColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 Double.toString(data.getValue().getSalary().getTotalSalary())));
+        saveToFileButton.setOnAction(actionEvent -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+            File file = fileChooser.showSaveDialog(null);
+            if (file != null) {
+                SalaryFileCreator salaryFileCreator = new SalaryFileCreator();
+                List<Employee> employees = employeeService.getAllEmployees();
+                salaryFileCreator.createFile(file.getPath(), employees);
+            }
+        });
     }
 
     private void findActualSalary(List<Employee> employees) {

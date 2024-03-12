@@ -114,7 +114,7 @@ public class SalaryWindowController extends VisualComponentsInitializer implemen
         profActivityPercColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 showAllowance(AllowanceTypes.PROFESSIONAL_ACTIVITY,data.getValue())));
         profActivityRubColumn.setCellValueFactory(data -> new SimpleStringProperty(
-                Double.toString(data.getValue().getSalary().getSpecialActivitiesAllowance())));
+                Double.toString(data.getValue().getSalary().getProfActivitiesAllowance())));
         totalSalaryColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 Double.toString(data.getValue().getSalary().getTotalSalary())));
         updateTable(salaryTable);

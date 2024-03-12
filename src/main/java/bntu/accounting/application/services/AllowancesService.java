@@ -48,7 +48,7 @@ public class AllowancesService implements Observer {
     public Double getExpAllowance(String key){
         double result = 0;
         switch (key){
-            case "До 5 лет":
+            case "до 5 лет":
                 result = options.getExperienceAllowances().getStep1();
                 break;
             case "5-10 лет":

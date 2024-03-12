@@ -33,17 +33,18 @@
                               <TableColumn fx:id="withLoadSalaryColumn" prefWidth="70.0" text="с.у.н." />
                            </columns>
                         </TableColumn>
-                        <TableColumn fx:id="totalAllowancesColumn5" editable="false" minWidth="50.0" prefWidth="466.0" resizable="false" text="Надбавки">
+                        <TableColumn editable="false" minWidth="50.0" prefWidth="466.0" resizable="false" text="Надбавки">
                            <columns>
-                              <TableColumn fx:id="totalAllowancesColumn4" prefWidth="65.0" text="Контракт" />
-                              <TableColumn fx:id="totalAllowancesColumn3" prefWidth="77.0" text="Стаж" />
-                              <TableColumn fx:id="totalAllowancesColumn2" prefWidth="70.0" text="Спец. раб." />
-                              <TableColumn fx:id="totalAllowancesColumn1" prefWidth="69.0" text="РВО" />
-                              <TableColumn fx:id="ss" minWidth="37.0" prefWidth="62.0" text="ОПД" />
+                              <TableColumn fx:id="contractAllowanceColumn" prefWidth="65.0" text="Контракт" />
+                              <TableColumn fx:id="expAllowanceColumn" prefWidth="77.0" text="Стаж" />
+                              <TableColumn fx:id="qualAllowanceColumn" prefWidth="70.0" text="Спец. раб." />
+                              <TableColumn fx:id="youngSpecAllowanceColumn" prefWidth="70.0" text="Мол. спец." />
+                              <TableColumn fx:id="workInIndustryAllowanceColumn" prefWidth="69.0" text="РВО" />
+                              <TableColumn fx:id="profActivityAllowanceColumn" minWidth="37.0" prefWidth="62.0" text="ОПД" />
                            </columns>
                         </TableColumn>
-                        <TableColumn fx:id="totalAllowancesColumn" minWidth="0.0" prefWidth="116.0" text="Сумма надбавок" />
-                        <TableColumn fx:id="totalSalaryColumn" minWidth="0.0" prefWidth="122.0" text="Суммарный оклад" />
+                        <TableColumn fx:id="totalAllowancesColumn" minWidth="0.0" prefWidth="65.0" text="Надбавки" />
+                        <TableColumn fx:id="totalSalaryColumn" minWidth="0.0" prefWidth="103.0" text="Сум. оклад" />
                             </columns>
                         </TableView>
                     </center>
@@ -69,7 +70,7 @@
             <Insets left="15.0" right="15.0" top="10.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="saveButton1" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="160.0" stylesheets="@../../css/button_style.css" text="Сохранить в файл" textFill="WHITE" GridPane.columnIndex="3">
+            <Button fx:id="saveToFileButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="160.0" stylesheets="@../../css/button_style.css" text="Сохранить в файл" textFill="WHITE" GridPane.columnIndex="3">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -108,7 +109,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="separateButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#moreButtonAction" prefHeight="27.0" prefWidth="186.0" style="-fx-background-color: #fdf8e7;" stylesheets="@../../css/button_style.css" text="Распределить фонд ОПД" textFill="WHITE" GridPane.columnIndex="1">
+            <Button fx:id="separateButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="186.0" style="-fx-background-color: #fdf8e7;" stylesheets="@../../css/button_style.css" text="Распределить фонд ОПД" textFill="WHITE" GridPane.columnIndex="1">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

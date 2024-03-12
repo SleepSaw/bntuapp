@@ -100,7 +100,11 @@ public class ShowVacancyWindowController extends VisualComponentsInitializer imp
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.getStage().setOnCloseRequest(event -> {
-            setActionToSaveChanges();
+            Optional<ButtonType> result = showConfirmingAlert("Сохранить изменения?",
+                    "Вы действительно хотите сохранить изменения?");
+            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                setActionToSaveChanges();
+            }
             EmployeesInstance.getInstance().detach(this);
         });
         super.getStage().initModality(Modality.APPLICATION_MODAL);

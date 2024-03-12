@@ -8,6 +8,8 @@ module bntu.accounting.application {
     requires java.naming;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 
 
     opens bntu.accounting.application.controllers to javafx.fxml;
@@ -27,5 +29,6 @@ module bntu.accounting.application {
     opens bntu.accounting.application.util.fxsupport to hibernate.entitymanager, jakarta.persistence, javafx.base;
     opens bntu.accounting.application.util.db.entityloaders to hibernate.entitymanager, jakarta.persistence, javafx.base;
     opens bntu.accounting.application.controllers.alerts to javafx.fxml;
+    exports bntu.accounting.application.services;
 
 }

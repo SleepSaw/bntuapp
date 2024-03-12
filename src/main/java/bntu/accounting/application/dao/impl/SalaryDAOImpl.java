@@ -54,7 +54,7 @@ public class SalaryDAOImpl implements SalaryDAO {
             salary.setQualAllowance(updatedSalary.getQualAllowance());
             salary.setContractAllowance(updatedSalary.getContractAllowance());
             salary.setIndustryWorkAllowance(updatedSalary.getIndustryWorkAllowance());
-            salary.setSpecialActivitiesAllowance(updatedSalary.getSpecialActivitiesAllowance());
+            salary.setProfActivitiesAllowance(updatedSalary.getProfActivitiesAllowance());
             salary.setYSAllowance(updatedSalary.getYSAllowance());
             session.getTransaction().commit();
         } catch (HibernateException e) {

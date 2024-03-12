@@ -7,12 +7,11 @@ import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Salary;
 import bntu.accounting.application.models.SalaryOptions;
 import bntu.accounting.application.models.builders.SalaryBuilder;
-import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.db.entityloaders.SalaryInstance;
 import bntu.accounting.application.util.normalization.Normalizer;
 
-import java.util.Optional;
+import java.util.List;
 
 public class SalaryService implements Observer {
     private AllowancesService allowancesService = new AllowancesService();
@@ -34,11 +33,15 @@ public class SalaryService implements Observer {
     public Double calcSalaryPerLoad(Double salaryPerRate, Double totalLoad) {
         return salaryPerRate * totalLoad / options.getLoadRate();
     }
+    public Double caclExpAllowance(String key, Double load){
+        return options.getBaseRate() * allowancesService.getExpAllowance(key) * load / options.getLoadRate();
+    }
     // Расчёт общей суммы надбавок
     public Double getTotalAllowances(Employee employee) {
         double rate = calcSalaryPerRate(employee.getCategory());
         double loadRate = calcSalaryPerLoad(rate, employee.getLoad().getTotalHours());
-        double exp = allowancesService.getExpAllowance(employee.getExperience()) * loadRate;
+        double exp = allowancesService.getExpAllowance(employee.getExperience()) * options.getBaseRate() * options.getLoadRate()
+                * employee.getLoad().getTotalHours();
         double qual = allowancesService.getQualAllowance(employee.getQualification()) * loadRate;
         double YS = 0;
         if (employee.getYoungSpecialist()) YS = allowancesService.getYoungSpecialistAllowance() * loadRate;
@@ -51,7 +54,8 @@ public class SalaryService implements Observer {
     public Double getTotalAllowances(Employee employee, SalaryBuilder builder) {
         double rate = calcSalaryPerRate(employee.getCategory());
         double loadRate = calcSalaryPerLoad(rate, employee.getLoad().getTotalHours());
-        builder.setExpAllowance(allowancesService.getExpAllowance(employee.getExperience()) * loadRate);
+        builder.setExpAllowance(allowancesService.getExpAllowance(employee.getExperience()) * options.getBaseRate() * options.getLoadRate()
+                * employee.getLoad().getTotalHours());
         builder.setQualAllowance(allowancesService.getQualAllowance(employee.getQualification()) * loadRate);
         double YS = 0;
         if (employee.getYoungSpecialist()) YS = allowancesService.getYoungSpecialistAllowance() * loadRate;
@@ -77,6 +81,69 @@ public class SalaryService implements Observer {
         Normalizer.normalizeSalary(salary);
         salaryDAO.updateSalary(employee.getLoad().getId(),salary);
         return roundValue(loadRate + getTotalAllowances(employee));
+    }
+    public Double getTotalSalaryOfAllTeachers(List<Employee> employees){
+        double result = 0;
+        for (Employee teacher: employees) {
+            result += teacher.getSalary().getTotalSalary();
+        }
+        return roundValue(result);
+    }
+    public Double getSalaryPerRateOfAllTeachers(List<Employee> employees){
+        double result = 0;
+        for (Employee employee: employees) {
+            result += employee.getSalary().getRateSalary();
+        }
+        return roundValue(result);
+    }
+    public Double getSalaryByLoadOfAllTeachers(List<Employee> employees){
+        double result =0;
+        for (Employee employee: employees) {
+            result += employee.getSalary().getLoadSalary();
+        }
+        return roundValue(result);
+    }
+    public Double getExpAllowanceOfAllTeachers(List<Employee> teachers){
+        double result = 0;
+        for (Employee employee: teachers) {
+            result += employee.getSalary().getExpAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getContractAllowanceOfAllTeachers(List<Employee> employees){
+        double result = 0;
+        for (Employee employee: employees) {
+            result += employee.getSalary().getContractAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getQualAllowanceOfAllTeachers(List<Employee> employees){
+        double result = 0;
+        for (Employee employee: employees) {
+            result += employee.getSalary().getQualAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getYoungSpecAllowanceOfAllTeachers(List<Employee> employees){
+        double result = 0;
+        for (Employee employee: employees) {
+            result += employee.getSalary().getYSAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getProfActivitiesAllowanceOfAllTeachers(List<Employee> employees){
+        double result = 0;
+        for (Employee employee: employees) {
+            result += employee.getSalary().getProfActivitiesAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getWorkInIndustryAllowanceOfAllTeachers(List<Employee> employees){
+        double result = 0;
+        for (Employee employee: employees) {
+            result += employee.getSalary().getIndustryWorkAllowance();
+        }
+        return roundValue(result);
     }
     private double roundValue(double value) {
         double result = Math.round(value * 100);

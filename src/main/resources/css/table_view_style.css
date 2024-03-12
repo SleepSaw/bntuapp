@@ -12,3 +12,6 @@
     -fx-pref-height: 0;
     -fx-max-height: 0;
 }
+.column-header{
+    -fx-wrap-text: true;
+}

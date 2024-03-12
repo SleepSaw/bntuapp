@@ -28,7 +28,7 @@ public class Salary {
     @Column(name = "contract_allowance")
     private Double contractAllowance;
     @Column(name = "special_activities_allowance")
-    private Double specialActivitiesAllowance;
+    private Double profActivitiesAllowance;
     public Salary() {
     }
 
@@ -42,7 +42,7 @@ public class Salary {
         this.YSAllowance = YSAllowance;
         this.industryWorkAllowance = industryWorkAllowance;
         this.contractAllowance = contractAllowance;
-        this.specialActivitiesAllowance = specialActivitiesAllowance;
+        this.profActivitiesAllowance = specialActivitiesAllowance;
     }
 
     public Employee getEmployee() {
@@ -117,12 +117,12 @@ public class Salary {
         this.contractAllowance = contractAllowance;
     }
 
-    public Double getSpecialActivitiesAllowance() {
-        return specialActivitiesAllowance;
+    public Double getProfActivitiesAllowance() {
+        return profActivitiesAllowance;
     }
 
-    public void setSpecialActivitiesAllowance(Double specialActivitiesAllowance) {
-        this.specialActivitiesAllowance = specialActivitiesAllowance;
+    public void setProfActivitiesAllowance(Double specialActivitiesAllowance) {
+        this.profActivitiesAllowance = specialActivitiesAllowance;
     }
 
     @Override
@@ -138,11 +138,11 @@ public class Salary {
                 && Objects.equals(YSAllowance, salary.YSAllowance)
                 && Objects.equals(industryWorkAllowance, salary.industryWorkAllowance)
                 && Objects.equals(contractAllowance, salary.contractAllowance)
-                && Objects.equals(specialActivitiesAllowance, salary.specialActivitiesAllowance);
+                && Objects.equals(profActivitiesAllowance, salary.profActivitiesAllowance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(totalSalary, rateSalary, loadSalary, expAllowance, qualAllowance, YSAllowance, industryWorkAllowance, contractAllowance, specialActivitiesAllowance);
+        return Objects.hash(totalSalary, rateSalary, loadSalary, expAllowance, qualAllowance, YSAllowance, industryWorkAllowance, contractAllowance, profActivitiesAllowance);
     }
 }

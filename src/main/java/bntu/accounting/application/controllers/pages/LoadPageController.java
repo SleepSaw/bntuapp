@@ -2,8 +2,10 @@ package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.exceptions.SettingIncorrectValue;
+import bntu.accounting.application.excel.LoadFileCreator;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
+import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
@@ -15,11 +17,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,6 +35,7 @@ import static bntu.accounting.application.util.enums.LoadTypes.ACADEMIC;
 public class LoadPageController extends VisualComponentsInitializer implements Initializable, Observer {
     private VacancyService vacancyService = new VacancyService();
     private LoadService loadService = new LoadService();
+    private EmployeeService employeeService = new EmployeeService();
     @FXML
     private TableColumn<Employee, String> academicLoadColumn;
     @FXML
@@ -48,6 +54,8 @@ public class LoadPageController extends VisualComponentsInitializer implements I
     private TableColumn<Employee, String> totalLoadColumn;
     @FXML
     private TableView<Employee> loadTable;
+    @FXML
+    private Button saveToFileButton;
     @FXML
     private BorderPane loadWindow;
 
@@ -72,6 +80,17 @@ public class LoadPageController extends VisualComponentsInitializer implements I
         provideEditingOfColumn(addLoadColumn, LoadTypes.ADDITIONAL);
         // Установка таблицы редактируемой
         loadTable.setEditable(true);
+
+        saveToFileButton.setOnAction(actionEvent -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+            File file = fileChooser.showSaveDialog(null);
+            if (file != null) {
+                LoadFileCreator loadFileCreator = new LoadFileCreator();
+                List<Employee> employees = employeeService.getAllEmployees();
+                loadFileCreator.createFile(file.getPath(), employees);
+            }
+        });
 
     }
 

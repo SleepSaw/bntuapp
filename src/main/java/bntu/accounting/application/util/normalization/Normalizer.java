@@ -11,7 +11,7 @@ public class Normalizer extends RounderValues {
         salary.setExpAllowance(normalizeItem(salary.getExpAllowance()));
         salary.setQualAllowance(normalizeItem(salary.getQualAllowance()));
         salary.setContractAllowance(normalizeItem(salary.getContractAllowance()));
-        salary.setSpecialActivitiesAllowance(normalizeItem(salary.getSpecialActivitiesAllowance()));
+        salary.setProfActivitiesAllowance(normalizeItem(salary.getProfActivitiesAllowance()));
         salary.setYSAllowance(normalizeItem(salary.getYSAllowance()));
         salary.setIndustryWorkAllowance(normalizeItem(salary.getIndustryWorkAllowance()));
     }

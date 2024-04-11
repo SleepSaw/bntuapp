@@ -1,6 +1,6 @@
 package bntu.accounting.application.excel;
 
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Item;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -27,20 +27,20 @@ public interface ExcelTable {
     void setAllColumnsWidth();
 
     /**
-     * Добавляет всех учителей из списка в Excel таблицу.
+     * Добавляет всех работников из списка в Excel таблицу.
      * @param startRow - индекс строки, с которой начнётся добавление учителей
-     * @param employees - список учителей для добавления в таблицу
+     * @param employees - список работников для добавления в таблицу
      * @return индекс строки, в которую был добавлен последний учитель
      * */
-    int addAllTeacherToTable(int startRow, List<Employee> employees);
+    int addAllItemsToTable(int startRow, List<Item> item);
 
     /**
-     * Добавляет учителя в заданную строку.
+     * Добавляет работника в заданную строку.
      * @param number - номер учителя в таблице
-     * @param employee - учитель
+     * @param employee - работник
      * @param row - строка, в которую учитель будет добавляться
      * */
-    void addOneTeacherToTable(Integer number, Employee employee, Row row);
+    void addEmployeeToTable(Integer number, Item item, Row row);
 
 
 

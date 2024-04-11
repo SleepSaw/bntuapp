@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "vacancy")
-public class Vacancy {
+public class Vacancy extends Item {
     @Id
     @OneToOne
     @JoinColumn(name = "id", referencedColumnName = "id")
@@ -23,7 +23,6 @@ public class Vacancy {
     private String comment;
     @Column(name = "status")
     private String status;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "vacancy", cascade = CascadeType.REMOVE)
     private List<Employee> employeeList;
 

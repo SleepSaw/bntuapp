@@ -2,9 +2,9 @@ package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.windows.SalaryOptionsWindowController;
-import bntu.accounting.application.excel.LoadFileCreator;
 import bntu.accounting.application.excel.SalaryFileCreator;
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Item;
 import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.services.SalaryService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
@@ -143,8 +143,8 @@ public class SalaryPageController extends VisualComponentsInitializer implements
             File file = fileChooser.showSaveDialog(null);
             if (file != null) {
                 SalaryFileCreator salaryFileCreator = new SalaryFileCreator();
-                List<Employee> employees = employeeService.getAllEmployees();
-                salaryFileCreator.createFile(file.getPath(), employees);
+                List<Item> items = employeeService.getAllEmployees().stream().map(e -> e.getParent()).toList();
+                salaryFileCreator.createFile(file.getPath(), items);
             }
         });
     }

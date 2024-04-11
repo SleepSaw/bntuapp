@@ -2,6 +2,7 @@ package bntu.accounting.application.excel;
 
 import bntu.accounting.application.iojson.FileLoader;
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Item;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -13,13 +14,13 @@ import java.util.List;
 
 public class SalaryFileCreator {
     private final static String headerFilePath = "excel_header.json";
-    private final static String salaryTableFilePath = "salary_table.json";
+    private final static String salaryTableFilePath = "tariffication.json";
     private FileLoader jsonFileLoader;
     private ExcelFileHeaderCreator headerCreator;
     private ExcelSalaryTableCreator SalaryTableCreator;
     private Workbook workbook;
 
-    public void createFile(String filePath, List<Employee> employees){
+    public void createFile(String filePath, List<Item> items){
         try(Workbook workbook = new XSSFWorkbook()){
             this.workbook = workbook;
             Sheet sheet = workbook.createSheet("Педагогическая нагрузка");
@@ -28,8 +29,8 @@ public class SalaryFileCreator {
             JSONObject salaryTableData = jsonFileLoader.loadJsonFile(salaryTableFilePath);
             headerCreator.writeDataToExcel(filePath,12,headersData);
             SalaryTableCreator.createLoadTableColumns(filePath,salaryTableData);
-            int endRow = SalaryTableCreator.addAllTeacherToTable(14,employees);
-            SalaryTableCreator.addCommonData(endRow, employees);
+            int endRow = SalaryTableCreator.addAllItemsToTable(14,items);
+            SalaryTableCreator.addCommonData(endRow, items);
             try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
                 workbook.write(outputStream);
             }

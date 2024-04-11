@@ -1,5 +1,6 @@
 package bntu.accounting.application;
 
+import bntu.accounting.application.doc.obj.TableCreator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

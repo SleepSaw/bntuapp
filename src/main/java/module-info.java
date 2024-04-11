@@ -30,5 +30,13 @@ module bntu.accounting.application {
     opens bntu.accounting.application.util.db.entityloaders to hibernate.entitymanager, jakarta.persistence, javafx.base;
     opens bntu.accounting.application.controllers.alerts to javafx.fxml;
     exports bntu.accounting.application.services;
+    exports bntu.accounting.application.doc;
+    opens bntu.accounting.application.doc to com.fasterxml.jackson.core;
+    exports bntu.accounting.application.doc.strategies;
+    opens bntu.accounting.application.doc.strategies to com.fasterxml.jackson.core;
+    exports bntu.accounting.application.doc.obj;
+    opens bntu.accounting.application.doc.obj to com.fasterxml.jackson.core;
+    exports bntu.accounting.application.excel;
+    opens bntu.accounting.application.excel to com.fasterxml.jackson.core;
 
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee extends Item {
     @Id
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id", referencedColumnName = "id")

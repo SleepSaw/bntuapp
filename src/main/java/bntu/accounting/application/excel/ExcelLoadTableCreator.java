@@ -1,6 +1,7 @@
 package bntu.accounting.application.excel;
 
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Item;
 import bntu.accounting.application.services.LoadService;
 import org.apache.poi.ss.usermodel.*;
 import org.json.JSONObject;
@@ -17,7 +18,7 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
 
     public void createLoadTableColumns(String fileName, JSONObject jsonData) {
 
-        CellStyle columnsStyle = createCellStyle(createFont("Times New Roman", 16, false));
+        CellStyle columnsStyle = setFontForCell(createFont("Times New Roman", 16, false));
         columnsStyle.setAlignment(HorizontalAlignment.CENTER);
         columnsStyle.setWrapText(true);
         columnsStyle.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -25,7 +26,7 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
         columnsStyle.setBorderBottom(BorderStyle.THIN);
         columnsStyle.setBorderLeft(BorderStyle.THIN);
         columnsStyle.setBorderRight(BorderStyle.THIN);
-        CellStyle styleBold = createCellStyle(createFont("Times New Roman", 20, true));
+        CellStyle styleBold = setFontForCell(createFont("Times New Roman", 20, true));
 
         setAllColumnsWidth();
 
@@ -73,17 +74,20 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
     }
 
     @Override
-    public void addCommonData(int rowIndex, List<Employee> employees) {
+    public void addCommonData(int rowIndex, List<Item> items) {
+        List<Employee> employees = items.stream().map(e -> (Employee) e).toList();
         Row row = sheet.createRow(rowIndex);
         CellStyle style = workbook.createCellStyle();
         style.cloneStyleFrom(columnStyle);
         Font font = createFont("Times New Roman",16,true,false);
         style.setFont(font);
-        style.setAlignment(HorizontalAlignment.LEFT);
+        CellStyle leftStyle = workbook.createCellStyle();
+        leftStyle.cloneStyleFrom(style);
+        leftStyle.setAlignment(HorizontalAlignment.LEFT);
 
         LoadService service = new LoadService();
         addCell(0,null,style,row);
-        addCell(1,"ИТОГО:",style,row);
+        addCell(1,"ИТОГО:",leftStyle,row);
         addCell(2,null,style,row);
         addCell(3,null,style,row);
         style.setAlignment(HorizontalAlignment.RIGHT);
@@ -98,8 +102,10 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
         cell.setCellStyle(style);
     }
 
+
     @Override
-    public void addOneTeacherToTable(Integer number,Employee employee, Row row) {
+    public void addEmployeeToTable(Integer number, Item item, Row row) {
+        Employee employee = (Employee) item;
         CellStyle styleAlignCenter = workbook.createCellStyle();
         styleAlignCenter.cloneStyleFrom(columnStyle);
         styleAlignCenter.setAlignment(HorizontalAlignment.CENTER);

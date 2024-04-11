@@ -1,7 +1,6 @@
 package bntu.accounting.application.excel;
 
 import bntu.accounting.application.iojson.FileLoader;
-import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Item;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -12,26 +11,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-public class LoadFileCreator {
+public class TarifficationFileCreator  {
     private final static String headerFilePath = "excel_header.json";
     private final static String loadTableFilePath = "tariffication.json";
     private FileLoader jsonFileLoader;
     private ExcelFileHeaderCreator headerCreator;
-    private ExcelLoadTableCreator loadTableCreator;
+    private ExcelTarifficationTableCreator tarifficationTableCreator;
     private Workbook workbook;
 
     public void createFile(String filePath, List<Item> items){
         try(Workbook workbook = new XSSFWorkbook()){
             this.workbook = workbook;
-            Sheet sheet = workbook.createSheet("Педагогическая нагрузка");
+            Sheet sheet = workbook.createSheet("Тарификация");
             init();
             JSONObject headersData = jsonFileLoader.loadJsonFile(headerFilePath);
             JSONObject loadTableData = jsonFileLoader.loadJsonFile(loadTableFilePath);
             headerCreator.writeDataToExcel(filePath,5,headersData);
             headerCreator.createRightBlock(5,headersData);
-            loadTableCreator.createLoadTableColumns(filePath,loadTableData);
-            int endRow = loadTableCreator.addAllItemsToTable(14,items);
-            loadTableCreator.addCommonData(endRow, items);
+            tarifficationTableCreator.createLoadTableColumns(filePath,loadTableData);
+            int endRow = tarifficationTableCreator.addAllItemsToTable(14,items);
+            tarifficationTableCreator.addCommonData(endRow, items);
+            tarifficationTableCreator.writeVacanciesData(endRow+1);
             try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
                 workbook.write(outputStream);
             }
@@ -41,8 +41,7 @@ public class LoadFileCreator {
     }
     private void init(){
         headerCreator = new ExcelFileHeaderCreator(workbook);
-        loadTableCreator = new ExcelLoadTableCreator(workbook);
+        tarifficationTableCreator = new ExcelTarifficationTableCreator(workbook);
         jsonFileLoader = new FileLoader();
     }
-
 }

@@ -1,6 +1,7 @@
 package bntu.accounting.application.excel;
 
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Item;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.SalaryService;
 import org.apache.poi.ss.usermodel.*;
@@ -18,7 +19,7 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
 
     public void createLoadTableColumns(String fileName, JSONObject jsonData) {
 
-        CellStyle columnsStyle = createCellStyle(createFont("Times New Roman", 16, false));
+        CellStyle columnsStyle = setFontForCell(createFont("Times New Roman", 16, false));
         columnsStyle.setAlignment(HorizontalAlignment.CENTER);
         columnsStyle.setWrapText(true);
         columnsStyle.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -26,7 +27,7 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         columnsStyle.setBorderBottom(BorderStyle.THIN);
         columnsStyle.setBorderLeft(BorderStyle.THIN);
         columnsStyle.setBorderRight(BorderStyle.THIN);
-        CellStyle styleBold = createCellStyle(createFont("Times New Roman", 20, true));
+        CellStyle styleBold = setFontForCell(createFont("Times New Roman", 20, true));
 
         setAllColumnsWidth();
 
@@ -50,7 +51,7 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,false);
         createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,false);
         createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,false);
-        createColumn(10,12,3,3,jsonData.getString("total_load_column"),columnsStyle,true);
+        createColumn(10,12,3,3,jsonData.getString("salary_total_load_column"),columnsStyle,true);
         createColumn(10,12,4,4,jsonData.getString("qualification_column"),columnsStyle,true);
         createColumn(10,12,5,5,jsonData.getString("exp_column"),columnsStyle,true);
         createColumn(10,12,6,6,jsonData.getString("category_column"),columnsStyle,true);
@@ -104,18 +105,21 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
     }
 
     @Override
-    public void addCommonData(int rowIndex, List<Employee> employees) {
+    public void addCommonData(int rowIndex, List<Item> items) {
+        List<Employee> employees = items.stream().map(e -> (Employee) e).toList();
         Row row = sheet.createRow(rowIndex);
         CellStyle style = workbook.createCellStyle();
         style.cloneStyleFrom(columnStyle);
         Font font = createFont("Times New Roman",16,true,false);
         style.setFont(font);
-        style.setAlignment(HorizontalAlignment.LEFT);
+        CellStyle leftStyle = workbook.createCellStyle();
+        leftStyle.cloneStyleFrom(style);
+        leftStyle.setAlignment(HorizontalAlignment.LEFT);
 
         SalaryService salaryService = new SalaryService();
         LoadService loadService = new LoadService();
         addCell(0,null,style,row);
-        addCell(1,"ИТОГО:",style,row);
+        addCell(1,"ИТОГО:",leftStyle,row);
         addCell(2,null,style,row);
         addCell(3,loadService.getTotalLoadOfAllTeachers(employees).toString(),style,row);
         addCell(4,null,style,row);
@@ -142,9 +146,10 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
     }
 
     @Override
-    public void addOneTeacherToTable(Integer number, Employee employee, Row row) {
+    public void addEmployeeToTable(Integer number, Item item, Row row) {
+        Employee employee = (Employee) item;
         row.setHeightInPoints(20);
-        CellStyle columnsStyle = createCellStyle(createFont("Times New Roman", 16, false));
+        CellStyle columnsStyle = setFontForCell(createFont("Times New Roman", 16, false));
         columnsStyle.setAlignment(HorizontalAlignment.CENTER);
         columnsStyle.setWrapText(true);
         columnsStyle.setVerticalAlignment(VerticalAlignment.CENTER);

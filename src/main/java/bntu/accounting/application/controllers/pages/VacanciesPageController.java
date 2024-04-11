@@ -26,11 +26,17 @@ public class VacanciesPageController implements Initializable, Observer {
     private Button addVacancyButton;
     @FXML
     private VBox vacanciesContainer;
+    @FXML
+    private Button documentButton;
 
     @FXML
     private void addVacancyButtonAction(ActionEvent event) throws IOException {
         WindowCreator.createWindow("/fxml/windows/add_vacancy_window.fxml", this,
                 new AddingVacancyWindowController());
+    }
+    @FXML
+    private void documentButtonAction(ActionEvent event) {
+        // TODO
     }
 
     @Override

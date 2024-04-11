@@ -14,9 +14,9 @@ public class ExcelFileHeaderCreator extends ExcelUtil {
     private Row row3 = sheet.createRow(3);
     private Row row5 = sheet.createRow(5);
     private Row row6 = sheet.createRow(6);
-    private CellStyle headerStyle = createCellStyle(createFont("Times New Roman", 20, false));
-    private CellStyle headerStyleBold = createCellStyle(createFont("Times New Roman", 20, true));
-    private CellStyle headerStyleBoldRight = createCellStyle(createFont("Times New Roman", 24, true));
+    private CellStyle headerStyle = setFontForCell(createFont("Times New Roman", 20, false));
+    private CellStyle headerStyleBold = setFontForCell(createFont("Times New Roman", 20, true));
+    private CellStyle headerStyleBoldRight = setFontForCell(createFont("Times New Roman", 24, true));
 
     public ExcelFileHeaderCreator(Workbook workbook) {
         super(workbook);

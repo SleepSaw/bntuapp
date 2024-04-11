@@ -15,7 +15,7 @@ import java.util.List;
 public class LoadService {
     private LoadDAO loadDAO = new LoadDAOImpl();
     public Double getTotalLoadOfAllTeachers(List<Employee> employees){
-        double result =0;
+        double result = 0;
         for (Employee employee: employees) {
             result += employee.getLoad().getTotalHours();
         }

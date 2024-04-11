@@ -21,7 +21,6 @@ public class SalaryService implements Observer {
         SalaryInstance.getInstance().attach(this);
         update();
     }
-
     private SalaryOptions options;
     private SalaryDAO salaryDAO = new SalaryDAOImpl();
     public Double calcSalaryPerRate(Integer category) {
@@ -81,6 +80,16 @@ public class SalaryService implements Observer {
         Normalizer.normalizeSalary(salary);
         salaryDAO.updateSalary(employee.getLoad().getId(),salary);
         return roundValue(loadRate + getTotalAllowances(employee));
+    }
+    public Double getTotalSalary(Salary salary) {
+        return
+                salary.getLoadSalary() +
+                        salary.getExpAllowance() +
+                        salary.getQualAllowance() +
+                        salary.getYSAllowance() +
+                        salary.getProfActivitiesAllowance() +
+                        salary.getContractAllowance() +
+                        salary.getIndustryWorkAllowance();
     }
     public Double getTotalSalaryOfAllTeachers(List<Employee> employees){
         double result = 0;

@@ -60,7 +60,7 @@
                   </ImageView>
                </graphic>
                   </Button>
-            <Button graphicTextGap="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="119.0" stylesheets="@../../css/button_style.css" text="Создать отчёт" textFill="white" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="documentButton" graphicTextGap="10.0" mnemonicParsing="false" onAction="#documentButtonAction" prefHeight="27.0" prefWidth="119.0" stylesheets="@../../css/button_style.css" text="Создать отчёт" textFill="white" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

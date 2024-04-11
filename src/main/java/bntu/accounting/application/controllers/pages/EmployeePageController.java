@@ -2,7 +2,11 @@ package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.windows.AddingEmployeeWindowController;
 import bntu.accounting.application.controllers.windows.EditingEmployeeWindowController;
+import bntu.accounting.application.doc.ExcelFileCreator;
+import bntu.accounting.application.doc.TableType;
+import bntu.accounting.application.excel.TarifficationFileCreator;
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Item;
 import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
@@ -16,7 +20,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -80,6 +86,17 @@ public class EmployeePageController implements Initializable, Observer {
     void addEmployeeButtonAction(ActionEvent event) throws IOException {
         WindowCreator.createWindow("/fxml/windows/add_employee_window.fxml", this,
                 new AddingEmployeeWindowController());
+    }
+    @FXML
+    void saveButtonAction(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+        File file = fileChooser.showSaveDialog(null);
+        if (file != null) {
+            TarifficationFileCreator tarifficationFileCreator = new TarifficationFileCreator();
+            List<Item> items = employeeService.getAllEmployees().stream().map(e -> e.getParent()).toList();
+            tarifficationFileCreator.createFile(file.getPath(), items);
+        }
     }
     @FXML
     void updateTableButtonAction(ActionEvent event) {

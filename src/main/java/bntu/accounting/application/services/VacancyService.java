@@ -6,13 +6,16 @@ import bntu.accounting.application.dao.interfaces.EmployeeDAO;
 import bntu.accounting.application.dao.interfaces.VacancyDAO;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Load;
+import bntu.accounting.application.models.Salary;
 import bntu.accounting.application.models.Vacancy;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.normalization.Normalizer;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VacancyService {
 
@@ -103,4 +106,45 @@ public class VacancyService {
         }
         return status;
     }
+
+    // Плановые показатели
+    public Map<Vacancy,Salary> getPlannedVacanciesSalary(List<Vacancy> vacancies,List<Employee> employees){
+        SalaryService salaryService = new SalaryService();
+        AllowancesService allowancesService = new AllowancesService();
+        Map<Vacancy,Salary> pairs = new HashMap<>();
+        List<Salary> salaries = employees.stream().map(e -> e.getSalary()).toList();
+        for (Vacancy vacancy : vacancies){
+            Salary salary = new Salary();
+            Load residue = findResidue(vacancy);
+            salary.setRateSalary(roundValue(findPlannedRate(salaries.stream().map(e -> e.getRateSalary()).toList())));
+            salary.setLoadSalary(roundValue(residue.getTotalHours() * salary.getRateSalary() / 20));
+            salary.setExpAllowance(roundValue(findPlannedRate(salaries.stream().map(e -> e.getExpAllowance()).toList())
+                    * residue.getTotalHours() / 20));
+            salary.setQualAllowance(roundValue(findPlannedRate(salaries.stream().map(e -> e.getQualAllowance()).toList())
+                    * residue.getTotalHours() / 20));
+            salary.setContractAllowance(roundValue(findPlannedRate(salaries.stream().map(e -> e.getContractAllowance()).toList())
+                    * residue.getTotalHours() / 20));
+            salary.setYSAllowance(roundValue(findPlannedRate(salaries.stream().map(e -> e.getYSAllowance()).toList())
+                    * residue.getTotalHours() / 20));
+            salary.setIndustryWorkAllowance(roundValue(salary.getLoadSalary() * allowancesService.getWorkInIndustryAllowance()));
+            salary.setProfActivitiesAllowance(0.00D);
+            salary.setTotalSalary(roundValue(salaryService.getTotalSalary(salary)));
+            pairs.put(vacancy,salary);
+        }
+        return pairs;
+    }
+    private double roundValue(double value) {
+        double result = Math.round(value * 100);
+        result = result / 100;
+        return result;
+    }
+    // Поиск среднего значения
+    public double findPlannedRate(List<Double> list){
+        double sum = 0;
+        for (double v : list){
+            sum += v;
+        }
+        return sum / list.size();
+    }
+
 }

@@ -13,7 +13,6 @@ public class SalaryOptions {
     private Double profActivityAllowance;
     @JsonProperty("work_in_industry_allowance")
     private Double workInIndustryAllowance;
-
     @JsonProperty("tariffs")
     private Tariff tariffs = new Tariff();
     @JsonProperty("experience")

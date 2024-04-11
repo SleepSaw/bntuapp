@@ -4,6 +4,7 @@ import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.exceptions.SettingIncorrectValue;
 import bntu.accounting.application.excel.LoadFileCreator;
 import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.Item;
 import bntu.accounting.application.models.Load;
 import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.services.LoadService;
@@ -87,8 +88,8 @@ public class LoadPageController extends VisualComponentsInitializer implements I
             File file = fileChooser.showSaveDialog(null);
             if (file != null) {
                 LoadFileCreator loadFileCreator = new LoadFileCreator();
-                List<Employee> employees = employeeService.getAllEmployees();
-                loadFileCreator.createFile(file.getPath(), employees);
+                List<Item> items = employeeService.getAllEmployees().stream().map(e -> e.getParent()).toList();
+                loadFileCreator.createFile(file.getPath(), items);
             }
         });
 

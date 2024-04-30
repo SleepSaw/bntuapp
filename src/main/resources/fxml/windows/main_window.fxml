@@ -159,7 +159,7 @@
             </top>
             <center>
                 <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                    <fx:include fx:id="homePage" source="../pages/home_page.fxml" />
+                    <fx:include fx:id="tarifficationPage" source="../pages/tariffication_page.fxml" />
                     <fx:include fx:id="employeePage" source="../pages/employee_page.fxml" />
                     <fx:include fx:id="loadPage" source="../pages/load_page.fxml" />
                     <fx:include fx:id="salaryPage" source="../pages/salary_page.fxml" />

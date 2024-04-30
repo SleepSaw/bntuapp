@@ -137,11 +137,15 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
         Row row = sheet.createRow(rowIndex);
         CellStyle style = workbook.createCellStyle();
         style.cloneStyleFrom(columnStyle);
+        style.setAlignment(HorizontalAlignment.RIGHT);
+        style.setDataFormat(format.getFormat("#0.00"));
         Font font = createFont("Times New Roman",16,true,false);
         style.setFont(font);
         CellStyle leftStyle = workbook.createCellStyle();
-        leftStyle.cloneStyleFrom(style);
+        leftStyle.cloneStyleFrom(columnStyle);
+        leftStyle.setFont(font);
         leftStyle.setAlignment(HorizontalAlignment.LEFT);
+
         // Нагрузка
         addCell(0,null,style,row);
         addCell(1,"ИТОГО:",leftStyle,row);
@@ -149,7 +153,8 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
 
         addCell(2,null,style,row);
         addCell(3,null,style,row);
-        style.setAlignment(HorizontalAlignment.RIGHT);
+
+
         addCell(4,loadService.getTotalLoadOfAllTeachers(employees).toString(),style,row);
         addCell(5,loadService.getAcademicLoadOfAllTeachers(employees).toString(),style,row);
         addCell(6,loadService.getAddLoadOfAllTeachers(employees).toString(),style,row);
@@ -190,6 +195,7 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
         CellStyle styleAlignRight = workbook.createCellStyle();
         styleAlignRight.cloneStyleFrom(columnStyle);
         styleAlignRight.setAlignment(HorizontalAlignment.RIGHT);
+        styleAlignRight.setDataFormat(format.getFormat("#0.00"));
 
         Cell numberCell = row.createCell(0);
         numberCell.setCellValue(number);
@@ -277,18 +283,18 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
             addCell(12,"",styleAlignLeft,row);
             addCell(13,"",styleAlignLeft,row);
             addCell(14,"",styleAlignLeft,row);
-            addCell(15,pairs.get(v).getRateSalary().toString(),styleAlignLeft,row);
-            addCell(16,pairs.get(v).getLoadSalary().toString(),styleAlignLeft,row);
-            addCell(17,pairs.get(v).getExpAllowance().toString(),styleAlignLeft,row);
-            addCell(18,pairs.get(v).getContractAllowance().toString(),styleAlignLeft,row);
+            addCell(15,pairs.get(v).getRateSalary().toString(),styleAlignRight,row);
+            addCell(16,pairs.get(v).getLoadSalary().toString(),styleAlignRight,row);
+            addCell(17,pairs.get(v).getExpAllowance().toString(),styleAlignRight,row);
+            addCell(18,pairs.get(v).getContractAllowance().toString(),styleAlignRight,row);
             addCell(19,"-",styleAlignCenter,row);
-            addCell(20,pairs.get(v).getQualAllowance().toString(),styleAlignLeft,row);
-            addCell(21,pairs.get(v).getYSAllowance().toString(),styleAlignLeft,row);
-            addCell(22,pairs.get(v).getIndustryWorkAllowance().toString(),styleAlignLeft,row);
-            addCell(23,pairs.get(v).getProfActivitiesAllowance().toString(),styleAlignLeft,row);
+            addCell(20,pairs.get(v).getQualAllowance().toString(),styleAlignRight,row);
+            addCell(21,pairs.get(v).getYSAllowance().toString(),styleAlignRight,row);
+            addCell(22,pairs.get(v).getIndustryWorkAllowance().toString(),styleAlignRight,row);
+            addCell(23,pairs.get(v).getProfActivitiesAllowance().toString(),styleAlignRight,row);
             addCell(24,"-",styleAlignCenter,row);
             addCell(25,"-",styleAlignCenter,row);
-            addCell(26,pairs.get(v).getTotalSalary().toString(),styleAlignLeft,row);
+            addCell(26,pairs.get(v).getTotalSalary().toString(),styleAlignRight,row);
             counter++;
         }
     }

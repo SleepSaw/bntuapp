@@ -109,7 +109,7 @@ public class SalaryPageController extends VisualComponentsInitializer implements
     public void initialize(URL url, ResourceBundle resourceBundle) {
         EmployeesInstance.getInstance().attach(this);
         RowIndexer.index(indexColumn);
-        updateTable(salaryTable);
+        findActualSalary(updateTable(salaryTable));
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         loadColumn.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue()
                 .getLoad().getTotalHours())));

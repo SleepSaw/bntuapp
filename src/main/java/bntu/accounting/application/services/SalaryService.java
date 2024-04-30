@@ -39,12 +39,12 @@ public class SalaryService implements Observer {
     public Double getTotalAllowances(Employee employee) {
         double rate = calcSalaryPerRate(employee.getCategory());
         double loadRate = calcSalaryPerLoad(rate, employee.getLoad().getTotalHours());
-        double exp = allowancesService.getExpAllowance(employee.getExperience()) * options.getBaseRate() * options.getLoadRate()
+        double exp = allowancesService.getExpAllowance(employee.getExperience()) * options.getBaseRate() / options.getLoadRate()
                 * employee.getLoad().getTotalHours();
         double qual = allowancesService.getQualAllowance(employee.getQualification()) * loadRate;
         double YS = 0;
         if (employee.getYoungSpecialist()) YS = allowancesService.getYoungSpecialistAllowance() * loadRate;
-        double contract = employee.getContractValue() / 100 * loadRate;
+        double contract = employee.getContractValue() / 100 * rate;
         double profActivity = allowancesService.getProfActivityAllowance() * loadRate;
         double industryWork = allowancesService.getWorkInIndustryAllowance() * loadRate;
         return roundValue(exp + qual + YS + profActivity + industryWork + contract);
@@ -53,7 +53,7 @@ public class SalaryService implements Observer {
     public Double getTotalAllowances(Employee employee, SalaryBuilder builder) {
         double rate = calcSalaryPerRate(employee.getCategory());
         double loadRate = calcSalaryPerLoad(rate, employee.getLoad().getTotalHours());
-        builder.setExpAllowance(allowancesService.getExpAllowance(employee.getExperience()) * options.getBaseRate() * options.getLoadRate()
+        builder.setExpAllowance(allowancesService.getExpAllowance(employee.getExperience()) * options.getBaseRate() / options.getLoadRate()
                 * employee.getLoad().getTotalHours());
         builder.setQualAllowance(allowancesService.getQualAllowance(employee.getQualification()) * loadRate);
         double YS = 0;

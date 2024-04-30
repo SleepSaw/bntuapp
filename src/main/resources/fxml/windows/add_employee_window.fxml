@@ -104,8 +104,8 @@
                   <TextField fx:id="fioTextField" prefHeight="25.0" prefWidth="177.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER" />
                </left>
             </BorderPane>
-            <ComboBox fx:id="postComboBox" prefHeight="25.0" prefWidth="227.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="subjectComboBox" prefHeight="25.0" prefWidth="287.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="postComboBox" editable="true" prefHeight="25.0" prefWidth="227.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="subjectComboBox" editable="true" prefHeight="25.0" prefWidth="287.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ComboBox fx:id="categoryComboBox" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <ComboBox fx:id="expComboBox" prefHeight="25.0" prefWidth="154.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ComboBox fx:id="qualificationComboBox" prefHeight="25.0" prefWidth="154.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="5" />

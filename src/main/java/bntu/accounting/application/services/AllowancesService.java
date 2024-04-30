@@ -60,11 +60,16 @@ public class AllowancesService implements Observer {
             case "св. 15 лет":
                 result = options.getExperienceAllowances().getStep4();
                 break;
+            // Самый дебильный кастыль из всех, что я делал
+            default:
+                result = options.getExperienceAllowances().getStep4();
+                break;
         }
-        return Double.valueOf(result);
+            return Double.valueOf(result);
     }
     public Double getQualAllowance(String key){
         double result = 0;
+
         switch (key){
             case "б.к.к.":
                 result = options.getQualificationAllowances().getStep1();

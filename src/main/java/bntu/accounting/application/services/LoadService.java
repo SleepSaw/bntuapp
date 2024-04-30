@@ -19,7 +19,7 @@ public class LoadService {
         for (Employee employee: employees) {
             result += employee.getLoad().getTotalHours();
         }
-        return result;
+        return roundValue(result);
     }
     public Double getAcademicLoadOfAllTeachers(List<Employee> employees){
         double result =0;
@@ -33,20 +33,20 @@ public class LoadService {
         for (Employee teacher: employees) {
             result += teacher.getLoad().getOrganizationHours();
         }
-        return result;
+        return roundValue(result);
     }
     public Double getAddLoadOfAllTeachers(List<Employee> employees){
         double result =0;
         for (Employee teacher: employees) {
             result += teacher.getLoad().getAdditionalHours();
         }
-        return result;
+        return roundValue(result);
     }
     public Double findTotalHours(Load load){
-        Double res = load.getAcademicHours() +
+        Double result = load.getAcademicHours() +
                 load.getAdditionalHours() + load.getOrganizationHours();
-        load.setTotalHours(res);
-        return res;
+        load.setTotalHours(result);
+        return roundValue(result);
     }
     public void updateLoad(Integer id,Load load){
         Normalizer.normalizeLoad(load);
@@ -55,6 +55,11 @@ public class LoadService {
     }
     public void checkLoadCapacity(Double maxCapacity, Double newSum) throws SettingIncorrectValue {
 
+    }
+    private double roundValue(double value) {
+        double result = Math.round(value * 100);
+        result = result / 100;
+        return result;
     }
     public void checkLoadOfPerformers(LoadTypes type, Double value, List<Employee> performers) throws SettingIncorrectValue {
         double sum;

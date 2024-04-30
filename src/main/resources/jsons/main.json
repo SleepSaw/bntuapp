@@ -1,9 +1,9 @@
 {
-  "base_rate": 235.0,
+  "base_rate": 228.0,
   "load_rate": 20.0,
   "young_specialist_allowance": 0.3,
   "prof_activity_allowance": 0.2,
-  "work_in_industry_allowance": 0.21,
+  "work_in_industry_allowance": 0.06,
   "tariffs": {
     "7": 1.47,
     "8": 1.57,

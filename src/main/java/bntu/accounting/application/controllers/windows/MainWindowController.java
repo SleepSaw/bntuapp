@@ -58,7 +58,7 @@ public class MainWindowController implements Initializable {
     private ImageView vacancyIcon;
     // Страницы
     @FXML
-    private BorderPane homePage;
+    private BorderPane tarifficationPage;
     @FXML
     private BorderPane vacancyPage;
     @FXML
@@ -106,35 +106,35 @@ public class MainWindowController implements Initializable {
     private void showPage(PagesNames name) {
         switch (name){
             case HOME:
-                homePage.setVisible(true);
+                tarifficationPage.setVisible(true);
                 employeePage.setVisible(false);
                 loadPage.setVisible(false);
                 salaryPage.setVisible(false);
                 vacancyPage.setVisible(false);
                 break;
             case EMPLOYEE:
-                homePage.setVisible(true);
+                tarifficationPage.setVisible(true);
                 employeePage.setVisible(true);
                 loadPage.setVisible(false);
                 salaryPage.setVisible(false);
                 vacancyPage.setVisible(false);
                 break;
             case LOAD:
-                homePage.setVisible(false);
+                tarifficationPage.setVisible(false);
                 employeePage.setVisible(false);
                 loadPage.setVisible(true);
                 salaryPage.setVisible(false);
                 vacancyPage.setVisible(false);
                 break;
             case SALARY:
-                homePage.setVisible(false);
+                tarifficationPage.setVisible(false);
                 employeePage.setVisible(false);
                 loadPage.setVisible(false);
                 salaryPage.setVisible(true);
                 vacancyPage.setVisible(false);
                 break;
             case VACANCY:
-                homePage.setVisible(false);
+                tarifficationPage.setVisible(false);
                 employeePage.setVisible(false);
                 loadPage.setVisible(false);
                 salaryPage.setVisible(false);

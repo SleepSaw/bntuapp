@@ -9,9 +9,11 @@ import java.util.List;
 public abstract class ExcelTableCreator extends ExcelUtil implements ExcelTable {
     protected CellStyle columnStyle;
     private Integer counter =0;
+    protected DataFormat format;
 
     public ExcelTableCreator(Workbook workbook) {
         super(workbook);
+        format = workbook.createDataFormat();
     }
 
 

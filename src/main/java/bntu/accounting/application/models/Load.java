@@ -44,11 +44,11 @@ public class Load {
     public Double getTotalHours() {
         if (totalHours != null) return totalHours;
         totalHours = 0D;
-        return totalHours;
+        return roundValue(totalHours);
     }
 
     public void setTotalHours(Double totalHours) {
-        this.totalHours = totalHours;
+        this.totalHours = roundValue(totalHours);
     }
 
     public Double getAcademicHours() {
@@ -113,5 +113,10 @@ public class Load {
         this.organizationHours = load.getOrganizationHours();
         this.additionalHours = load.getAdditionalHours();
         this.totalHours = load.getTotalHours();
+    }
+    private double roundValue(double value) {
+        double result = Math.round(value * 100);
+        result = result / 100;
+        return result;
     }
 }

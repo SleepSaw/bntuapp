@@ -59,12 +59,13 @@ public class AddingEmployeeWindowController extends VisualComponentsInitializer 
         employee.setExperience(expComboBox.getValue());
         employee.setQualification(qualificationComboBox.getValue());
         employee.setYoungSpecialist(specCheckBox.isSelected());
-        employee.setContractValue(Double.parseDouble(contractValueField.getText()));
+        if (flag) employee.setContractValue(Double.parseDouble(contractValueField.getText()));
         employeeService.saveEmployee(employee);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        flag = contractCheckBox.isSelected();
         addEmployeeButton.setOnAction(actionEvent -> {
             try{
                 addEmployeeButtonAction();

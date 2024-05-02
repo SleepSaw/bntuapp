@@ -75,8 +75,8 @@ public class MainWindowController implements Initializable {
     }
     @FXML
     void homeButtonAction(ActionEvent event) {
-        showPage(PagesNames.HOME);
-        drawPageSelector(PagesNames.HOME);
+        showPage(PagesNames.TARIFFICATION);
+        drawPageSelector(PagesNames.TARIFFICATION);
     }
 
     @FXML
@@ -99,13 +99,13 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showPage(PagesNames.HOME);
-        drawPageSelector(PagesNames.HOME);
+        showPage(PagesNames.TARIFFICATION);
+        drawPageSelector(PagesNames.TARIFFICATION);
     }
     //Демонстрация страницы в зависимости от переданного имени страницы
     private void showPage(PagesNames name) {
         switch (name){
-            case HOME:
+            case TARIFFICATION:
                 tarifficationPage.setVisible(true);
                 employeePage.setVisible(false);
                 loadPage.setVisible(false);
@@ -155,7 +155,7 @@ public class MainWindowController implements Initializable {
     private void drawPageSelector(PagesNames name){
 
         switch (name){
-            case HOME:
+            case TARIFFICATION:
                 clearSelection();
                 homeLabel.setStyle("-fx-border-width: 0 0 2 0;" +
                         "-fx-border-color: #217346;");

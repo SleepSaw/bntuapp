@@ -17,7 +17,6 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
     }
 
     public void createLoadTableColumns(String fileName, JSONObject jsonData) {
-
         CellStyle columnsStyle = setFontForCell(createFont("Times New Roman", 16, false));
         columnsStyle.setAlignment(HorizontalAlignment.CENTER);
         columnsStyle.setWrapText(true);
@@ -77,8 +76,10 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
     public void addCommonData(int rowIndex, List<Item> items) {
         List<Employee> employees = items.stream().map(e -> (Employee) e).toList();
         Row row = sheet.createRow(rowIndex);
+        row.setHeightInPoints(20);
         CellStyle style = workbook.createCellStyle();
         style.cloneStyleFrom(columnStyle);
+        style.setDataFormat(format.getFormat("#0.00"));
         Font font = createFont("Times New Roman",16,true,false);
         style.setFont(font);
         CellStyle leftStyle = workbook.createCellStyle();
@@ -117,7 +118,8 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
         CellStyle styleAlignRight = workbook.createCellStyle();
         styleAlignRight.cloneStyleFrom(columnStyle);
         styleAlignRight.setAlignment(HorizontalAlignment.RIGHT);
-
+        row.setHeightInPoints(20);
+        styleAlignRight.setDataFormat(format.getFormat("#0.00"));
         Cell numberCell = row.createCell(0);
         numberCell.setCellValue(number);
         numberCell.setCellStyle(styleAlignCenter);

@@ -135,10 +135,12 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
     public void addCommonData(int rowIndex, List<Item> items) {
         List<Employee> employees = items.stream().map(e -> (Employee) e).toList();
         Row row = sheet.createRow(rowIndex);
+        row.setHeightInPoints(20);
         CellStyle style = workbook.createCellStyle();
         style.cloneStyleFrom(columnStyle);
         style.setAlignment(HorizontalAlignment.RIGHT);
         style.setDataFormat(format.getFormat("#0.00"));
+
         Font font = createFont("Times New Roman",16,true,false);
         style.setFont(font);
         CellStyle leftStyle = workbook.createCellStyle();
@@ -196,6 +198,8 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
         styleAlignRight.cloneStyleFrom(columnStyle);
         styleAlignRight.setAlignment(HorizontalAlignment.RIGHT);
         styleAlignRight.setDataFormat(format.getFormat("#0.00"));
+
+        row.setHeightInPoints(20);
 
         Cell numberCell = row.createCell(0);
         numberCell.setCellValue(number);
@@ -268,6 +272,7 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
         Map<Vacancy, Salary> pairs = vacancyService.getPlannedVacanciesSalary(vacancies, employeeService.getAllEmployees());
         for (Vacancy v : vacancies) {
             Row row = sheet.createRow(counter);
+            row.setHeightInPoints(20);
             addCell(0,"",styleAlignLeft,row);
             addCell(1,"Вакансия",styleAlignLeft,row);
             addCell(2,v.getPost(),styleAlignLeft,row);

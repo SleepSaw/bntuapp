@@ -108,6 +108,7 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
     public void addCommonData(int rowIndex, List<Item> items) {
         List<Employee> employees = items.stream().map(e -> (Employee) e).toList();
         Row row = sheet.createRow(rowIndex);
+        row.setHeightInPoints(20);
         CellStyle style = workbook.createCellStyle();
         style.cloneStyleFrom(columnStyle);
         Font font = createFont("Times New Roman",16,true,false);
@@ -115,7 +116,7 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         CellStyle leftStyle = workbook.createCellStyle();
         leftStyle.cloneStyleFrom(style);
         leftStyle.setAlignment(HorizontalAlignment.LEFT);
-
+        style.setDataFormat(format.getFormat("#0.00"));
         SalaryService salaryService = new SalaryService();
         LoadService loadService = new LoadService();
         addCell(0,null,style,row);
@@ -170,7 +171,7 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         CellStyle styleAlignRight = workbook.createCellStyle();
         styleAlignRight.cloneStyleFrom(columnsStyle);
         styleAlignRight.setAlignment(HorizontalAlignment.RIGHT);
-
+        styleAlignRight.setDataFormat(format.getFormat("#0.00"));
         addCell(row,0,number.toString(),styleAlignLeft);
         addCell(row,1,employee.getName(),styleAlignLeft);
         addCell(row,2,employee.getPost(),styleAlignLeft);

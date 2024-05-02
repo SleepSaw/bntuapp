@@ -34,8 +34,6 @@ public class EmployeePageController implements Initializable, Observer {
     @FXML
     private Button addEmployeeButton;
     @FXML
-    private Button saveButton;
-    @FXML
     private Button updateTableButton;
     @FXML
     private ImageView saveIcon;
@@ -86,17 +84,6 @@ public class EmployeePageController implements Initializable, Observer {
     void addEmployeeButtonAction(ActionEvent event) throws IOException {
         WindowCreator.createWindow("/fxml/windows/add_employee_window.fxml", this,
                 new AddingEmployeeWindowController());
-    }
-    @FXML
-    void saveButtonAction(ActionEvent event){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
-        File file = fileChooser.showSaveDialog(null);
-        if (file != null) {
-            TarifficationFileCreator tarifficationFileCreator = new TarifficationFileCreator();
-            List<Item> items = employeeService.getAllEmployees().stream().map(e -> e.getParent()).toList();
-            tarifficationFileCreator.createFile(file.getPath(), items);
-        }
     }
     @FXML
     void updateTableButtonAction(ActionEvent event) {

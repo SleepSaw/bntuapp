@@ -12,6 +12,7 @@ public abstract class ExcelUtil {
         this.workbook = workbook;
         if (workbook!=null) {
             this.sheet = workbook.getSheetAt(0);
+            sheet.setDefaultRowHeight((short)15);
         }
 
     }

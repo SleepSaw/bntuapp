@@ -77,25 +77,16 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
         List<Employee> employees = items.stream().map(e -> (Employee) e).toList();
         Row row = sheet.createRow(rowIndex);
         row.setHeightInPoints(20);
-        CellStyle style = workbook.createCellStyle();
-        style.cloneStyleFrom(columnStyle);
-        style.setDataFormat(format.getFormat("#0.00"));
-        Font font = createFont("Times New Roman",16,true,false);
-        style.setFont(font);
-        CellStyle leftStyle = workbook.createCellStyle();
-        leftStyle.cloneStyleFrom(style);
-        leftStyle.setAlignment(HorizontalAlignment.LEFT);
 
         LoadService service = new LoadService();
-        addCell(0,null,style,row);
+        addCell(0,null,leftStyle,row);
         addCell(1,"ИТОГО:",leftStyle,row);
-        addCell(2,null,style,row);
-        addCell(3,null,style,row);
-        style.setAlignment(HorizontalAlignment.RIGHT);
-        addCell(4,service.getTotalLoadOfAllTeachers(employees).toString(),style,row);
-        addCell(5,service.getAcademicLoadOfAllTeachers(employees).toString(),style,row);
-        addCell(6,service.getAddLoadOfAllTeachers(employees).toString(),style,row);
-        addCell(7,service.getOrgLoadOfAllTeachers(employees).toString(),style,row);
+        addCell(2,null,leftStyle,row);
+        addCell(3,null,leftStyle,row);
+        addCell(4,service.getTotalLoadOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(5,service.getAcademicLoadOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(6,service.getAddLoadOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(7,service.getOrgLoadOfAllTeachers(employees).toString(),rightStyle,row);
     }
     private void addCell(int cellIndex, String value, CellStyle style, Row row){
         Cell cell = row.createCell(cellIndex);
@@ -107,50 +98,38 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
     @Override
     public void addEmployeeToTable(Integer number, Item item, Row row) {
         Employee employee = (Employee) item;
-        CellStyle styleAlignCenter = workbook.createCellStyle();
-        styleAlignCenter.cloneStyleFrom(columnStyle);
-        styleAlignCenter.setAlignment(HorizontalAlignment.CENTER);
-
-        CellStyle styleAlignLeft = workbook.createCellStyle();
-        styleAlignLeft.cloneStyleFrom(columnStyle);
-        styleAlignLeft.setAlignment(HorizontalAlignment.LEFT);
-
-        CellStyle styleAlignRight = workbook.createCellStyle();
-        styleAlignRight.cloneStyleFrom(columnStyle);
-        styleAlignRight.setAlignment(HorizontalAlignment.RIGHT);
         row.setHeightInPoints(20);
-        styleAlignRight.setDataFormat(format.getFormat("#0.00"));
         Cell numberCell = row.createCell(0);
         numberCell.setCellValue(number);
-        numberCell.setCellStyle(styleAlignCenter);
+        numberCell.setCellStyle(rightStyle);
 
         Cell fioCell = row.createCell(1);
         fioCell.setCellValue(employee.getName());
-        fioCell.setCellStyle(styleAlignLeft);
+        fioCell.setCellStyle(rightStyle);
 
         Cell postCell = row.createCell(2);
         postCell.setCellValue(employee.getPost());
-        postCell.setCellStyle(styleAlignLeft);
+        postCell.setCellStyle(rightStyle);
 
         Cell subjectCell = row.createCell(3);
         subjectCell.setCellValue(employee.getSubject());
-        subjectCell.setCellStyle(styleAlignLeft);
+        subjectCell.setCellStyle(rightStyle);
 
         Cell totalLoadCell = row.createCell(4);
         totalLoadCell.setCellValue(employee.getLoad().getTotalHours());
-        totalLoadCell.setCellStyle(styleAlignRight);
+        totalLoadCell.setCellStyle(rightStyle);
 
         Cell academicLoadCell = row.createCell(5);
         academicLoadCell.setCellValue(employee.getLoad().getAcademicHours());
-        academicLoadCell.setCellStyle(styleAlignRight);
+        academicLoadCell.setCellStyle(rightStyle);
 
         Cell addLoadCell = row.createCell(6);
         addLoadCell.setCellValue(employee.getLoad().getAdditionalHours());
-        addLoadCell.setCellStyle(styleAlignRight);
+        addLoadCell.setCellStyle(rightStyle);
 
         Cell orgLoadCell = row.createCell(7);
         orgLoadCell.setCellValue(employee.getLoad().getOrganizationHours());
-        orgLoadCell.setCellStyle(styleAlignRight);
+        orgLoadCell.setCellStyle(rightStyle);
     }
 
 }

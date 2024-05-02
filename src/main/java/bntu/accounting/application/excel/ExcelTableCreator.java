@@ -7,13 +7,10 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import java.util.List;
 
 public abstract class ExcelTableCreator extends ExcelUtil implements ExcelTable {
-    protected CellStyle columnStyle;
     private Integer counter =0;
-    protected DataFormat format;
 
     public ExcelTableCreator(Workbook workbook) {
         super(workbook);
-        format = workbook.createDataFormat();
     }
 
 
@@ -21,12 +18,10 @@ public abstract class ExcelTableCreator extends ExcelUtil implements ExcelTable 
     public void createColumn(int startRow, int endRow, int startColumn, int endColumn, String title, CellStyle style,
                              boolean rotate) {
         Sheet sheet = workbook.getSheetAt(0);
-        CellStyle columnStyle = workbook.createCellStyle();
-        this.columnStyle = workbook.createCellStyle();
-        this.columnStyle.cloneStyleFrom(style);
-        columnStyle.cloneStyleFrom(style);
+        CellStyle ownStyle = workbook.createCellStyle();
+        ownStyle.cloneStyleFrom(columnStyle);
         if (rotate){
-            columnStyle.setRotation((short) 90); // Поворот на 90 градусов
+            ownStyle.setRotation((short) 90); // Поворот на 90 градусов
         }
         Cell cell;
         Row row = sheet.getRow(startRow);
@@ -35,7 +30,7 @@ public abstract class ExcelTableCreator extends ExcelUtil implements ExcelTable 
             for(int j = startColumn;j<=endColumn;j++){
                 cell = row.createCell(j);
                 cell.setCellValue(title);
-                cell.setCellStyle(columnStyle);
+                cell.setCellStyle(ownStyle);
             }
         }
 

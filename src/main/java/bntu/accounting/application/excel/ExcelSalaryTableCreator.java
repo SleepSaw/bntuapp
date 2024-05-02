@@ -18,15 +18,6 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
     }
 
     public void createLoadTableColumns(String fileName, JSONObject jsonData) {
-
-        CellStyle columnsStyle = setFontForCell(createFont("Times New Roman", 16, false));
-        columnsStyle.setAlignment(HorizontalAlignment.CENTER);
-        columnsStyle.setWrapText(true);
-        columnsStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        columnsStyle.setBorderTop(BorderStyle.THIN);
-        columnsStyle.setBorderBottom(BorderStyle.THIN);
-        columnsStyle.setBorderLeft(BorderStyle.THIN);
-        columnsStyle.setBorderRight(BorderStyle.THIN);
         CellStyle styleBold = setFontForCell(createFont("Times New Roman", 20, true));
 
         setAllColumnsWidth();
@@ -41,38 +32,37 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         row11.setHeightInPoints(30);
         Row row12 = sheet.createRow(12);
         row12.setHeightInPoints(270);
-        Row row13 = sheet.createRow(13);
 
 
 
         writeDataToCell(row8, 0, jsonData.getString("chapter_name_part1"), styleBold);
         writeDataToCell(row9, 0, jsonData.getString("chapter_name_part2"), styleBold);
 
-        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,false);
-        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,false);
-        createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,false);
-        createColumn(10,12,3,3,jsonData.getString("salary_total_load_column"),columnsStyle,true);
-        createColumn(10,12,4,4,jsonData.getString("qualification_column"),columnsStyle,true);
-        createColumn(10,12,5,5,jsonData.getString("exp_column"),columnsStyle,true);
-        createColumn(10,12,6,6,jsonData.getString("category_column"),columnsStyle,true);
+        createColumn(10,12,0,0,jsonData.getString("index_column"),columnStyle,false);
+        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnStyle,false);
+        createColumn(10,12,2,2,jsonData.getString("post_column"),columnStyle,false);
+        createColumn(10,12,3,3,jsonData.getString("salary_total_load_column"),columnStyle,true);
+        createColumn(10,12,4,4,jsonData.getString("qualification_column"),columnStyle,true);
+        createColumn(10,12,5,5,jsonData.getString("exp_column"),columnStyle,true);
+        createColumn(10,12,6,6,jsonData.getString("category_column"),columnStyle,true);
 
 
-        createColumn(10,12,7,7,jsonData.getString("salary_per_rate_column"),columnsStyle,true);
-        createColumn(10,12,8,8,jsonData.getString("salary_by_load_column"),columnsStyle,true);
+        createColumn(10,12,7,7,jsonData.getString("salary_per_rate_column"),columnStyle,true);
+        createColumn(10,12,8,8,jsonData.getString("salary_by_load_column"),columnStyle,true);
 
-        createColumn(10,10,9,15,jsonData.getString("allowances_by_load_column"),columnsStyle,false);
+        createColumn(10,10,9,15,jsonData.getString("allowances_by_load_column"),columnStyle,false);
 
-        createColumn(11,12,9,9,jsonData.getString("exp_allowance_column"),columnsStyle,true);
-        createColumn(11,12,10,10,jsonData.getString("contract_allowance_column"),columnsStyle,true);
-        createColumn(11,12,11,11,jsonData.getString("village_allowance_column"),columnsStyle,true);
-        createColumn(11,12,12,12,jsonData.getString("qual_allowance_column"),columnsStyle,true);
-        createColumn(11,12,13,13,jsonData.getString("young_specialist_allowance_column"),columnsStyle,true);
-        createColumn(11,12,14,14,jsonData.getString("six_percent_allowance_column"),columnsStyle,true);
-        createColumn(11,12,15,15,jsonData.getString("osobennosti_allowance_column"),columnsStyle,true);
+        createColumn(11,12,9,9,jsonData.getString("exp_allowance_column"),columnStyle,true);
+        createColumn(11,12,10,10,jsonData.getString("contract_allowance_column"),columnStyle,true);
+        createColumn(11,12,11,11,jsonData.getString("village_allowance_column"),columnStyle,true);
+        createColumn(11,12,12,12,jsonData.getString("qual_allowance_column"),columnStyle,true);
+        createColumn(11,12,13,13,jsonData.getString("young_specialist_allowance_column"),columnStyle,true);
+        createColumn(11,12,14,14,jsonData.getString("six_percent_allowance_column"),columnStyle,true);
+        createColumn(11,12,15,15,jsonData.getString("osobennosti_allowance_column"),columnStyle,true);
 
-        createColumn(10,12,16,16,jsonData.getString("osobennosti_per_rate_allowance_column"),columnsStyle,true);
-        createColumn(10,12,17,17,jsonData.getString("also_allowance_column"),columnsStyle,true);
-        createColumn(10,12,18,18,jsonData.getString("total_salary_column"),columnsStyle,true);
+        createColumn(10,12,16,16,jsonData.getString("osobennosti_per_rate_allowance_column"),columnStyle,true);
+        createColumn(10,12,17,17,jsonData.getString("also_allowance_column"),columnStyle,true);
+        createColumn(10,12,18,18,jsonData.getString("total_salary_column"),columnStyle,true);
 
 
 
@@ -109,36 +99,28 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         List<Employee> employees = items.stream().map(e -> (Employee) e).toList();
         Row row = sheet.createRow(rowIndex);
         row.setHeightInPoints(20);
-        CellStyle style = workbook.createCellStyle();
-        style.cloneStyleFrom(columnStyle);
-        Font font = createFont("Times New Roman",16,true,false);
-        style.setFont(font);
-        CellStyle leftStyle = workbook.createCellStyle();
-        leftStyle.cloneStyleFrom(style);
-        leftStyle.setAlignment(HorizontalAlignment.LEFT);
-        style.setDataFormat(format.getFormat("#0.00"));
         SalaryService salaryService = new SalaryService();
         LoadService loadService = new LoadService();
-        addCell(0,null,style,row);
+        addCell(0,null,leftStyle,row);
         addCell(1,"ИТОГО:",leftStyle,row);
-        addCell(2,null,style,row);
-        addCell(3,loadService.getTotalLoadOfAllTeachers(employees).toString(),style,row);
-        addCell(4,null,style,row);
-        addCell(5,null,style,row);
-        addCell(6,null,style,row);
-        style.setAlignment(HorizontalAlignment.RIGHT);
-        addCell(7,salaryService.getSalaryPerRateOfAllTeachers(employees).toString(),style,row);
-        addCell(8,salaryService.getSalaryByLoadOfAllTeachers(employees).toString(),style,row);
-        addCell(9,salaryService.getExpAllowanceOfAllTeachers(employees).toString(),style,row);
-        addCell(10,salaryService.getContractAllowanceOfAllTeachers(employees).toString(),style,row);
-        addCell(11,null,style,row);
-        addCell(12,salaryService.getQualAllowanceOfAllTeachers(employees).toString(),style,row);
-        addCell(13,salaryService.getYoungSpecAllowanceOfAllTeachers(employees).toString(),style,row);
-        addCell(14,salaryService.getProfActivitiesAllowanceOfAllTeachers(employees).toString(),style,row);
-        addCell(15,salaryService.getWorkInIndustryAllowanceOfAllTeachers(employees).toString(),style,row);
-        addCell(16,null,style,row);
-        addCell(17,null,style,row);
-        addCell(18,salaryService.getTotalSalaryOfAllTeachers(employees).toString(),style,row);
+        addCell(2,null,leftStyle,row);
+        addCell(3,loadService.getTotalLoadOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(4,null,leftStyle,row);
+        addCell(5,null,leftStyle,row);
+        addCell(6,null,leftStyle,row);
+
+        addCell(7,salaryService.getSalaryPerRateOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(8,salaryService.getSalaryByLoadOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(9,salaryService.getExpAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(10,salaryService.getContractAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(11,null,rightStyle,row);
+        addCell(12,salaryService.getQualAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(13,salaryService.getYoungSpecAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(14,salaryService.getProfActivitiesAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(15,salaryService.getWorkInIndustryAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(16,null,rightStyle,row);
+        addCell(17,null,rightStyle,row);
+        addCell(18,salaryService.getTotalSalaryOfAllTeachers(employees).toString(),rightStyle,row);
     }
     private void addCell(int cellIndex, String value, CellStyle style, Row row){
         Cell cell = row.createCell(cellIndex);
@@ -150,47 +132,25 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
     public void addEmployeeToTable(Integer number, Item item, Row row) {
         Employee employee = (Employee) item;
         row.setHeightInPoints(20);
-        CellStyle columnsStyle = setFontForCell(createFont("Times New Roman", 16, false));
-        columnsStyle.setAlignment(HorizontalAlignment.CENTER);
-        columnsStyle.setWrapText(true);
-        columnsStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        columnsStyle.setBorderTop(BorderStyle.THIN);
-        columnsStyle.setBorderBottom(BorderStyle.THIN);
-        columnsStyle.setBorderLeft(BorderStyle.THIN);
-        columnsStyle.setBorderRight(BorderStyle.THIN);
-        columnStyle.cloneStyleFrom(columnsStyle);
-
-        CellStyle styleAlignCenter = workbook.createCellStyle();
-        styleAlignCenter.cloneStyleFrom(columnsStyle);
-        styleAlignCenter.setAlignment(HorizontalAlignment.CENTER);
-
-        CellStyle styleAlignLeft = workbook.createCellStyle();
-        styleAlignLeft.cloneStyleFrom(columnsStyle);
-        styleAlignLeft.setAlignment(HorizontalAlignment.LEFT);
-
-        CellStyle styleAlignRight = workbook.createCellStyle();
-        styleAlignRight.cloneStyleFrom(columnsStyle);
-        styleAlignRight.setAlignment(HorizontalAlignment.RIGHT);
-        styleAlignRight.setDataFormat(format.getFormat("#0.00"));
-        addCell(row,0,number.toString(),styleAlignLeft);
-        addCell(row,1,employee.getName(),styleAlignLeft);
-        addCell(row,2,employee.getPost(),styleAlignLeft);
-        addCell(row,3,employee.getLoad().getTotalHours(),styleAlignRight);
-        addCell(row,4,employee.getQualification(),styleAlignCenter);
-        addCell(row,5,employee.getExperience(),styleAlignLeft);
-        addCell(row,6,employee.getCategory(),styleAlignCenter);
-        addCell(row,7,employee.getSalary().getRateSalary(),styleAlignRight);
-        addCell(row,8,employee.getSalary().getLoadSalary(),styleAlignRight);
-        addCell(row,9,employee.getSalary().getExpAllowance(),styleAlignRight);
-        addCell(row,10,employee.getSalary().getContractAllowance(),styleAlignRight);
-        addCell(row,11,"-",styleAlignCenter);
-        addCell(row,12,employee.getSalary().getQualAllowance(),styleAlignRight  );
-        addCell(row,13,employee.getSalary().getYSAllowance(),styleAlignRight);
-        addCell(row,14,employee.getSalary().getIndustryWorkAllowance(),styleAlignRight);
-        addCell(row,15,employee.getSalary().getProfActivitiesAllowance(),styleAlignRight);
-        addCell(row,16,"-",styleAlignCenter);
-        addCell(row,17,"-",styleAlignCenter);
-        addCell(row,18,employee.getSalary().getTotalSalary(),styleAlignRight);
+        addCell(row,0,number.toString(),leftStyle);
+        addCell(row,1,employee.getName(),leftStyle);
+        addCell(row,2,employee.getPost(),leftStyle);
+        addCell(row,3,employee.getLoad().getTotalHours(),rightStyle);
+        addCell(row,4,employee.getQualification(),centerStyle);
+        addCell(row,5,employee.getExperience(),leftStyle);
+        addCell(row,6,employee.getCategory(),centerStyle);
+        addCell(row,7,employee.getSalary().getRateSalary(),rightStyle);
+        addCell(row,8,employee.getSalary().getLoadSalary(),rightStyle);
+        addCell(row,9,employee.getSalary().getExpAllowance(),rightStyle);
+        addCell(row,10,employee.getSalary().getContractAllowance(),rightStyle);
+        addCell(row,11,"-",centerStyle);
+        addCell(row,12,employee.getSalary().getQualAllowance(),rightStyle  );
+        addCell(row,13,employee.getSalary().getYSAllowance(),rightStyle);
+        addCell(row,14,employee.getSalary().getIndustryWorkAllowance(),rightStyle);
+        addCell(row,15,employee.getSalary().getProfActivitiesAllowance(),rightStyle);
+        addCell(row,16,"-",centerStyle);
+        addCell(row,17,"-",centerStyle);
+        addCell(row,18,employee.getSalary().getTotalSalary(),rightStyle);
     }
     private void addCell(Row row, int cellIndex,String value,CellStyle style){
         Cell cell = row.createCell(cellIndex);

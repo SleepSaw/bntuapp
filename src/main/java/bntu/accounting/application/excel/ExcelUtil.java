@@ -3,6 +3,11 @@ package bntu.accounting.application.excel;
 import org.apache.poi.ss.usermodel.*;
 
 public abstract class ExcelUtil {
+    public DataFormat format;
+    public CellStyle leftStyle;
+    public CellStyle centerStyle;
+    public CellStyle rightStyle;
+    protected static CellStyle columnStyle;
     protected Workbook workbook;
     protected Sheet sheet;
     /**
@@ -14,8 +19,34 @@ public abstract class ExcelUtil {
             this.sheet = workbook.getSheetAt(0);
             sheet.setDefaultRowHeight((short)15);
         }
+        format = workbook.createDataFormat();
+        initStyles();
 
     }
+
+    private void initStyles() {
+        Font usualFont =  createFont("Times New Roman", 16, false);
+        columnStyle = workbook.createCellStyle();
+        centerStyle = workbook.createCellStyle();
+        leftStyle = workbook.createCellStyle();
+        rightStyle = workbook.createCellStyle();
+        columnStyle.setFont(usualFont);
+        columnStyle.setAlignment(HorizontalAlignment.CENTER);
+        columnStyle.setWrapText(true);
+        columnStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        columnStyle.setBorderTop(BorderStyle.THIN);
+        columnStyle.setBorderBottom(BorderStyle.THIN);
+        columnStyle.setBorderLeft(BorderStyle.THIN);
+        columnStyle.setBorderRight(BorderStyle.THIN);
+        centerStyle.cloneStyleFrom(columnStyle);
+        centerStyle.setAlignment(HorizontalAlignment.CENTER);
+        leftStyle.cloneStyleFrom(columnStyle);
+        leftStyle.setAlignment(HorizontalAlignment.LEFT);
+        rightStyle.cloneStyleFrom(columnStyle);
+        rightStyle.setAlignment(HorizontalAlignment.RIGHT);
+        rightStyle.setDataFormat(format.getFormat("#0.00"));
+    }
+
     /**
      * Создаёт объект шрифта на основе аргументов
      * */

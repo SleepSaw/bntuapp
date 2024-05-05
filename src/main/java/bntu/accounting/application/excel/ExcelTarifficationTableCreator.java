@@ -137,37 +137,37 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
 
         // Нагрузка
         addCell(0,null,rightStyle,row);
-        addCell(1,"ИТОГО:",leftStyle,row);
-        addCell(9,"ИТОГО:",leftStyle,row);
+        addCell(1,"ИТОГО:",boldLeftStyle,row);
+        addCell(9,"ИТОГО:",boldLeftStyle,row);
 
         addCell(2,null,rightStyle,row);
         addCell(3,null,rightStyle,row);
 
 
-        addCell(4,loadService.getTotalLoadOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(5,loadService.getAcademicLoadOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(6,loadService.getAddLoadOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(7,loadService.getOrgLoadOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(4,loadService.getTotalLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(5,loadService.getAcademicLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(6,loadService.getAddLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(7,loadService.getOrgLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
         // Оклады
         LoadService loadService = new LoadService();
-        addCell(8,null,rightStyle,row);
-        addCell(10,null,rightStyle,row);
-        addCell(11,loadService.getTotalLoadOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(8,null,boldRightStyle,row);
+        addCell(10,null,boldRightStyle,row);
+        addCell(11,loadService.getTotalLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
         addCell(12,null,rightStyle,row);
         addCell(13,null,rightStyle,row);
         addCell(14,null,rightStyle,row);
-        addCell(15,salaryService.getSalaryPerRateOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(16,salaryService.getSalaryByLoadOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(17,salaryService.getExpAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(18,salaryService.getContractAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(15,salaryService.getSalaryPerRateOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(16,salaryService.getSalaryByLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(17,salaryService.getExpAllowanceOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(18,salaryService.getContractAllowanceOfAllTeachers(employees).toString(),boldRightStyle,row);
         addCell(19,null,rightStyle,row);
-        addCell(20,salaryService.getQualAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(21,salaryService.getYoungSpecAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(22,salaryService.getProfActivitiesAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(23,salaryService.getWorkInIndustryAllowanceOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(20,salaryService.getQualAllowanceOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(21,salaryService.getYoungSpecAllowanceOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(22,salaryService.getProfActivitiesAllowanceOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(23,salaryService.getWorkInIndustryAllowanceOfAllTeachers(employees).toString(),boldRightStyle,row);
         addCell(24,null,rightStyle,row);
         addCell(25,null,rightStyle,row);
-        addCell(26,salaryService.getTotalSalaryOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(26,salaryService.getTotalSalaryOfAllTeachers(employees).toString(),boldRightStyle,row);
     }
 
     @Override

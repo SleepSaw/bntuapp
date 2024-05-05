@@ -25,7 +25,7 @@ public abstract class ExcelTableCreator extends ExcelUtil implements ExcelTable 
         }
         Cell cell;
         Row row = sheet.getRow(startRow);
-        for(int i = startRow;i<=endRow;i++){
+        for(int i = startRow; i<=endRow;i++){
             row = sheet.getRow(i);
             for(int j = startColumn;j<=endColumn;j++){
                 cell = row.createCell(j);
@@ -39,9 +39,17 @@ public abstract class ExcelTableCreator extends ExcelUtil implements ExcelTable 
             sheet.addMergedRegion(mergedRegion);
         }
             if(startColumn == endColumn){
-                row = sheet.getRow(endRow+1);
-                counter++;
-                indexingColumn(row,startColumn,counter.toString());
+                try {
+                    row = sheet.getRow(endRow+1);
+                    counter++;
+                    indexingColumn(row,startColumn,counter.toString());
+                }
+                catch (NullPointerException ex){
+                    row = sheet.createRow(endRow+1);
+                    counter++;
+                    indexingColumn(row,startColumn,counter.toString());
+                }
+
             }
     }
     private void indexingColumn(Row row, int columnIndex,String value){

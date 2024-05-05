@@ -7,6 +7,8 @@ public abstract class ExcelUtil {
     public CellStyle leftStyle;
     public CellStyle centerStyle;
     public CellStyle rightStyle;
+    public CellStyle boldRightStyle;
+    public CellStyle boldLeftStyle;
     protected static CellStyle columnStyle;
     protected Workbook workbook;
     protected Sheet sheet;
@@ -26,10 +28,13 @@ public abstract class ExcelUtil {
 
     private void initStyles() {
         Font usualFont =  createFont("Times New Roman", 16, false);
+        Font boldFont =  createFont("Times New Roman", 16, true);
         columnStyle = workbook.createCellStyle();
         centerStyle = workbook.createCellStyle();
         leftStyle = workbook.createCellStyle();
         rightStyle = workbook.createCellStyle();
+        boldLeftStyle = workbook.createCellStyle();
+        boldRightStyle = workbook.createCellStyle();
         columnStyle.setFont(usualFont);
         columnStyle.setAlignment(HorizontalAlignment.CENTER);
         columnStyle.setWrapText(true);
@@ -45,6 +50,10 @@ public abstract class ExcelUtil {
         rightStyle.cloneStyleFrom(columnStyle);
         rightStyle.setAlignment(HorizontalAlignment.RIGHT);
         rightStyle.setDataFormat(format.getFormat("#0.00"));
+        boldRightStyle.cloneStyleFrom(rightStyle);
+        boldRightStyle.setFont(boldFont);
+        boldLeftStyle.cloneStyleFrom(leftStyle);
+        boldLeftStyle.setFont(boldFont);
     }
 
     /**

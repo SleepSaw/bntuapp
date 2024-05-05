@@ -80,13 +80,13 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
 
         LoadService service = new LoadService();
         addCell(0,null,leftStyle,row);
-        addCell(1,"ИТОГО:",leftStyle,row);
+        addCell(1,"ИТОГО:",boldLeftStyle,row);
         addCell(2,null,leftStyle,row);
         addCell(3,null,leftStyle,row);
-        addCell(4,service.getTotalLoadOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(5,service.getAcademicLoadOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(6,service.getAddLoadOfAllTeachers(employees).toString(),rightStyle,row);
-        addCell(7,service.getOrgLoadOfAllTeachers(employees).toString(),rightStyle,row);
+        addCell(4,service.getTotalLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(5,service.getAcademicLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(6,service.getAddLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
+        addCell(7,service.getOrgLoadOfAllTeachers(employees).toString(),boldRightStyle,row);
     }
     private void addCell(int cellIndex, String value, CellStyle style, Row row){
         Cell cell = row.createCell(cellIndex);

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0"
+            prefWidth="706.0" stylesheets="@../../css/text_field_style.css" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Pane prefHeight="48.0" prefWidth="706.0" style="-fx-background-color: #d6ffe8; -fx-border-width: 0 0 2 0; -fx-border-color: #f0f0f0;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="14.0" layoutY="11.0" text="Сохранить тарификацию..." textFill="#515151">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <Pane prefHeight="305.0" prefWidth="706.0" BorderPane.alignment="CENTER" style="-fx-background-color: transparent;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" style="-fx-border-color: #217346; -fx-border-width: 0 0 2 0;" text="Утвердители" textFill="#515151">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="53.0" text="ФИО утвердителя:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="83.0" text="Должность утвердителя:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="113.0" text="ФИО начальника ПЭУ:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="approverNameField" layoutX="181.0" layoutY="51.0" prefHeight="25.0" prefWidth="165.0" />
+            <TextField fx:id="approverPostField" layoutX="181.0" layoutY="81.0" prefHeight="25.0" prefWidth="165.0" />
+            <TextField fx:id="departmentHeadNameField" layoutX="181.0" layoutY="111.0" prefHeight="25.0" prefWidth="165.0" />
+            <Label layoutX="372.0" layoutY="14.0" style="-fx-border-color: #217346; -fx-border-width: 0 0 2 0;" text="Отчётный период" textFill="#515151">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="372.0" layoutY="114.0" text="Полугодие:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="372.0" layoutY="84.0" text="Учебный год:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="372.0" layoutY="54.0" text="Дата:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="firstHalfOfYear" layoutX="473.0" layoutY="115.0" mnemonicParsing="false" text="Первое" />
+            <CheckBox fx:id="secondHalfOfYear" layoutX="563.0" layoutY="115.0" mnemonicParsing="false" text="Второе" />
+            <TextField fx:id="academicYearField" layoutX="473.0" layoutY="81.0" prefHeight="25.0" prefWidth="150.0" />
+            <DatePicker fx:id="datePicker" editable="false" layoutX="473.0" layoutY="51.0" prefHeight="25.0" prefWidth="150.0" scaleShape="false" style="-fx-background-color: transparent;" />
+            <Label layoutX="14.0" layoutY="158.0" style="-fx-border-color: #217346; -fx-border-width: 0 0 2 0;" text="Примечания" textFill="#515151">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="notesArea" layoutX="14.0" layoutY="197.0" prefHeight="129.0" prefWidth="678.0" />
+         </children>
+      </Pane>
+   </center>
+   <bottom>
+      <Pane prefHeight="53.0" prefWidth="706.0" style="-fx-background-color: #f0f0f0;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="saveButton" layoutX="548.0" layoutY="14.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="144.0" stylesheets="@../../css/button_style.css" text="Сохранить" />
+            <Button fx:id="cancelButton" layoutX="447.0" layoutY="14.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="91.0" text="Отмена" />
+         </children>
+      </Pane>
+   </bottom>
+</BorderPane>

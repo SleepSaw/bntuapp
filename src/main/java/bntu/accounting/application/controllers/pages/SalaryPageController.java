@@ -1,6 +1,7 @@
 package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
+import bntu.accounting.application.controllers.windows.BonusWindowController;
 import bntu.accounting.application.controllers.windows.SalaryOptionsWindowController;
 import bntu.accounting.application.excel.SalaryFileCreator;
 import bntu.accounting.application.models.Employee;
@@ -57,7 +58,7 @@ public class SalaryPageController extends VisualComponentsInitializer implements
     @FXML
     private TableColumn<Employee, String> youngSpecAllowanceColumn;
     @FXML
-    private Button separateButton;
+    private Button bonusButton;
     @FXML
     private Button optionsButton;
     @FXML
@@ -104,6 +105,16 @@ public class SalaryPageController extends VisualComponentsInitializer implements
             throw new RuntimeException(e);
         }
     }
+    @FXML
+    void bonusButtonAction(ActionEvent event) {
+        try {
+            WindowCreator.createWindow("/fxml/windows/bonus_window.fxml", this,
+                    new BonusWindowController(super.getStage()));
+        } catch (LoadException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

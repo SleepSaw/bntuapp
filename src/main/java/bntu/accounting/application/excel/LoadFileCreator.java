@@ -14,7 +14,7 @@ import java.util.List;
 
 public class LoadFileCreator {
     private final static String headerFilePath = "excel_header.json";
-    private final static String loadTableFilePath = "tariffication.json";
+    private final static String loadTableFilePath = "tariffication_table.json";
     private FileLoader jsonFileLoader;
     private ExcelFileHeaderCreator headerCreator;
     private ExcelLoadTableCreator loadTableCreator;
@@ -28,7 +28,7 @@ public class LoadFileCreator {
             JSONObject headersData = jsonFileLoader.loadJsonFile(headerFilePath);
             JSONObject loadTableData = jsonFileLoader.loadJsonFile(loadTableFilePath);
             headerCreator.writeDataToExcel(filePath,5,headersData);
-            headerCreator.createRightBlock(5,headersData);
+            headerCreator.createRightBlock(5);
             loadTableCreator.createLoadTableColumns(filePath,loadTableData);
             int endRow = loadTableCreator.addAllItemsToTable(14,items);
             loadTableCreator.addCommonData(endRow, items);

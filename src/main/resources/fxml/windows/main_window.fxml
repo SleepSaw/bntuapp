@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -12,7 +20,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1349.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.windows.MainWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1359.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.windows.MainWindowController">
     <left>
         <AnchorPane fx:id="page" prefHeight="430.0" prefWidth="223.0" style="-fx-background-color: #d6ffe8;" stylesheets="@../../css/menu_buttons_style.css" BorderPane.alignment="CENTER">
             <children>
@@ -159,16 +167,35 @@
             </top>
             <center>
                 <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                    <fx:include fx:id="tarifficationPage" source="../pages/tariffication_page.fxml" />
-                    <fx:include fx:id="employeePage" source="../pages/employee_page.fxml" />
-                    <fx:include fx:id="loadPage" source="../pages/load_page.fxml" />
-                    <fx:include fx:id="salaryPage" source="../pages/salary_page.fxml" />
-                    <fx:include fx:id="vacancyPage" source="../pages/vacancies_page.fxml" />
+                   <children>
+                       <fx:include fx:id="tarifficationPage" source="../pages/tariffication_page.fxml" />
+                       <fx:include fx:id="employeePage" source="../pages/employee_page.fxml" />
+                       <fx:include fx:id="loadPage" source="../pages/load_page.fxml" />
+                       <fx:include fx:id="salaryPage" source="../pages/salary_page.fxml" />
+                       <fx:include fx:id="vacancyPage" source="../pages/vacancies_page.fxml" />
+                   </children>
                 </Pane>
             </center>
         </BorderPane>
     </center>
    <top>
-      <AnchorPane prefHeight="1.0" prefWidth="1349.0" style="-fx-background-color: #afafaf;" BorderPane.alignment="CENTER" />
+      <MenuBar style="-fx-background-color: white; -fx-border-width: 0 0 1 0; -fx-border-color: #f0f0f0;" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Тарификация">
+            <items>
+                  <Menu fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveMenuItemAction" text="Сохранить" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Оклады">
+            <items>
+              <MenuItem fx:id="salaryOptionsMenuItem" mnemonicParsing="false" onAction="#salaryOptionsMenuItemAction" text="Настройки" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Помощь" />
+        </menus>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </MenuBar>
    </top>
 </BorderPane>

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SalaryFileCreator {
     private final static String headerFilePath = "excel_header.json";
-    private final static String salaryTableFilePath = "tariffication.json";
+    private final static String salaryTableFilePath = "tariffication_table.json";
     private FileLoader jsonFileLoader;
     private ExcelFileHeaderCreator headerCreator;
     private ExcelSalaryTableCreator SalaryTableCreator;

@@ -1,5 +1,7 @@
 package bntu.accounting.application.excel;
 
+import bntu.accounting.application.iojson.ReportData;
+import bntu.accounting.application.iojson.ReportJsonHelper;
 import bntu.accounting.application.models.Employee;
 import bntu.accounting.application.models.Item;
 import bntu.accounting.application.models.Salary;
@@ -29,11 +31,18 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
         AllowancesService allowancesService = new AllowancesService();
         CellStyle styleBold = setFontForCell(createFont("Times New Roman", 20, true));
         setAllColumnsWidth();
+        ReportJsonHelper helper = new ReportJsonHelper();
+        ReportData reportData = helper.readFromJson();
+
 
         Row row4 = sheet.createRow(4);
         row4.setHeightInPoints(30);
-        Row row5 = sheet.createRow(5);
+        Row row5 = sheet.getRow(5);
         row5.setHeightInPoints(30);
+        Row row6 = sheet.getRow(6);
+        row5.setHeightInPoints(30);
+        Row row7 = sheet.createRow(7);
+        row7.setHeightInPoints(30);
         Row row8 = sheet.createRow(8);
         row8.setHeightInPoints(30);
         Row row9 = sheet.createRow(9);
@@ -47,7 +56,9 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
         Row row13 = sheet.createRow(13);
 
 
-        writeDataToCell(row8, 0, jsonData.getString("chapter_name_part1"), styleBold);
+        writeDataToCell(row7, 0, "на " + reportData.getDay() + " " + reportData.getMonth() + " " +
+                reportData.getYear() + " на " + reportData.getAcademicYear() + " учебный год " + reportData.getHalfOfYear() + " полугодие", styleBold);
+        writeDataToCell(row9, 0, jsonData.getString("chapter_name"), styleBold);
         writeDataToCell(row4, 8, jsonData.getString("chapter_name_part1"), styleBold);
         writeDataToCell(row5, 8, jsonData.getString("chapter_name_part2"), styleBold);
         writeDataToCell(row9, 8, "Базовая ставка: " + allowancesService.getBaseRate(), styleBold);
@@ -229,7 +240,7 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
         addCell(row,25,"-",centerStyle);
         addCell(row,26,employee.getSalary().getTotalSalary(),rightStyle);
     }
-    public void writeVacanciesData(int startRow){
+    public int writeVacanciesData(int startRow){
         List<Vacancy> vacancies = vacancyService.getAllVacancies().stream().
                 filter(e -> !(e.getStatus().equals(VacancyStatus.CLOSED.toString()))).toList();
         int counter = startRow;
@@ -266,6 +277,7 @@ public class ExcelTarifficationTableCreator extends ExcelTableCreator
             addCell(26,pairs.get(v).getTotalSalary().toString(),rightStyle,row);
             counter++;
         }
+        return counter;
     }
     private void addCell(Row row, int cellIndex,String value,CellStyle style){
         Cell cell = row.createCell(cellIndex);

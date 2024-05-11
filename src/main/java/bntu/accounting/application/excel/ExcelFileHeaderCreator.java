@@ -1,5 +1,8 @@
 package bntu.accounting.application.excel;
 
+import bntu.accounting.application.iojson.FileLoader;
+import bntu.accounting.application.iojson.ReportData;
+import bntu.accounting.application.iojson.ReportJsonHelper;
 import org.apache.poi.ss.usermodel.*;
 import org.json.JSONObject;
 
@@ -23,8 +26,6 @@ public class ExcelFileHeaderCreator extends ExcelUtil {
     }
 
     public void writeDataToExcel(String fileName, int marginLeftIndexColumn, JSONObject jsonData) {
-
-
         writeDataToCell(row0, 0, jsonData.getString("governing_institution_name"), headerStyle);
         writeDataToCell(row1, 0, jsonData.getString("educational_institution_name"), headerStyle);
         writeDataToCell(row2, 0, jsonData.getString("branch"), headerStyleBold);
@@ -39,12 +40,14 @@ public class ExcelFileHeaderCreator extends ExcelUtil {
         }
 
     }
-    public void createRightBlock(int marginLeftIndexColumn, JSONObject jsonData ){
-        writeDataToCell(row1, marginLeftIndexColumn, jsonData.getString("main_person_post"), headerStyleBoldRight);
+    public void createRightBlock(int marginLeftIndexColumn){
+        ReportJsonHelper reportJsonHelper = new ReportJsonHelper();
+        ReportData reportData = reportJsonHelper.readFromJson();
+        writeDataToCell(row1, marginLeftIndexColumn, reportData.getApproverPost(), headerStyleBoldRight);
         writeDataToCell(row0, marginLeftIndexColumn, "УТВЕРЖДАЮ", headerStyleBoldRight);
         writeDataToCell(row2, marginLeftIndexColumn, "__________________   " +
-                (String) jsonData.get("main_person_name"), headerStyleBoldRight);
-        writeDataToCell(row3, marginLeftIndexColumn, "\"_____ \"_______________2023год", headerStyleBoldRight);
+                reportData.getApproverName(), headerStyleBoldRight);
+        writeDataToCell(row3, marginLeftIndexColumn, "\"_____ \"_______________"+reportData.getYear()+" год", headerStyleBoldRight);
     }
 
 }

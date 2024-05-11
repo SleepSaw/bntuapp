@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -14,7 +20,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.SalaryPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.SalaryPageController">
     <center>
         <ScrollPane hbarPolicy="NEVER" prefHeight="579.0" prefWidth="1094.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <content>
@@ -109,7 +115,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="separateButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="186.0" style="-fx-background-color: #fdf8e7;" stylesheets="@../../css/button_style.css" text="Распределить фонд ОПД" textFill="WHITE" GridPane.columnIndex="1">
+            <Button fx:id="bonusButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#bonusButtonAction" prefHeight="27.0" prefWidth="186.0" style="-fx-background-color: #fdf8e7;" stylesheets="@../../css/button_style.css" text="Распределить фонд ОПД" textFill="WHITE" GridPane.columnIndex="1">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

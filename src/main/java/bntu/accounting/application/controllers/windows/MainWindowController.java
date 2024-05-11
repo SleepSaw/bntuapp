@@ -1,16 +1,21 @@
 package bntu.accounting.application.controllers.windows;
 
+import bntu.accounting.application.controllers.VisualComponentsInitializer;
+import bntu.accounting.application.controllers.pages.TarifficationPageController;
 import bntu.accounting.application.util.enums.PagesNames;
+import bntu.accounting.application.util.fxsupport.WindowCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.fxml.LoadException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;;import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainWindowController implements Initializable {
+public class MainWindowController extends VisualComponentsInitializer implements Initializable {
     // Текст
     @FXML
     private Label homeLabel;
@@ -67,6 +72,11 @@ public class MainWindowController implements Initializable {
     private BorderPane salaryPage;
     @FXML
     private BorderPane employeePage;
+    @FXML
+    private MenuItem saveMenuItem;
+    @FXML
+    private MenuItem salaryOptionsMenuItem;
+
 
     @FXML
     void employeeButtonAction(ActionEvent event) {
@@ -181,5 +191,17 @@ public class MainWindowController implements Initializable {
                         "-fx-border-color: #217346;");
                 break;
         }
+    }
+
+    public void saveMenuItemAction(ActionEvent actionEvent) {
+        try {
+            WindowCreator.createWindow("/fxml/windows/tariffication_window.fxml", this,
+                    new TarifficationWindowController(super.getStage()));
+        } catch (LoadException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void salaryOptionsMenuItemAction(ActionEvent actionEvent) {
     }
 }

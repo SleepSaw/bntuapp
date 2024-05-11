@@ -1,4 +1,4 @@
-module bntu.accounting.application {
+    module bntu.accounting.application {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.json;
@@ -22,6 +22,7 @@ module bntu.accounting.application {
     opens bntu.accounting.application.util to hibernate.entitymanager, jakarta.persistence, javafx.base;
     exports bntu.accounting.application;
     exports bntu.accounting.application.models to com.fasterxml.jackson.databind;
+    exports  bntu.accounting.application.iojson to com.fasterxml.jackson.databind;
     opens bntu.accounting.application.iojson to hibernate.entitymanager, jakarta.persistence, javafx.base;
     opens bntu.accounting.application.util.db to hibernate.entitymanager, jakarta.persistence, javafx.base;
     opens bntu.accounting.application.util.enums to hibernate.entitymanager, jakarta.persistence, javafx.base;

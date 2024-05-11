@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TarifficationFileCreator  {
     private final static String headerFilePath = "excel_header.json";
-    private final static String loadTableFilePath = "tariffication.json";
+    private final static String loadTableFilePath = "tariffication_table.json";
     private FileLoader jsonFileLoader;
     private ExcelFileHeaderCreator headerCreator;
     private ExcelTarifficationTableCreator tarifficationTableCreator;
@@ -27,7 +27,7 @@ public class TarifficationFileCreator  {
             JSONObject headersData = jsonFileLoader.loadJsonFile(headerFilePath);
             JSONObject loadTableData = jsonFileLoader.loadJsonFile(loadTableFilePath);
             headerCreator.writeDataToExcel(filePath,5,headersData);
-            headerCreator.createRightBlock(5,headersData);
+            headerCreator.createRightBlock(5);
             tarifficationTableCreator.createLoadTableColumns(filePath,loadTableData);
             int endRow = tarifficationTableCreator.addAllItemsToTable(14,items);
             tarifficationTableCreator.addCommonData(endRow, items);
@@ -39,7 +39,7 @@ public class TarifficationFileCreator  {
             throw new RuntimeException(e);
         }
     }
-    private void init(){
+    private void    init(){
         headerCreator = new ExcelFileHeaderCreator(workbook);
         tarifficationTableCreator = new ExcelTarifficationTableCreator(workbook);
         jsonFileLoader = new FileLoader();

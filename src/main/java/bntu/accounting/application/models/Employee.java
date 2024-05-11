@@ -2,6 +2,7 @@ package bntu.accounting.application.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,7 +30,6 @@ public class Employee extends Item {
     private Double contractValue;
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY,mappedBy = "employee")
     private Salary salary;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vacancy_id", referencedColumnName = "id")
     private Vacancy vacancy;

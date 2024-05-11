@@ -13,6 +13,9 @@
         <property name="hibernate.show_sql">true</property>
 
         <mapping class="bntu.accounting.application.models.Employee"/>
+        <mapping class="bntu.accounting.application.models.Expert"/>
+        <mapping class="bntu.accounting.application.models.ConstructKey"/>
+        <mapping class="bntu.accounting.application.models.Rating"/>
         <mapping class="bntu.accounting.application.models.Load"/>
         <mapping class="bntu.accounting.application.models.Salary"/>
         <mapping class="bntu.accounting.application.models.Vacancy"/>

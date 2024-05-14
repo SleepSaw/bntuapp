@@ -1,28 +1,23 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.controllers.alerts.*;
 import bntu.accounting.application.controllers.exceptions.EmptyEntityException;
 import bntu.accounting.application.controllers.exceptions.SettingIncorrectValue;
-import bntu.accounting.application.dao.exceptions.EmptyResultListException;
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.models.fordb.Employee;
+import bntu.accounting.application.models.fordb.Vacancy;
 import bntu.accounting.application.models.builders.EmployeeBuilder;
 import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
-import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import bntu.accounting.application.util.fxsupport.TextFieldValidator;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.fxml.LoadException;
@@ -30,7 +25,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import org.hibernate.HibernateException;
 
 import java.net.URL;

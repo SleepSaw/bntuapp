@@ -1,4 +1,4 @@
-package bntu.accounting.application.iojson;
+package bntu.accounting.application.models.serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 public class ReportData {

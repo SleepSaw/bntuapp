@@ -1,6 +1,6 @@
 package bntu.accounting.application.iojson;
 
-import bntu.accounting.application.models.SalaryOptions;
+import bntu.accounting.application.models.serializable.SalaryOptions;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +26,7 @@ public class OptionsJsonHelper {
     }
     public SalaryOptions readFromJson(){
         try {
-            return mapper.readValue(new File(filePath), SalaryOptions.class);
+            return mapper.readValue(jsonFile, SalaryOptions.class);
         } catch (JsonMappingException e) {
             throw new RuntimeException(e);
         } catch (JsonGenerationException e) {

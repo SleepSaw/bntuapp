@@ -1,6 +1,6 @@
 package bntu.accounting.application.util.fxsupport;
 
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.fordb.Employee;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;

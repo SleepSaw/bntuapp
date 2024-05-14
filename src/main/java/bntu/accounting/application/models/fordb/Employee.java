@@ -1,6 +1,9 @@
-package bntu.accounting.application.models;
+package bntu.accounting.application.models.fordb;
 
+import bntu.accounting.application.models.Item;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,11 +31,16 @@ public class Employee extends Item {
     private Boolean isYoungSpecialist;
     @Column(name = "contract")
     private Double contractValue;
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY,mappedBy = "employee")
+    @Column(name = "work_quality_grade")
+    private Integer workQualityGrade;
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "employee")
     private Salary salary;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vacancy_id", referencedColumnName = "id")
     private Vacancy vacancy;
+
+    @OneToMany(mappedBy = "key.employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings;
 
     public Employee() {
     }
@@ -137,6 +145,26 @@ public class Employee extends Item {
 
     public void setVacancy(Vacancy vacancy) {
         this.vacancy = vacancy;
+    }
+
+    public Integer getWorkQualityGrade() {
+        return workQualityGrade;
+    }
+
+    public void setWorkQualityGrade(Integer workQualityGrade) {
+        this.workQualityGrade = workQualityGrade;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+    public Rating getScoreByExpert(Expert expert){
+        List<Rating> list = ratings.stream().filter(rating -> rating.getKey().getExpert().equals(expert)).toList();
+        return list.get(0);
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override

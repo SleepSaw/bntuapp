@@ -1,6 +1,6 @@
 package bntu.accounting.application.excel;
 
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.fordb.Employee;
 import bntu.accounting.application.models.Item;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.SalaryService;

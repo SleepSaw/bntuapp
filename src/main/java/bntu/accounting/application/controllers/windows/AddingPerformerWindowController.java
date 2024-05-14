@@ -1,10 +1,9 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.controllers.alerts.*;
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Load;
-import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.models.fordb.Employee;
+import bntu.accounting.application.models.fordb.Load;
+import bntu.accounting.application.models.fordb.Vacancy;
 import bntu.accounting.application.models.builders.EmployeeBuilder;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;

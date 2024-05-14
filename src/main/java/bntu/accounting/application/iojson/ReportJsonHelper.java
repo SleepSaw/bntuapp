@@ -1,5 +1,6 @@
 package bntu.accounting.application.iojson;
 
+import bntu.accounting.application.models.serializable.ReportData;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -27,8 +28,7 @@ public class ReportJsonHelper {
     }
     public ReportData readFromJson(){
         try {
-            ReportData reportData = mapper.readValue(jsonFile, ReportData.class);
-            return reportData;
+            return mapper.readValue(jsonFile, ReportData.class);
         }
         catch (JsonMappingException e) {
             throw new RuntimeException(e);

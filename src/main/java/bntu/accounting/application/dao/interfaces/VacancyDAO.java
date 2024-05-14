@@ -1,8 +1,8 @@
 package bntu.accounting.application.dao.interfaces;
 
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Load;
-import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.models.fordb.Employee;
+import bntu.accounting.application.models.fordb.Load;
+import bntu.accounting.application.models.fordb.Vacancy;
 
 import java.util.List;
 

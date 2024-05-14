@@ -3,14 +3,14 @@ package bntu.accounting.application.controllers;
 import bntu.accounting.application.controllers.alerts.*;
 import bntu.accounting.application.dao.impl.EmployeeDAOImpl;
 import bntu.accounting.application.dao.interfaces.EmployeeDAO;
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.fordb.Employee;
 import bntu.accounting.application.iojson.FileLoader;
+import bntu.accounting.application.services.EmployeeService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +23,7 @@ import java.util.Optional;
 
 public class VisualComponentsInitializer implements AlertManager {
     private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    private EmployeeService employeeService = new EmployeeService();
     // название файла с конфигурацией приложения
     private final String filePath = "employee_data.json";
     private final FileLoader loader = new FileLoader();
@@ -53,6 +54,13 @@ public class VisualComponentsInitializer implements AlertManager {
     protected List<Employee> updateTable(TableView<Employee> table) {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
         List<Employee> resultList = employeeDAO.getAllEmployees();
+        employees.addAll(resultList);
+        table.setItems(employees);
+        return resultList;
+    }
+    protected List<Employee> specialUpdateTable(TableView<Employee> table) {
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
+        List<Employee> resultList = employeeService.getBestEmployees();
         employees.addAll(resultList);
         table.setItems(employees);
         return resultList;

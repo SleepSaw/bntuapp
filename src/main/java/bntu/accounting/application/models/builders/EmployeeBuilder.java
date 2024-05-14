@@ -1,7 +1,7 @@
 package bntu.accounting.application.models.builders;
 
 
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.fordb.Employee;
 
 public class EmployeeBuilder {
     private String name;

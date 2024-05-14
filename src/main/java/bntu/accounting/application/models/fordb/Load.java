@@ -1,4 +1,4 @@
-package bntu.accounting.application.models;
+package bntu.accounting.application.models.fordb;
 
 import jakarta.persistence.*;
 

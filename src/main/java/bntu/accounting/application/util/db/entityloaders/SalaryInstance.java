@@ -1,8 +1,6 @@
 package bntu.accounting.application.util.db.entityloaders;
 
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Salary;
-import bntu.accounting.application.models.SalaryOptions;
+import bntu.accounting.application.models.fordb.Salary;
 
 import java.util.ArrayList;
 import java.util.List;

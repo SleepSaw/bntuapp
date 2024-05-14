@@ -2,9 +2,7 @@ package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.iojson.OptionsJsonHelper;
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.SalaryOptions;
-import bntu.accounting.application.models.Tariff;
+import bntu.accounting.application.models.serializable.SalaryOptions;
 import bntu.accounting.application.services.AllowancesService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.SalaryInstance;
@@ -12,7 +10,6 @@ import bntu.accounting.application.util.enums.AllowanceTypes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -20,7 +17,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;

@@ -4,7 +4,7 @@ import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.controllers.windows.BonusWindowController;
 import bntu.accounting.application.controllers.windows.SalaryOptionsWindowController;
 import bntu.accounting.application.excel.SalaryFileCreator;
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.fordb.Employee;
 import bntu.accounting.application.models.Item;
 import bntu.accounting.application.services.EmployeeService;
 import bntu.accounting.application.services.SalaryService;

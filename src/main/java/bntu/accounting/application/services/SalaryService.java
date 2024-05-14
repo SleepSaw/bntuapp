@@ -3,9 +3,9 @@ package bntu.accounting.application.services;
 import bntu.accounting.application.dao.impl.SalaryDAOImpl;
 import bntu.accounting.application.dao.interfaces.SalaryDAO;
 import bntu.accounting.application.iojson.OptionsJsonHelper;
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Salary;
-import bntu.accounting.application.models.SalaryOptions;
+import bntu.accounting.application.models.fordb.Employee;
+import bntu.accounting.application.models.fordb.Salary;
+import bntu.accounting.application.models.serializable.SalaryOptions;
 import bntu.accounting.application.models.builders.SalaryBuilder;
 import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.db.entityloaders.SalaryInstance;
@@ -20,6 +20,15 @@ public class SalaryService implements Observer {
     public SalaryService() {
         SalaryInstance.getInstance().attach(this);
         update();
+    }
+    public void updateSalaryOPD(Employee employee, Double OPDValue){
+        salaryDAO.updateSalaryOPD(employee, OPDValue);
+    }
+    public void updateSalary(Integer id, Salary salary){
+        salaryDAO.updateSalary(id,salary);
+    }
+    public void saveSalary(Salary salary){
+        salaryDAO.saveSalary(salary);
     }
     private SalaryOptions options;
     private SalaryDAO salaryDAO = new SalaryDAOImpl();

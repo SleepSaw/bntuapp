@@ -1,4 +1,4 @@
-package bntu.accounting.application.models;
+package bntu.accounting.application.models.serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

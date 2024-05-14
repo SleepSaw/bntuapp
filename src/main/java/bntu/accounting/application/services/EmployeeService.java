@@ -6,8 +6,8 @@ import bntu.accounting.application.dao.impl.SalaryDAOImpl;
 import bntu.accounting.application.dao.interfaces.EmployeeDAO;
 import bntu.accounting.application.dao.interfaces.LoadDAO;
 import bntu.accounting.application.dao.interfaces.SalaryDAO;
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.models.fordb.Employee;
+import bntu.accounting.application.models.fordb.Vacancy;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import org.hibernate.HibernateException;
 
@@ -44,6 +44,9 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployees() throws HibernateException {
         return employeeDAO.getAllEmployees();
+    }
+    public List<Employee> getBestEmployees() {
+        return employeeDAO.getAllEmployees().stream().filter(employee -> employee.getWorkQualityGrade() == 1).toList();
     }
 
 }

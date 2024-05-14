@@ -1,7 +1,7 @@
 package bntu.accounting.application.util.normalization;
 
-import bntu.accounting.application.models.Load;
-import bntu.accounting.application.models.Salary;
+import bntu.accounting.application.models.fordb.Load;
+import bntu.accounting.application.models.fordb.Salary;
 
 public class Normalizer extends RounderValues {
     public static void normalizeSalary(Salary salary){

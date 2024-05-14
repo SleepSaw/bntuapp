@@ -1,20 +1,26 @@
-package bntu.accounting.application.models;
+package bntu.accounting.application.models.fordb;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
 @Embeddable
 public class ConstructKey implements Serializable {
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "expert_id", referencedColumnName = "id")
     private Expert expert;
+
+    public ConstructKey() {
+    }
+
+    public ConstructKey(Employee employee, Expert expert) {
+        this.employee = employee;
+        this.expert = expert;
+    }
 
     public Employee getEmployee() {
         return employee;

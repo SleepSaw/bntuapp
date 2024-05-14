@@ -1,10 +1,9 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.excel.LoadFileCreator;
 import bntu.accounting.application.excel.TarifficationFileCreator;
 import bntu.accounting.application.iojson.FileLoader;
-import bntu.accounting.application.iojson.ReportData;
+import bntu.accounting.application.models.serializable.ReportData;
 import bntu.accounting.application.iojson.ReportJsonHelper;
 import bntu.accounting.application.models.Item;
 import bntu.accounting.application.services.EmployeeService;
@@ -15,16 +14,11 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 

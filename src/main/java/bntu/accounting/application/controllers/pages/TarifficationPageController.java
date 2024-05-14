@@ -4,8 +4,6 @@ import bntu.accounting.application.controllers.VisualComponentsInitializer;
 import bntu.accounting.application.excel.TarifficationFileCreator;
 import bntu.accounting.application.models.Item;
 import bntu.accounting.application.services.EmployeeService;
-import bntu.accounting.application.services.SalaryService;
-import bntu.accounting.application.util.db.entityloaders.Observer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

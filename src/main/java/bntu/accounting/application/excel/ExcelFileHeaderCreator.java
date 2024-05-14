@@ -1,7 +1,6 @@
 package bntu.accounting.application.excel;
 
-import bntu.accounting.application.iojson.FileLoader;
-import bntu.accounting.application.iojson.ReportData;
+import bntu.accounting.application.models.serializable.ReportData;
 import bntu.accounting.application.iojson.ReportJsonHelper;
 import org.apache.poi.ss.usermodel.*;
 import org.json.JSONObject;

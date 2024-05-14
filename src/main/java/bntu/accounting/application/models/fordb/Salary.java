@@ -1,4 +1,4 @@
-package bntu.accounting.application.models;
+package bntu.accounting.application.models.fordb;
 
 import jakarta.persistence.*;
 
@@ -8,7 +8,7 @@ import java.util.Objects;
 @Table(name = "salary")
 public class Salary {
     @Id
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private Employee employee;
     @Column(name = "total_salary")

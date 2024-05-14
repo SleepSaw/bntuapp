@@ -1,12 +1,11 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.models.Load;
-import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.models.fordb.Load;
+import bntu.accounting.application.models.fordb.Vacancy;
 import bntu.accounting.application.services.LoadService;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.enums.VacancyStatus;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

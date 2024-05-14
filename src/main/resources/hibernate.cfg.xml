@@ -12,13 +12,13 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
 
-        <mapping class="bntu.accounting.application.models.Employee"/>
-        <mapping class="bntu.accounting.application.models.Expert"/>
-        <mapping class="bntu.accounting.application.models.ConstructKey"/>
-        <mapping class="bntu.accounting.application.models.Rating"/>
-        <mapping class="bntu.accounting.application.models.Load"/>
-        <mapping class="bntu.accounting.application.models.Salary"/>
-        <mapping class="bntu.accounting.application.models.Vacancy"/>
+        <mapping class="bntu.accounting.application.models.fordb.Employee"/>
+        <mapping class="bntu.accounting.application.models.fordb.Expert"/>
+        <mapping class="bntu.accounting.application.models.fordb.ConstructKey"/>
+        <mapping class="bntu.accounting.application.models.fordb.Rating"/>
+        <mapping class="bntu.accounting.application.models.fordb.Load"/>
+        <mapping class="bntu.accounting.application.models.fordb.Salary"/>
+        <mapping class="bntu.accounting.application.models.fordb.Vacancy"/>
 
     </session-factory>
 </hibernate-configuration>

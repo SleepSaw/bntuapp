@@ -1,13 +1,9 @@
 package bntu.accounting.application.services;
 
-import bntu.accounting.application.iojson.FileLoader;
 import bntu.accounting.application.iojson.OptionsJsonHelper;
-import bntu.accounting.application.models.SalaryOptions;
+import bntu.accounting.application.models.serializable.SalaryOptions;
 import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.db.entityloaders.SalaryInstance;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 public class AllowancesService implements Observer {
     private OptionsJsonHelper helper = new OptionsJsonHelper();

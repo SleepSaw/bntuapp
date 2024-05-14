@@ -1,5 +1,6 @@
-package bntu.accounting.application.models;
+package bntu.accounting.application.models.fordb;
 
+import bntu.accounting.application.models.Item;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import jakarta.persistence.*;
 

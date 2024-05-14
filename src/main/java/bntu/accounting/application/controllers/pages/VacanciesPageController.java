@@ -2,7 +2,7 @@ package bntu.accounting.application.controllers.pages;
 
 import bntu.accounting.application.controllers.templates.VacancyItemController;
 import bntu.accounting.application.controllers.windows.AddingVacancyWindowController;
-import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.models.fordb.Vacancy;
 import bntu.accounting.application.services.VacancyService;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;

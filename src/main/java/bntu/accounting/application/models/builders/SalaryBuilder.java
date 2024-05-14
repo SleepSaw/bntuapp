@@ -1,7 +1,6 @@
 package bntu.accounting.application.models.builders;
 
-import bntu.accounting.application.models.Salary;
-import jakarta.persistence.Column;
+import bntu.accounting.application.models.fordb.Salary;
 
 public class SalaryBuilder {
 

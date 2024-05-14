@@ -1,9 +1,9 @@
 package bntu.accounting.application.dao.impl;
 
 import bntu.accounting.application.dao.interfaces.EmployeeDAO;
-import bntu.accounting.application.models.Employee;
-import bntu.accounting.application.models.Load;
-import bntu.accounting.application.models.Salary;
+import bntu.accounting.application.models.fordb.Employee;
+import bntu.accounting.application.models.fordb.Load;
+import bntu.accounting.application.models.fordb.Salary;
 import bntu.accounting.application.util.db.DBManager;
 import bntu.accounting.application.util.normalization.Normalizer;
 import org.hibernate.HibernateException;

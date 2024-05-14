@@ -39,5 +39,9 @@
     opens bntu.accounting.application.doc.obj to com.fasterxml.jackson.core;
     exports bntu.accounting.application.excel;
     opens bntu.accounting.application.excel to com.fasterxml.jackson.core;
+        exports bntu.accounting.application.models.serializable to com.fasterxml.jackson.databind;
+        opens bntu.accounting.application.models.serializable to hibernate.entitymanager, jakarta.persistence, javafx.base, org.hibernate.orm.core;
+        exports bntu.accounting.application.models.fordb to com.fasterxml.jackson.databind;
+        opens bntu.accounting.application.models.fordb to hibernate.entitymanager, jakarta.persistence, javafx.base, org.hibernate.orm.core;
 
-}
+    }

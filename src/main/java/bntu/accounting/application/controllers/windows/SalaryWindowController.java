@@ -1,7 +1,7 @@
 package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.fordb.Employee;
 import bntu.accounting.application.services.AllowancesService;
 import bntu.accounting.application.services.SalaryService;
 import bntu.accounting.application.util.enums.AllowanceTypes;

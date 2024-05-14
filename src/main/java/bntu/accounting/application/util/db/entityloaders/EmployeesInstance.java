@@ -1,8 +1,6 @@
 package bntu.accounting.application.util.db.entityloaders;
 
-import bntu.accounting.application.dao.impl.EmployeeDAOImpl;
-import bntu.accounting.application.dao.interfaces.EmployeeDAO;
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.fordb.Employee;
 
 import java.util.ArrayList;
 import java.util.List;

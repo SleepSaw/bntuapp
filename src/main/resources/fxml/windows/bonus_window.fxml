@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="892.0" prefWidth="1512.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="892.0" prefWidth="1769.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <BorderPane prefHeight="73.0" prefWidth="1336.0" style="-fx-background-color: #fdf8e7;" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="73.0" prefWidth="1336.0" style="-fx-background-color: #d6ffe8;" BorderPane.alignment="CENTER">
          <right>
             <VBox prefHeight="76.0" prefWidth="193.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" stylesheets="@../../css/button_style.css" text="Выполнить">
+                  <Button fx:id="performButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: white;" stylesheets="@../../css/button_style.css" text="Выполнить">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -25,7 +23,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: white;" stylesheets="@../../css/button_style.css" text="Настройки">
+                  <Button fx:id="optionsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: #fdf8e7;" stylesheets="@../../css/button_style.css" text="Настройки">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -50,13 +48,13 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="150.0" layoutY="12.0" prefHeight="25.0" prefWidth="80.0" stylesheets="@../../css/text_field_style.css" />
-                  <Label layoutX="15.0" layoutY="47.0" prefHeight="20.0" prefWidth="126.0" text="Статус:">
+                  <TextField fx:id="fundField" layoutX="150.0" layoutY="12.0" prefHeight="25.0" prefWidth="80.0" stylesheets="@../../css/text_field_style.css" />
+                  <Label fx:id="statusLabel" layoutX="15.0" layoutY="47.0" prefHeight="20.0" prefWidth="126.0" text="Статус:">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="150.0" layoutY="42.0" prefHeight="25.0" prefWidth="80.0" stylesheets="@../../css/text_field_style.css" />
+                  <TextField fx:id="statusValueField" layoutX="150.0" layoutY="42.0" prefHeight="25.0" prefWidth="80.0" stylesheets="@../../css/text_field_style.css" />
                   <Label layoutX="240.0" layoutY="17.0" prefHeight="20.0" prefWidth="37.0" text="руб.">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -77,8 +75,8 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="362.0" layoutY="42.0" prefHeight="26.0" prefWidth="35.0" stylesheets="@../../css/text_field_style.css" />
-                  <TextField layoutX="469.0" layoutY="42.0" prefHeight="8.0" prefWidth="35.0" stylesheets="@../../css/text_field_style.css" />
+                  <TextField fx:id="firstRateField" layoutX="362.0" layoutY="42.0" prefHeight="26.0" prefWidth="50.0" stylesheets="@../../css/text_field_style.css" />
+                  <TextField fx:id="secondRateField" layoutX="469.0" layoutY="42.0" prefHeight="8.0" prefWidth="50.0" stylesheets="@../../css/text_field_style.css" />
                   <Label layoutX="418.0" layoutY="47.0" prefHeight="20.0" prefWidth="55.0" text="2-я ст.">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -89,36 +87,38 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="581.0" layoutY="42.0" prefHeight="8.0" prefWidth="35.0" stylesheets="@../../css/text_field_style.css" />
+                  <TextField fx:id="thirdRateField" layoutX="581.0" layoutY="42.0" prefHeight="8.0" prefWidth="50.0" stylesheets="@../../css/text_field_style.css" />
+                  <Button fx:id="correctButton" layoutX="679.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: #fdf8e7;" stylesheets="@../../css/button_style.css" text="Корректировать">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </Pane>
          </center>
       </BorderPane>
    </top>
    <left>
-      <ScrollPane centerShape="false" focusTraversable="false" prefHeight="773.0" prefWidth="759.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+      <ScrollPane centerShape="false" prefHeight="773.0" prefWidth="885.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
          <content>
-            <TableView prefHeight="771.0" prefWidth="757.0">
+            <TableView fx:id="mainTable" editable="true" prefHeight="771.0" prefWidth="883.0" stylesheets="@../../css/table_view_style.css">
               <columns>
-                <TableColumn minWidth="90.0" prefWidth="156.0" text="ФИО" />
-                <TableColumn maxWidth="3000.0" prefWidth="70.0" text="Нагрузка" />
-                  <TableColumn maxWidth="900.0" minWidth="80.0" prefWidth="134.0" text="Оклад с.у.н." />
-                  <TableColumn minWidth="20.0" prefWidth="119.0" text="Степень качества" />
+                <TableColumn fx:id="nameColumn" minWidth="90.0" prefWidth="156.0" text="ФИО" />
+                <TableColumn fx:id="loadColumn" maxWidth="3000.0" prefWidth="70.0" text="Нагрузка" />
+                  <TableColumn fx:id="salaryColumn" maxWidth="900.0" minWidth="80.0" prefWidth="134.0" text="Оклад с.у.н." />
+                  <TableColumn fx:id="gradeOfQualityColumn" maxWidth="2000.0" minWidth="20.0" prefWidth="40.0" text="Степень " />
                   <TableColumn prefWidth="213.0" text="Величина премии">
                      <columns>
-                        <TableColumn prefWidth="119.0" text="Ставка (%)" />
-                        <TableColumn prefWidth="119.0" text="Значение (руб.)" />
+                        <TableColumn fx:id="rateColumn" prefWidth="119.0" text="Ставка (%)" />
+                        <TableColumn fx:id="valueColumn" prefWidth="119.0" text="Значение (руб.)" />
                      </columns>
                   </TableColumn>
-                  <TableColumn prefWidth="103.0" text="Доплаты" />
+                  <TableColumn fx:id="additionalSalaryColumn" maxWidth="3000.0" text="Доплаты" />
+                  <TableColumn fx:id="totalBonus" prefWidth="137.0" text="Суммарная премия" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
-               <stylesheets>
-                  <URL value="@../../css/table_view_style.css" />
-                  <URL value="@../../css/bonus_table_view_style.css" />
-               </stylesheets>
             </TableView>
          </content>
          <BorderPane.margin>
@@ -132,7 +132,7 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </BorderPane.margin>
          <top>
-            <FlowPane prefHeight="65.0" prefWidth="330.0" BorderPane.alignment="CENTER">
+            <FlowPane fx:id="expertsPanel" prefHeight="40.0" prefWidth="839.0" BorderPane.alignment="CENTER">
                <children>
                   <Label prefHeight="20.0" prefWidth="126.0" text="Список экспертов:">
                      <font>
@@ -161,22 +161,17 @@
                   </Pane>
                </top>
                <center>
-                  <TableView prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/bonus_table_view_style.css" BorderPane.alignment="CENTER">
+                  <TableView fx:id="bonusTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/table_view_style.css" BorderPane.alignment="CENTER">
                     <columns>
-                      <TableColumn maxWidth="2000.0" minWidth="120.0" prefWidth="132.0" text="ФИО" />
-                      <TableColumn maxWidth="1000.0" prefWidth="50.0" text="Э1" />
-                        <TableColumn maxWidth="1000.0" prefWidth="50.0" text="Э2" />
-                        <TableColumn maxWidth="1000.0" prefWidth="50.0" text="Э3" />
-                        <TableColumn maxWidth="1000.0" prefWidth="50.0" text="Э4" />
-                        <TableColumn maxWidth="1000.0" prefWidth="50.0" text="Э5" />
-                        <TableColumn prefWidth="93.0" text="Сумма баллов" />
-                        <TableColumn prefWidth="236.0" text="Учитывая компетентность">
+                      <TableColumn fx:id="employeeNameColumn" maxWidth="2000.0" minWidth="120.0" prefWidth="132.0" text="ФИО" />
+                        <TableColumn fx:id="totalPointsColumn" maxWidth="4000.0" prefWidth="93.0" text="Сумма баллов" />
+                        <TableColumn maxWidth="2000.0" prefWidth="236.0" text="Учитывая компетентность">
                            <columns>
-                              <TableColumn prefWidth="93.0" text="В баллах" />
-                              <TableColumn prefWidth="93.0" text="В % от избытка" />
+                              <TableColumn fx:id="InPointsColumn" prefWidth="93.0" text="В баллах" />
+                              <TableColumn fx:id="inPercentColumn" prefWidth="93.0" text="В % от избытка" />
                            </columns>
                         </TableColumn>
-                        <TableColumn maxWidth="3000.0" prefWidth="93.0" text="Итог (руб.)" />
+                        <TableColumn fx:id="totalAdditionalBonus" maxWidth="4000.0" prefWidth="93.0" text="Итог (руб.)" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

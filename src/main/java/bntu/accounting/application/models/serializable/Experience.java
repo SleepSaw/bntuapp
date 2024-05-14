@@ -1,20 +1,17 @@
-package bntu.accounting.application.models;
+package bntu.accounting.application.models.serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Qualification {
-    @JsonProperty("б.к.к.")
+public class Experience {
+    @JsonProperty("До 5 лет")
     private Double step1;
-    @JsonProperty("1-я к.к.")
+    @JsonProperty("5-10 лет")
     private Double step2;
-    @JsonProperty("2-я к.к.")
+    @JsonProperty("10-15 лет")
     private Double step3;
-    @JsonProperty("в.к.к.")
+    @JsonProperty("св. 15 лет")
     private Double step4;
-    @JsonProperty("уч.-методист")
-    private Double step5;
-
-    public Qualification() {
+    public Experience() {
     }
 
     public Double getStep1() {
@@ -49,22 +46,13 @@ public class Qualification {
         this.step4 = step4;
     }
 
-    public Double getStep5() {
-        return step5;
-    }
-
-    public void setStep5(Double step5) {
-        this.step5 = step5;
-    }
-
     @Override
     public String toString() {
-        return "Qualification{" +
+        return "Experience{" +
                 "step1=" + step1 +
                 ", step2=" + step2 +
                 ", step3=" + step3 +
                 ", step4=" + step4 +
-                ", step5=" + step5 +
                 '}';
     }
 }

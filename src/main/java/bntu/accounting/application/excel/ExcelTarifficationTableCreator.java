@@ -1,11 +1,11 @@
 package bntu.accounting.application.excel;
 
-import bntu.accounting.application.iojson.ReportData;
+import bntu.accounting.application.models.serializable.ReportData;
 import bntu.accounting.application.iojson.ReportJsonHelper;
-import bntu.accounting.application.models.Employee;
+import bntu.accounting.application.models.fordb.Employee;
 import bntu.accounting.application.models.Item;
-import bntu.accounting.application.models.Salary;
-import bntu.accounting.application.models.Vacancy;
+import bntu.accounting.application.models.fordb.Salary;
+import bntu.accounting.application.models.fordb.Vacancy;
 import bntu.accounting.application.services.*;
 import bntu.accounting.application.util.enums.VacancyStatus;
 import org.apache.poi.ss.usermodel.*;

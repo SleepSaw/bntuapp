@@ -1,12 +1,15 @@
 package bntu.accounting.application.dao.impl;
 
 import bntu.accounting.application.dao.interfaces.SalaryDAO;
-import bntu.accounting.application.models.Load;
-import bntu.accounting.application.models.Salary;
+import bntu.accounting.application.models.fordb.Employee;
+import bntu.accounting.application.models.fordb.Load;
+import bntu.accounting.application.models.fordb.Rating;
+import bntu.accounting.application.models.fordb.Salary;
 import bntu.accounting.application.util.db.DBManager;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalaryDAOImpl implements SalaryDAO {
@@ -31,7 +34,8 @@ public class SalaryDAOImpl implements SalaryDAO {
             session.getTransaction().commit();
             return salary.getEmployee().getLoad().getId();
         } catch (HibernateException e) {
-            System.out.println("Create save HIBERNATE EXCEPTION");
+            System.out.println("________________________________________________________________________");
+            System.out.println(e);
             return 0;
         }
     }
@@ -45,8 +49,10 @@ public class SalaryDAOImpl implements SalaryDAO {
     public void updateSalary(Integer id, Salary updatedSalary) {
         try (Session session = DBManager.getSession()) {
             session.beginTransaction();
-            Salary salary = session.get(Salary.class, updatedSalary.getEmployee().getSalary());
-            salary.setEmployee(updatedSalary.getEmployee());
+            Salary salary = session.get(Salary.class, updatedSalary.getEmployee());
+            List<Rating> ratings = new ArrayList<>();
+            ratings.addAll(salary.getEmployee().getRatings());
+            salary.getEmployee().setRatings(ratings);
             salary.setTotalSalary(updatedSalary.getTotalSalary());
             salary.setRateSalary(updatedSalary.getRateSalary());
             salary.setLoadSalary(updatedSalary.getLoadSalary());
@@ -58,6 +64,21 @@ public class SalaryDAOImpl implements SalaryDAO {
             salary.setYSAllowance(updatedSalary.getYSAllowance());
             session.getTransaction().commit();
         } catch (HibernateException e) {
+            System.out.println(e);
+        }
+    }
+    @Override
+    public void updateSalaryOPD(Employee key, Double OPD) {
+        try (Session session = DBManager.getSession()) {
+            session.beginTransaction();
+            Salary salary = session.get(Salary.class, key);
+            salary.setProfActivitiesAllowance(OPD);
+            List<Rating> ratings = new ArrayList<>();
+            ratings.addAll(salary.getEmployee().getRatings());
+            salary.getEmployee().setRatings(ratings);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println("_______________________________________________________________________________");
             System.out.println(e);
         }
     }

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -12,7 +18,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane fx:id="loadWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" stylesheets="@../../css/green_theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.LoadPageController">
+<BorderPane fx:id="loadWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1124.0" style="-fx-background-color: white;" stylesheets="@../../css/green_theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.pages.LoadPageController">
     <top>
         <GridPane prefHeight="35.0" prefWidth="1124.0" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -46,7 +52,7 @@
             <content>
                 <BorderPane prefHeight="638.0" prefWidth="1092.0" style="-fx-background-color: white;">
                <top>
-                        <TableView fx:id="loadTable" prefHeight="672.0" prefWidth="1092.0" stylesheets="@../../css/table_view_style.css" BorderPane.alignment="CENTER">
+                        <TableView fx:id="loadTable" editable="true" prefHeight="672.0" prefWidth="1092.0" stylesheets="@../../css/table_view_style.css" BorderPane.alignment="CENTER">
                             <columns>
                                 <TableColumn fx:id="indexColumn" prefWidth="49.0" text="№" />
                                 <TableColumn fx:id="nameColumn" prefWidth="179.0" text="ФИО" />

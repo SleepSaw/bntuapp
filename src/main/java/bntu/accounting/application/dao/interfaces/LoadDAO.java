@@ -1,6 +1,6 @@
 package bntu.accounting.application.dao.interfaces;
 
-import bntu.accounting.application.models.Load;
+import bntu.accounting.application.models.fordb.Load;
 
 import java.util.List;
 

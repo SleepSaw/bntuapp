@@ -8,6 +8,7 @@ import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.fxsupport.RowIndexer;
 import bntu.accounting.application.util.fxsupport.WindowCreator;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -79,10 +80,6 @@ public class EmployeePageController implements Initializable, Observer {
         WindowCreator.createWindow("/fxml/windows/add_employee_window.fxml", this,
                 new AddingEmployeeWindowController());
     }
-    @FXML
-    void updateTableButtonAction(ActionEvent event) {
-        updateTable();
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -97,8 +94,12 @@ public class EmployeePageController implements Initializable, Observer {
         expColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("experience"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<Employee, Double>("category"));
         contractColumn.setCellValueFactory(new PropertyValueFactory<Employee, Double>("contractValue"));
-        youngSpecialistColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("youngSpecialist"));
+        youngSpecialistColumn.setCellValueFactory(data -> new SimpleStringProperty(getYSWord(data.getValue().getYoungSpecialist())));
         updateTable();
+    }
+    private String getYSWord(boolean isYS){
+        if(isYS) return "Да";
+        return "Нет";
     }
     private void updateTable () {
             ObservableList<Employee> employees = FXCollections.observableArrayList();

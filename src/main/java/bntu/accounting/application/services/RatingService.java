@@ -38,9 +38,11 @@ public class RatingService {
         return Normalizer.normalizeItem(total * rate);
     }
     public Double findBonusRateByGrade(Integer grade){
-        if (grade == 3) return ratingOptions.getActualThirdRate();
-        if (grade == 2) return ratingOptions.getActualSecondRate();
-        else return ratingOptions.getActualFirstRate();
+        Double result = 0d;
+        if (grade == 3) result = ratingOptions.getActualThirdRate();
+        else if (grade == 2) result =  ratingOptions.getActualSecondRate();
+        else result = ratingOptions.getActualFirstRate();
+        return Normalizer.normalizeItem(result);
     }
     public Double findSumOfScores(List<Rating> ratings){
         double sum = 0;

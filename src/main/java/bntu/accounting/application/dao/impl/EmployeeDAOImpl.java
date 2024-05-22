@@ -59,6 +59,19 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             employee.setExperience(updatedEmployee.getExperience());
             employee.setCategory(updatedEmployee.getCategory());
             employee.setContractValue(updatedEmployee.getContractValue());
+            employee.setWorkQualityGrade(updatedEmployee.getWorkQualityGrade());
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println("Create HIBERNATE EXCEPTION");
+        }
+    }
+
+    @Override
+    public void updateWorkQualityGradeOfEmployee(Integer id, int grade) {
+        try (Session session = DBManager.getSession()) {
+            session.beginTransaction();
+            Employee employee = session.get(Employee.class, id);
+            employee.setWorkQualityGrade(grade);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println("Create HIBERNATE EXCEPTION");
@@ -75,6 +88,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             // здесь же создаём помочную и к ней привязываем основную
             Salary salary = new Salary();
             salary.setEmployee(employee);
+            employee.setWorkQualityGrade(2);
             // сохраняем в правильном порядке
             session.persist(load);
             session.persist(employee);

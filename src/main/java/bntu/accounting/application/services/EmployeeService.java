@@ -28,7 +28,9 @@ public class EmployeeService {
         employeeDAO.updateEmployee(id, updatedEmployee);
         EmployeesInstance.getInstance().notifyObservers();
     }
-
+    public void updateGradeOfEmployee(Integer id, int grade){
+        employeeDAO.updateWorkQualityGradeOfEmployee(id,grade);
+    }
     public void saveEmployee(Employee employee) {
         employeeDAO.saveEmployee(employee);
         EmployeesInstance.getInstance().notifyObservers();

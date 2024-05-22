@@ -17,9 +17,14 @@ public class DefaultDivider {
       this.options = options;
    }
 
-   public Double divideFund(List<Employee> employees){
+   public Result divideFund(List<Employee> employees){
+      Result result = new Result();
+      result.setFirstRate(options.getDefaultFirstRate());
+      result.setSecondRate(options.getDefaultSecondRate());
+      result.setThirdRate(options.getDefaultThirdRate());
       double balance = bonusService.findBalance(employees,
-              options.getDefaultFirstRate(), options.getDefaultSecondRate(), options.getDefaultThirdRate());
-      return Normalizer.roundValue(balance);
+              result.getFirstRate(), result.getSecondRate(), result.getThirdRate());
+      result.setBalance(balance);
+      return result;
    }
 }

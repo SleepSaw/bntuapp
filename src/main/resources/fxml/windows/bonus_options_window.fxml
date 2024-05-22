@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <BorderPane prefHeight="52.0" prefWidth="900.0" style="-fx-background-color: #f8f8f8;" BorderPane.alignment="CENTER">
+         <right>
+            <Pane prefHeight="0.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="saveButton" layoutX="125.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" style="-fx-background-color: #d6ffe8;" text="Сохранить изменения">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="cancelButton" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: white;" text="Отмена">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets right="15.0" />
+               </BorderPane.margin>
+            </Pane>
+         </right>
+         <left>
+            <Label prefHeight="27.0" prefWidth="245.0" text="Настройка премирования" textFill="#515151" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets left="15.0" />
+               </BorderPane.margin>
+            </Label>
+         </left>
+         <effect>
+            <DropShadow />
+         </effect>
+      </BorderPane>
+   </top>
+   <center>
+      <VBox prefHeight="472.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="182.0" prefWidth="900.0">
+               <children>
+                  <GridPane hgap="10.0" layoutX="23.0" layoutY="49.0" prefHeight="97.0" prefWidth="320.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="86.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.0" minWidth="10.0" prefWidth="39.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="175.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="1-я степень">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="2-я степень" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="baseRateField" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" />
+                        <TextField fx:id="loadRateField" prefHeight="25.0" prefWidth="57.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="\%" GridPane.columnIndex="2">
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="3-я степень" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="loadRateField1" prefHeight="25.0" prefWidth="57.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="\%" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="\%" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <Label fx:id="generalLabel" layoutX="14.0" layoutY="14.0" prefHeight="29.0" prefWidth="169.0" text="Начальные ставки " textFill="#515151">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="276.0" prefWidth="900.0">
+               <children>
+                  <Label fx:id="allowanceLabel" layoutX="14.0" layoutY="14.0" prefHeight="29.0" prefWidth="88.0" text="Эксперты" textFill="#515151">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="experienceTable" editable="true" layoutX="23.0" layoutY="70.0" prefHeight="50.0" prefWidth="698.0" stylesheets="@../../css/table_view_style.css">
+                     <columns>
+                        <TableColumn fx:id="exp1Column" prefWidth="248.0" text="ФИО" />
+                        <TableColumn fx:id="exp2Column" prefWidth="163.0" text="Должность" />
+                        <TableColumn fx:id="exp3Column" prefWidth="159.0" text="Опыт работы" />
+                        <TableColumn fx:id="exp4Column" prefWidth="126.0" text="Компетентность" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="280.0" layoutY="20.0" text="* Максимальное количество экспертов - 5 ч.">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="saveButton1" layoutX="123.0" layoutY="16.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #d6ffe8;" text="Добавить эксперта">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </center>
+   <stylesheets>
+      <URL value="@../../css/options_styles.css" />
+      <URL value="@../../css/add_employee_style.css" />
+   </stylesheets>
+</BorderPane>

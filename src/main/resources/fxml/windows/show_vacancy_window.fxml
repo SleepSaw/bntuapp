@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -19,13 +26,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="showVacancyWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="527.0" prefWidth="755.0" style="-fx-background-color: white;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="showVacancyWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="755.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <BorderPane prefHeight="50.0" prefWidth="755.0" style="-fx-background-color: #217346;" stylesheets="@../../css/add_employee_style.css" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="50.0" prefWidth="755.0" style="-fx-background-color: #d6ffe8;" stylesheets="@../../css/add_employee_style.css" BorderPane.alignment="CENTER">
          <left>
-            <Label text="Просмотр вакансии" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Label text="Просмотр вакансии" textFill="#515151" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -35,7 +40,7 @@
             <Insets left="15.0" />
          </padding>
          <right>
-            <Button fx:id="saveChangesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: transparent;" text="Сохранить изменения" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
+            <Button fx:id="saveChangesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: transparent;" text="Сохранить изменения" textFill="#2900f5" underline="true" BorderPane.alignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
@@ -83,7 +88,7 @@
                 <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="createPerformerButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="231.0" style="-fx-background-color: #217346;" text="Создать нового исполнителя" textFill="WHITE">
+                  <Button fx:id="createPerformerButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="231.0" stylesheets="@../../css/button_style.css" text="Создать нового исполнителя" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>

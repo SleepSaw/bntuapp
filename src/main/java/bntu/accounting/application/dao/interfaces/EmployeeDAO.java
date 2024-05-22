@@ -14,6 +14,7 @@ public interface EmployeeDAO {
     void removeEmployee(Employee employee);
 
     void updateEmployee(Integer id, Employee updatedEmployee);
+    void updateWorkQualityGradeOfEmployee(Integer id, int grade);
 
     /**
      * @param employee объект работника

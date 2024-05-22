@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,63 +19,33 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="982.0" prefWidth="1434.0" stylesheets="@../../css/table_view_style.css"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="bntu.accounting.application.controllers.windows.SalaryWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1434.0" stylesheets="@../../css/table_view_style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bntu.accounting.application.controllers.windows.SalaryWindowController">
    <top>
-      <BorderPane prefHeight="51.0" prefWidth="1390.0" style="-fx-background-color: #217346;" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="51.0" prefWidth="1390.0" style="-fx-background-color: #d6ffe8;" BorderPane.alignment="CENTER">
          <left>
             <BorderPane prefHeight="51.0" prefWidth="616.0" BorderPane.alignment="CENTER">
                <left>
                   <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                </left>
-               <right>
-                  <Label prefHeight="27.0" prefWidth="575.0" text="Подробная информация о заработных палатах работников" textFill="WHITE" BorderPane.alignment="CENTER">
+               <center>
+                  <Label prefHeight="27.0" prefWidth="575.0" text="Подробная информация о заработных палатах работников" textFill="#515151" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-               </right>
+               </center>
             </BorderPane>
          </left>
       </BorderPane>
    </top>
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <top>
-            <BorderPane prefHeight="61.0" prefWidth="1390.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-               <left>
-                  <GridPane hgap="10.0" prefHeight="61.0" prefWidth="656.0" BorderPane.alignment="CENTER">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.0" minWidth="10.0" prefWidth="162.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.0" minWidth="10.0" prefWidth="189.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="202.0" minWidth="10.0" prefWidth="157.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="21.0" minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="15.0" minHeight="4.0" prefHeight="8.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="212.0" style="-fx-background-color: #217346;" text="Показать общие сведения" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="212.0" style="-fx-background-color: #217346;" text="Авто. распределение" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Button layoutX="10.0" layoutY="23.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="164.0" style="-fx-background-color: #217346;" text="Отчёт в Excel" textFill="WHITE" GridPane.rowIndex="1" />
-                     </children>
-                  </GridPane>
-               </left>
-               <BorderPane.margin>
-                  <Insets left="15.0" />
-               </BorderPane.margin>
-            </BorderPane>
-         </top>
          <center>
             <BorderPane prefHeight="689.0" prefWidth="1390.0" BorderPane.alignment="CENTER">
                <center>
                   <ScrollPane prefHeight="746.0" prefWidth="1390.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                      <content>
-                        <TableView fx:id="salaryTable" prefHeight="838.0" prefWidth="1403.0">
+                        <TableView fx:id="salaryTable" prefHeight="887.0" prefWidth="1403.0">
                           <columns>
                             <TableColumn fx:id="indexColumn" prefWidth="40.0" text="№" />
                             <TableColumn fx:id="nameColumn" prefWidth="159.0" text="ФИО" />

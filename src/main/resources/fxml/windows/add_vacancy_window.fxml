@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -14,11 +19,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="463.0" stylesheets="@../../css/add_employee_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="463.0" stylesheets="@../../css/add_employee_style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <BorderPane prefHeight="48.0" prefWidth="463.0" style="-fx-background-color: #217346;" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="48.0" prefWidth="463.0" style="-fx-background-color: #d6ffe8;" BorderPane.alignment="CENTER">
          <left>
-            <Label text="Добавление вакансии" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Label text="Добавление вакансии" textFill="#515151" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -37,15 +42,11 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="saveVacancyButton" layoutX="85.0" layoutY="16.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #217346;" text="Сохранить" textFill="WHITE">
+                  <Button fx:id="saveVacancyButton" layoutX="114.0" layoutY="16.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="205.0" stylesheets="@../../css/button_style.css" text="Добавить вакансию" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clearAllFieldsButton" layoutX="227.0" layoutY="16.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" text="Очистить поля">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
                </children>
             </AnchorPane>
          </center>

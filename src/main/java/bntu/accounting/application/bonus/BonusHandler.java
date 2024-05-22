@@ -28,7 +28,7 @@ public class BonusHandler {
         Result result = new Result();
         double fund = bonusService.findBonusFund(employees);
         result.setFund(fund);
-        double balance = defaultDivider.divideFund(employees);
+        double balance = defaultDivider.divideFund(employees).getBalance();
         result.setBalance(balance);
         result.setFirstRate(options.getDefaultFirstRate());
         result.setSecondRate(options.getDefaultSecondRate());

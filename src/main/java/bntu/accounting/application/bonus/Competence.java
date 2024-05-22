@@ -13,7 +13,7 @@ public class Competence
     private void initMatrix(){
         degreesMatrix[0][0] = 1d;degreesMatrix[0][1] = 1.5d;degreesMatrix[0][2] = 2d;degreesMatrix[0][3] = 3d;
         degreesMatrix[1][0] = 2.5d;degreesMatrix[1][1] = 3d;degreesMatrix[1][2] = 5d;degreesMatrix[1][3] = 6d;
-        degreesMatrix[2][0] = 3d;degreesMatrix[2][1] = 5.5d;degreesMatrix[2][2] = 7d;degreesMatrix[2][3] = 10d;
+        degreesMatrix[2][0] = 4.5d;degreesMatrix[2][1] = 5.5d;degreesMatrix[2][2] = 7d;degreesMatrix[2][3] = 10d;
 
     }
     public double getCompetenceDegree(Expert expert){

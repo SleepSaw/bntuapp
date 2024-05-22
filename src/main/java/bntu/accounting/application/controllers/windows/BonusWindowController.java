@@ -9,8 +9,11 @@ import bntu.accounting.application.dao.interfaces.RatingDAO;
 import bntu.accounting.application.models.fordb.*;
 import bntu.accounting.application.models.serializable.RatingOptions;
 import bntu.accounting.application.services.*;
+import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
+import bntu.accounting.application.util.db.entityloaders.Observer;
 import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
 import bntu.accounting.application.util.enums.LoadTypes;
+import bntu.accounting.application.util.normalization.Normalizer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,13 +26,10 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Pattern;
 
-public class BonusWindowController extends VisualComponentsInitializer implements Initializable {
+public class BonusWindowController extends VisualComponentsInitializer implements Initializable, Observer {
     @FXML
     private TableView<Employee> bonusTable;
 
@@ -100,6 +100,7 @@ public class BonusWindowController extends VisualComponentsInitializer implement
 
     @FXML
     private TextField fundField;
+    // После корректировки не сходятся обнуленые значения
 
     @FXML
     private TableColumn<Employee, String> inPercentColumn;
@@ -112,7 +113,6 @@ public class BonusWindowController extends VisualComponentsInitializer implement
     private ExpertService expertService = new ExpertService();
     private BonusService bonusService = new BonusService();
     private BonusHandler bonusHandler = new BonusHandler();
-    private Employee employee1;
 
     public BonusWindowController(Stage stage) {
         super(stage);
@@ -124,8 +124,8 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         experts = expertService.getAllExperts();
         fund = bonusService.findBonusFund(employees);
         options = ratingService.getRatingOptions();
-        DefaultDivider defaultDivider = new DefaultDivider(options);
-        defaultDivider.divideFund(employees);
+//        DefaultDivider defaultDivider = new DefaultDivider(options);
+//        defaultDivider.divideFund(employees);
     }
 
     // Доделать после второй таблицы
@@ -155,13 +155,14 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         provideEditingOfColumn(gradeOfQualityColumn);
         gradeOfQualityColumn.setEditable(true);
         mainTable.setEditable(true);
-        rateColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf((ratingService.findBonusRateByGrade(data.getValue().getWorkQualityGrade()) * 100))));
+        rateColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(Normalizer.normalizeItem((ratingService.findBonusRateByGrade
+                (data.getValue().getWorkQualityGrade()) * 100)))));
         valueColumn.setCellValueFactory(data -> new SimpleStringProperty(ratingService.findBonusValue(data.getValue()).toString()));
         additionalSalaryColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 bonusHandler.getBonusValue(data.getValue()).toString()));
         totalBonus.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(
-                bonusHandler.getBonusValue(data.getValue())
-                        + data.getValue().getSalary().getProfActivitiesAllowance())
+                Normalizer.normalizeItem(bonusHandler.getBonusValue(data.getValue())
+                        + data.getValue().getSalary().getProfActivitiesAllowance()))
         ));
         updateTable(mainTable,employees);
     }
@@ -174,9 +175,9 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         InPointsColumn.setCellValueFactory(data -> new SimpleStringProperty(
                 bonusHandler.getWeightSum(data.getValue()).toString()));
         inPercentColumn.setCellValueFactory(data -> new SimpleStringProperty(
-                String.valueOf(bonusHandler.getPiece(data.getValue()) * 100)));
+                String.valueOf(Normalizer.normalizeItem(bonusHandler.getPiece(data.getValue()) * 100))));
         totalAdditionalBonus.setCellValueFactory(data -> new SimpleStringProperty(
-                bonusHandler.getBonusValue(data.getValue()).toString()));
+                Normalizer.normalizeItem(bonusHandler.getBonusValue(data.getValue())).toString()));
         updateTable(bonusTable,employees.stream().filter(e -> e.getWorkQualityGrade() == 1).toList());
         bonusTable.refresh();
     }
@@ -196,10 +197,11 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         updateTable(bonusTable,employees.stream().filter(e -> e.getWorkQualityGrade() == 1).toList());
         bonusTable.refresh();
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        EmployeesInstance.getInstance().attach(this);
         initializeContext();
+        createRatings();
         initializeHeader();
         initializeMainTable();
         initializeBonusTable();
@@ -207,8 +209,22 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         correctButton.setOnAction(actionEvent -> {
             resolve();
         });
-
-
+        super.getStage().setOnCloseRequest(event -> {
+            EmployeesInstance.getInstance().notifyObservers();
+            EmployeesInstance.getInstance().detach(this);
+        });
+    }
+    private void createRatings(){
+        for(Employee e : employees){
+            if(e.getRatings() == null || e.getRatings().isEmpty()){
+                List<Rating> ratings = new ArrayList<>();
+                for(Expert expert : experts){
+                    Rating rating = new Rating(e,expert,0);
+                    ratingService.saveRating(rating);
+                    ratings.add(rating);
+                }
+            }
+        }
     }
 
     private void addExpertsColumns() {
@@ -235,9 +251,9 @@ public class BonusWindowController extends VisualComponentsInitializer implement
     private void initializeHeader() {
         Result result = new Result(fund, options.getDefaultFirstRate(), options.getDefaultSecondRate(), options.getDefaultThirdRate());
         fundField.setText(fund.toString());
-        firstRateField.setText(String.valueOf(options.getDefaultFirstRate() * 100));
-        secondRateField.setText(String.valueOf(options.getDefaultSecondRate() * 100));
-        thirdRateField.setText(String.valueOf(options.getDefaultThirdRate() * 100));
+        firstRateField.setText(String.valueOf(Normalizer.normalizeItem(options.getDefaultFirstRate() * 100)));
+        secondRateField.setText(String.valueOf(Normalizer.normalizeItem(options.getDefaultSecondRate() * 100)));
+        thirdRateField.setText(String.valueOf(Normalizer.normalizeItem(options.getDefaultThirdRate() * 100)));
         result.setBalance(bonusService.findBalance(employees, options.getDefaultFirstRate(),
                 options.getDefaultSecondRate(), options.getDefaultThirdRate()));
         updateFundStatus(result);
@@ -264,9 +280,9 @@ public class BonusWindowController extends VisualComponentsInitializer implement
     }
 
     private void updateRates(Result result) {
-        firstRateField.setText(result.getFirstRate().toString());
-        secondRateField.setText(result.getSecondRate().toString());
-        thirdRateField.setText(result.getThirdRate().toString());
+        firstRateField.setText(String.valueOf(Normalizer.normalizeItem(result.getFirstRate() * 100)));
+        secondRateField.setText(String.valueOf(Normalizer.normalizeItem(result.getSecondRate() * 100)));
+        thirdRateField.setText(String.valueOf(Normalizer.normalizeItem(result.getThirdRate() * 100)));
     }
 
     private void provideEditingOfColumn(TableColumn<Employee, String> column) {
@@ -274,17 +290,24 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         column.setOnEditCommit(event -> {
             Pattern p = Pattern.compile("^[123]$");
             Employee employee = event.getRowValue();
-            employee1 = employee;
             try {
                 if (!p.matcher(event.getNewValue()).matches()) {
                     throw new NumberFormatException();
                 }
                 employee.setWorkQualityGrade(Integer.valueOf(event.getNewValue()));
+                employeeService.updateGradeOfEmployee(employee.getLoad().getId(),employee.getWorkQualityGrade());
             } catch (NumberFormatException e) {
                 showErrorAlert("Некорректное значение",
                         "Ошибка ввода степени качества работы. При вводе допускаются только одна из цифр 1,2 и 3");
             }
             mainTable.refresh();
+            updateTable(bonusTable,employees.stream().filter(e -> e.getWorkQualityGrade() ==1).toList());
+            bonusTable.refresh();
+            DefaultDivider defaultDivider = new DefaultDivider(options);
+            updateFundStatus(defaultDivider.divideFund(employees));
         });
     }
+
+    @Override
+    public void update() {}
 }

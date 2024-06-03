@@ -20,6 +20,7 @@ public class LoadService {
         }
         return roundValue(result);
     }
+
     public Double getAcademicLoadOfAllTeachers(List<Employee> employees){
         double result =0;
         for (Employee teacher: employees) {

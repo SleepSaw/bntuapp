@@ -50,6 +50,7 @@ public class ExpertDAOImpl implements ExpertDAO {
             expert.setPost(updatedExpert.getPost());
             expert.setName(updatedExpert.getName());
             expert.setExperience(updatedExpert.getExperience());
+            expert.setCompetence(updatedExpert.getCompetence());
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println("Create HIBERNATE EXCEPTION");

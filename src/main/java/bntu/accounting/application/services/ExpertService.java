@@ -11,4 +11,7 @@ public class ExpertService {
     public List<Expert> getAllExperts(){
         return expertDAO.getAllExperts();
     }
+    public void updateExpert(Integer id, Expert updatedExpert){
+        expertDAO.updateExpert(id,updatedExpert);
+    }
 }

@@ -11,7 +11,7 @@ public interface RatingDAO {
     List<Rating> findAllRatingByEmployee(Employee employee);
     List<Rating> findAllRatingByExpert(Expert expert);
     void removeRating(Rating rating);
-    void updateRating(Employee employee, Expert expert, Rating updatedRating);
+    void updateRating(Employee employee, Expert expert, Integer score);
     void saveRating(Rating rating);
     Rating findAllRatingByKey(Employee employee, Expert expert);
 }

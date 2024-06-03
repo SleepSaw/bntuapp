@@ -23,6 +23,9 @@ public class RatingService {
         ratingOptions = ratingJsonHelper.readFromJson();
     }
 
+    public void updateRating(Employee employee, Expert expert, Integer score) {
+        ratingDAO.updateRating(employee,expert,score);
+    }
     public RatingOptions getRatingOptions() {
         return ratingOptions;
     }

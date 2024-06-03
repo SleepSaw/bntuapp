@@ -131,22 +131,6 @@
          <BorderPane.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </BorderPane.margin>
-         <top>
-            <FlowPane fx:id="expertsPanel" prefHeight="40.0" prefWidth="839.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label prefHeight="20.0" prefWidth="126.0" text="Список экспертов:">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Слепцов Д.А. (Э1)" textFill="#468ffd" underline="true" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: transparent;" text="Слепцов Д.А. (Э2)" textFill="#468ffd" underline="true" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: transparent;" text="Слепцов Д.А. (Э3)" textFill="#468ffd" underline="true" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: transparent;" text="Слепцов Д.А. (Э4)" textFill="#468ffd" underline="true" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" style="-fx-background-color: transparent;" text="Слепцов Д.А. (Э5)" textFill="#468ffd" underline="true" />
-               </children>
-            </FlowPane>
-         </top>
          <center>
             <BorderPane prefHeight="708.0" prefWidth="650.0" BorderPane.alignment="CENTER">
                <top>
@@ -161,7 +145,7 @@
                   </Pane>
                </top>
                <center>
-                  <TableView fx:id="bonusTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/table_view_style.css" BorderPane.alignment="CENTER">
+                  <TableView fx:id="bonusTable" editable="true" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/table_view_style.css" BorderPane.alignment="CENTER">
                     <columns>
                       <TableColumn fx:id="employeeNameColumn" maxWidth="2000.0" minWidth="120.0" prefWidth="132.0" text="ФИО" />
                         <TableColumn fx:id="totalPointsColumn" maxWidth="4000.0" prefWidth="93.0" text="Сумма баллов" />
@@ -180,6 +164,27 @@
                </center>
             </BorderPane>
          </center>
+         <top>
+            <BorderPane prefHeight="30.0" prefWidth="839.0" BorderPane.alignment="CENTER">
+               <left>
+                  <Label prefHeight="20.0" prefWidth="126.0" text="Список экспертов:" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </left>
+               <center>
+                  <FlowPane fx:id="expertsPanel" prefHeight="12.0" prefWidth="713.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </FlowPane>
+               </center>
+            </BorderPane>
+         </top>
       </BorderPane>
    </right>
 </BorderPane>

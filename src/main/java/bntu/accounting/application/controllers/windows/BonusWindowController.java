@@ -2,22 +2,15 @@ package bntu.accounting.application.controllers.windows;
 
 import bntu.accounting.application.bonus.*;
 import bntu.accounting.application.controllers.VisualComponentsInitializer;
-import bntu.accounting.application.controllers.exceptions.SettingIncorrectValue;
-import bntu.accounting.application.dao.impl.ExpertDAOImpl;
-import bntu.accounting.application.dao.interfaces.ExpertDAO;
-import bntu.accounting.application.dao.interfaces.RatingDAO;
 import bntu.accounting.application.models.fordb.*;
 import bntu.accounting.application.models.serializable.RatingOptions;
 import bntu.accounting.application.services.*;
 import bntu.accounting.application.util.db.entityloaders.EmployeesInstance;
 import bntu.accounting.application.util.db.entityloaders.Observer;
-import bntu.accounting.application.util.db.entityloaders.VacancyInstance;
-import bntu.accounting.application.util.enums.LoadTypes;
 import bntu.accounting.application.util.normalization.Normalizer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -113,6 +106,7 @@ public class BonusWindowController extends VisualComponentsInitializer implement
     private ExpertService expertService = new ExpertService();
     private BonusService bonusService = new BonusService();
     private BonusHandler bonusHandler = new BonusHandler();
+    private List<Button> expertButtons = new ArrayList<>();
 
     public BonusWindowController(Stage stage) {
         super(stage);
@@ -152,7 +146,7 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         });
         gradeOfQualityColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        provideEditingOfColumn(gradeOfQualityColumn);
+        provideEditingOfGradeColumn(gradeOfQualityColumn);
         gradeOfQualityColumn.setEditable(true);
         mainTable.setEditable(true);
         rateColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(Normalizer.normalizeItem((ratingService.findBonusRateByGrade
@@ -189,7 +183,7 @@ public class BonusWindowController extends VisualComponentsInitializer implement
 
     private void resolve() {
         Result result = bonusHandler.bonusEmployees(employees, experts);
-        updateFundStatus(result);
+        updateBalanceStatus(result);
         updateRates(result);
         ratingService.saveRates(result);
         updateTable(mainTable,employees);
@@ -205,6 +199,7 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         initializeHeader();
         initializeMainTable();
         initializeBonusTable();
+        initializeExpertBar();
         mainTable.refresh();
         correctButton.setOnAction(actionEvent -> {
             resolve();
@@ -230,13 +225,16 @@ public class BonusWindowController extends VisualComponentsInitializer implement
     private void addExpertsColumns() {
         ObservableList<TableColumn<Employee, ?>> columns = bonusTable.getColumns();
         List<Expert> list = expertService.getAllExperts();
+        list.stream().sorted();
         int col_i = 1;
         for (Expert e : list) {
             TableColumn<Employee, String> column = new TableColumn<>();
-            column.setText("Э-i");
+            column.setText("Э" + col_i);
             column.setMaxWidth(1000);
             column.setPrefWidth(50);
             column.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getScoreByExpert(e).getScore().toString()));
+            column.setCellFactory(TextFieldTableCell.forTableColumn());
+            provideEditingOfRatingColumn(column,list.get(col_i-1));
             columns.add(col_i, column);
             col_i++;
         }
@@ -256,10 +254,10 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         thirdRateField.setText(String.valueOf(Normalizer.normalizeItem(options.getDefaultThirdRate() * 100)));
         result.setBalance(bonusService.findBalance(employees, options.getDefaultFirstRate(),
                 options.getDefaultSecondRate(), options.getDefaultThirdRate()));
-        updateFundStatus(result);
+        updateBalanceStatus(result);
     }
 
-    private void updateFundStatus(Result result) {
+    private void updateBalanceStatus(Result result) {
         updateRates(result);
         Double balance = result.getBalance();
         String status;
@@ -284,8 +282,30 @@ public class BonusWindowController extends VisualComponentsInitializer implement
         secondRateField.setText(String.valueOf(Normalizer.normalizeItem(result.getSecondRate() * 100)));
         thirdRateField.setText(String.valueOf(Normalizer.normalizeItem(result.getThirdRate() * 100)));
     }
+    private void provideEditingOfRatingColumn(TableColumn<Employee, String> column, Expert expert) {
+        // Установка фабрики ячеек для редактирования
+        column.setOnEditCommit(event -> {
+            Pattern p = Pattern.compile("^(10|[1-9])$");
+            Employee employee = event.getRowValue();
+            try {
+                if (!p.matcher(event.getNewValue()).matches()) {
+                    throw new NumberFormatException();
+                }
+                Integer score = Integer.valueOf(event.getNewValue());
+                employee.setScoreByExpert(score,expert);
+                ratingService.updateRating(employee, expert, score);
+            } catch (NumberFormatException e) {
+                showErrorAlert("Некорректное значение",
+                        "Ошибка ввода оценки. Допускаются числа от 1 до 10");
+            }
+            resolve();
+            updateTable(bonusTable, employees.stream().filter(e -> e.getWorkQualityGrade() == 1).toList());
+            bonusTable.refresh();
+            mainTable.refresh();
 
-    private void provideEditingOfColumn(TableColumn<Employee, String> column) {
+        });
+    }
+    private void provideEditingOfGradeColumn(TableColumn<Employee, String> column) {
         // Установка фабрики ячеек для редактирования
         column.setOnEditCommit(event -> {
             Pattern p = Pattern.compile("^[123]$");
@@ -304,10 +324,23 @@ public class BonusWindowController extends VisualComponentsInitializer implement
             updateTable(bonusTable,employees.stream().filter(e -> e.getWorkQualityGrade() ==1).toList());
             bonusTable.refresh();
             DefaultDivider defaultDivider = new DefaultDivider(options);
-            updateFundStatus(defaultDivider.divideFund(employees));
+            updateBalanceStatus(defaultDivider.divideFund(employees));
         });
     }
+    private void initializeExpertBar() {
+        expertsPanel.getChildren().clear();
+        int i = 1;
+        for (Expert expert : experts) {
+            Button b = new Button(expert.getName() + " (Э" + i + ")");
+            b.setStyle("-fx-text-fill: #468ffd;" +
+                    "-fx-background-color: transparent;" +
+                    "-fx-underline: true;");
+            expertButtons.add(b);
+            expertsPanel.getChildren().add(b);
+            i++;
+        }
 
+    }
     @Override
     public void update() {}
 }

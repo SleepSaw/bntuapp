@@ -3,7 +3,6 @@ package bntu.accounting.application.bonus;
 import bntu.accounting.application.iojson.RatingJsonHelper;
 import bntu.accounting.application.models.fordb.Employee;
 import bntu.accounting.application.models.fordb.Expert;
-import bntu.accounting.application.models.fordb.Salary;
 import bntu.accounting.application.models.serializable.RatingOptions;
 import bntu.accounting.application.services.BonusService;
 import bntu.accounting.application.services.SalaryService;
@@ -19,7 +18,7 @@ public class BonusHandler {
     private RatingOptions options;
     private DefaultDivider defaultDivider;
     private RatesRecalculator recalculator;
-    private ExpertAssessmentsMethod1 expertAssessmentsMethod;
+    private ExpertAssessmentsMethod expertAssessmentsMethod;
     private Map<Employee,AssessmentResult> resultMap;
 
     public Result bonusEmployees(List<Employee> employees, List<Expert> experts) {
@@ -92,6 +91,6 @@ public class BonusHandler {
         options = jsonHelper.readFromJson();
         defaultDivider = new DefaultDivider(options);
         recalculator = new RatesRecalculator(options);
-        expertAssessmentsMethod = new ExpertAssessmentsMethod1();
+        expertAssessmentsMethod = new ExpertAssessmentsMethod();
     }
 }

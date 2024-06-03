@@ -60,12 +60,12 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
-    public void updateRating(Employee employee, Expert expert, Rating updatedRating) {
+    public void updateRating(Employee employee, Expert expert, Integer score) {
         try (Session session = DBManager.getSession()) {
             session.beginTransaction();
             ConstructKey key = new ConstructKey(employee,expert);
             Rating rating = session.get(Rating.class, key);
-            rating.setScore(updatedRating.getScore());
+            rating.setScore(score);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println("Create HIBERNATE EXCEPTION");

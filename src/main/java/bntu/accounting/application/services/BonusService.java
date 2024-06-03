@@ -17,24 +17,30 @@ public class BonusService {
 
     public Double findBalance(List<Employee> employees,
                                Double firstRate, Double secondRate, Double thirdRate) {
-        Double fund  = findBonusFund(employees);
+        Double fund = findBonusFund(employees);
         Double balance = fund;
         for (Employee employee : employees) {
-            int q = employee.getWorkQualityGrade();
-            double value = 0;
-            switch (q) {
-                case 1:
-                    value = employee.getSalary().getLoadSalary() * firstRate;
-                    break;
-                case 2:
-                    value = employee.getSalary().getLoadSalary() * secondRate;
-                    break;
-                case 3:
-                    value = employee.getSalary().getLoadSalary() * thirdRate;
-                    break;
+            int q = 0;
+            if (employee.getWorkQualityGrade() == null) {
+                q = 3;
+                employee.setWorkQualityGrade(3);
+            } else {
+                q = employee.getWorkQualityGrade();
+                double value = 0;
+                switch (q) {
+                    case 1:
+                        value = employee.getSalary().getLoadSalary() * firstRate;
+                        break;
+                    case 2:
+                        value = employee.getSalary().getLoadSalary() * secondRate;
+                        break;
+                    case 3:
+                        value = employee.getSalary().getLoadSalary() * thirdRate;
+                        break;
+                }
+                balance -= value;
+                employee.getSalary().setProfActivitiesAllowance(Normalizer.normalizeItem(value));
             }
-            balance -= value;
-            employee.getSalary().setProfActivitiesAllowance(Normalizer.normalizeItem(value));
         }
         return Normalizer.roundValue(balance);
     }

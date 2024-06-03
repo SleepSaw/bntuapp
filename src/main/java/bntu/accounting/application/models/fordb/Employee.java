@@ -162,6 +162,10 @@ public class Employee extends Item {
         List<Rating> list = ratings.stream().filter(rating -> rating.getKey().getExpert().equals(expert)).toList();
         return list.get(0);
     }
+    public void setScoreByExpert(Integer score,Expert expert){
+        List<Rating> list = ratings.stream().filter(rating -> rating.getKey().getExpert().equals(expert)).toList();
+        list.get(0).setScore(score);
+    }
 
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;

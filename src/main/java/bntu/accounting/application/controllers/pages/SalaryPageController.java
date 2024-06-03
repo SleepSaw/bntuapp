@@ -168,7 +168,7 @@ public class SalaryPageController extends VisualComponentsInitializer implements
 
     @Override
     public void update() {
-        updateTable(salaryTable);
+        findActualSalary(updateTable(salaryTable));
         salaryTable.refresh();
     }
 }
